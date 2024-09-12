@@ -20,8 +20,7 @@ body {
 	line-height: 1.6;
 }
 
-header,
-footer {
+header {
 	background-color: var(--paynes-gray);
 	color: var(--white-smoke);
 	text-align: center;
