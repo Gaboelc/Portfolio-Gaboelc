@@ -1,14 +1,16 @@
----
-// src/components/Header.astro
----
-<header>
-  <nav>
-    <ul>
-      <li><a href="#about">About Me</a></li>
-      <li><a href="#experience">Experience</a></li>
-      <li><a href="#skills">Skills</a></li>
-      <li><a href="#projects">Projects</a></li>
-      <li><a href="#contact">Contacts</a></li>
-    </ul>
+<header class="flex justify-between items-center py-3 w-[1120px] mx-auto">
+  <div class="flex items-center">
+    <img
+      class="rounded-full h-12 w-12" 
+      src="../../public/images/Gabriel_Leon_Photo.JPG" 
+      alt="Gabriel Leon photo" 
+    />
+  </div>
+
+  <nav class="flex flex-row gap-x-10 opacity-80">
+    <a href="/">Home</a>
+    <a href="/about">About</a>
+    <a href="/portfolio">Portfolio</a>
+    <a href="/contact">Contact</a>
   </nav>
 </header>

@@ -1,16 +1,44 @@
 ---
-// src/layouts/MainLayout.astro
-import "../../styles/global.css";
+import '@fontsource/rajdhani/400.css';
+import Header from '../components/Header.astro';
+
+interface Props{
+  title: string;
+}
+
+const { title } = Astro.props;
 ---
-<html lang="es">
+
+<html lang="en">
   <head>
 	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width" initial-scale=1/>
     <link rel="icon" type="image/svg+xml" href="../../public/favicon.svg">
-    <title>Gabriel León Castro - Data Analyst Portfolio</title>
+    <title>{title}</title>
   </head>
+
+  <script is:inline src="https://cdn.jsdelivr.net/npm/flowbite@2.5.1/dist/flowbite.min.js"></script>
+
   <body>
+    <Header />
     <slot />
   </body>
 </html>
+
+<style is:global>
+  :root {
+    color-scheme: light dark;
+  }
+  html {
+    font-family: 'Rajdhani', system-ui, sans-serif;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background: #050505;
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+  }
+</style>
