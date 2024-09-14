@@ -1,8 +1,14 @@
 ---
 // src/pages/index.astro
 import MainLayout from '../layouts/MainLayout.astro';
+import Headling from '../components/Headling.astro';
+import SocialNetworks from '../components/SocialNetworks.astro';
 ---
 <MainLayout title = "Gabriel León Castro - Data Analyst Portfolio">
   <main>
+    <section id="About" class="w-full mx-auto lg:w-[850px] py-44"> 
+      <Headling />
+      <SocialNetworks />
+    </section>
   </main>
 </MainLayout>
