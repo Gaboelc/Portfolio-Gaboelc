@@ -1,23 +1,10 @@
 /* src/styles/global.css */
-:root {
+/* :root {
 	--paynes-gray: #4e5a66;
 	--reseda-green: #6d7863;
 	--white-smoke: #f2f2f2;
 	--jasper: #cd533b;
 	--orange-pantone: #fe5f00;
-}
-
-html {
-	scroll-behavior: smooth;
-}
-
-body {
-	font-family: 'Roboto', sans-serif;
-	margin: 0;
-	padding: 0;
-	background-color: var(--white-smoke);
-	color: var(--paynes-gray);
-	line-height: 1.6;
 }
 
 header {
@@ -33,105 +20,20 @@ section {
 	background-color: var(--white-smoke);
 	border: 1px solid var(--reseda-green);
 	border-radius: 8px;
+} */
+
+:root {
+	color-scheme: light dark;
+}
+html {
+	font-family: 'Rajdhani', system-ui, sans-serif;
+	scroll-behavior: smooth;
 }
 
-header {
-	display: flex;
-	justify-content: space-between;
-	padding: 1rem 2rem;
-}
-
-ul {
-	line-height: 1.8;
-}
-
-nav ul {
-	list-style: none;
-	display: flex;
-	gap: 1rem;
-}
-
-nav a {
-	color: var(--white-smoke);
-	text-decoration: none;
-	font-weight: bold;
-	transition: color 0.3s ease, transform 0.2s ease;
-}
-
-nav a:hover {
-	color: var(--orange-pantone);
-	transform: scale(1.1);
-}
-
-h2 {
-	color: var(--paynes-gray);
-	border-bottom: 2px solid var(--jasper);
-	padding-bottom: 0.5rem;
-	margin-bottom: 1rem;
-}
-
-button {
-	background-color: var(--orange-pantone);
-	border: none;
-	padding: 0.7rem 1.5rem;
-	color: var(--white-smoke);
-	cursor: pointer;
-	border-radius: 5px;
-	box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-	transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-button:hover {
-	background-color: var(--jasper);
-	transform: translateY(-2px);
-}
-
-button:active {
-	transform: translateY(0);
-	box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-button:focus {
-	outline: none;
-	box-shadow: 0 0 5px rgba(255, 165, 0, 0.5);
-}
-
-form {
-	display: grid;
-	gap: 1rem;
-	max-width: 400px;
-	margin: auto;
-}
-
-input,
-textarea {
-	width: 100%;
-	padding: 0.7rem;
-	border: 1px solid var(--paynes-gray);
-	border-radius: 5px;
-	margin-top: 0.5rem;
-	font-size: 1rem;
-}
-
-input:focus,
-textarea:focus {
-	border-color: var(--orange-pantone);
-	outline: none;
-	box-shadow: 0 0 5px rgba(254, 95, 0, 0.5);
-}
-
-footer {
-	background-color: var(--paynes-gray);
-	color: var(--white-smoke);
-	text-align: center;
-	padding: 1rem;
-	border-top: 2px solid var(--orange-pantone);
-}
-
-#projects {
-	text-align: center;
-	margin: 0 auto;
-	max-width: 800px;
-	border: 1px solid var(--reseda-green);
-	border-radius: 8px;
+body {
+	background: #0a0a0a;
+	/* display: flex; */
+	/* flex-direction: column; */
+	/* justify-content: center; */
+	min-height: 100vh;
 }

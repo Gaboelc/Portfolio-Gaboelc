@@ -1,41 +1,36 @@
 ---
 import Badge from '../components/Badge.astro';
+import Tittle from './Tittle.astro';
+import SocialPill from './SocialPill.astro';
+import LinkedInIcon from '../icons/LinkedInIcon.astro';
+import GitHubIcon from '../icons/GitHubIcon.astro';
 ---
+<section>
+	<div class="flex flex-row items-center justify-center space-x-2">
+	  <Tittle title="Hey, I'm Gabriel Leon Castro"/>
+	  <a href="https://www.linkedin.com/in/gaboelc/" target="_blank" rel="noopener">
+	    <Badge badge='Available for Hire!' />
+	  </a>
+	</div>
+	
+	<small class="text-4xl ms-2 font-semibold text-gray-500">
+		+4 years of experience. Data Analyst. From San Jose, Costa Rica.
+		<span class="text-[#FC6D09]">
+			Specialized in creating accurate data analysis.
+		</span>
+	</small>
+</section>
 
+<section>
+	<nav class="flex gap-x-2 mt-5">
+		<SocialPill href="https://www.linkedin.com/in/gaboelc/">
+			<LinkedInIcon class="w-6 h-6"/>
+			LinkedIn
+		</SocialPill>
 
-<h1 class="mb-4 
-	text-4xl 
-	font-extrabold 
-	leading-none 
-	tracking-tight 
-	text-gray-400
-	md:text-5xl 
-	lg:text-6xl 
-	dark:text-white"> Hey, I'm Gabriel Leon Castro 
-		<a href="https://www.linkedin.com/in/gaboelc/" target="_blank" 
-		rel="noopener">
-			<Badge badge='Available for Hire!' />
-		</a>
-</h1>
-
-<p class="mb-6 
-	text-lg 
-	font-normal 
-	text-gray-500 
-	lg:text-xl  
-	dark:text-gray-400"> As a Supply Chain Data Analyst at SGF Global, I 
-	specialize in <span class="font-bold">transforming complex datasets into actionable insights that 
-	streamline operations and drive business growth</span>. Leveraging my expertise in
-	 Power BI and Python, I create robust data visualizations and statistical
-	  analyses that inform strategic decisions.</p>
-<p class="mb-6 
-	text-lg 
-	font-normal 
-	text-gray-500 
-	lg:text-xl  
-	dark:text-gray-400"> With a solid foundation in Data Sciences from LEAD 
-	University, my approach is rooted in precision and a passion for continuous 
-	improvement. I thrive in dynamic environments where my analytical skills 
-	contribute to enhancing processes and service delivery. Looking ahead, I am 
-	eager to further refine my skills and take on more challenging projects that 
-	push the boundaries of data-driven decision-making. </p>
+		<SocialPill href="https://github.com/Gaboelc" >
+			<GitHubIcon class="w-6 h-6"/>
+			GitHub
+		</SocialPill>
+	</nav>
+</section>
