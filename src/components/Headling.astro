@@ -5,32 +5,34 @@ import SocialPill from './SocialPill.astro';
 import LinkedInIcon from '../icons/LinkedInIcon.astro';
 import GitHubIcon from '../icons/GitHubIcon.astro';
 ---
-<section>
-	<div class="flex flex-row items-center justify-center space-x-2">
-	  <Tittle title="Hey, I'm Gabriel Leon Castro"/>
-	  <a href="https://www.linkedin.com/in/gaboelc/" target="_blank" rel="noopener">
-	    <Badge badge='Available for Hire!' />
-	  </a>
-	</div>
-	
-	<small class="text-4xl ms-2 font-semibold text-gray-500">
-		+4 years of experience. Data Analyst. From San Jose, Costa Rica.
-		<span class="text-[#FC6D09]">
-			Specialized in creating accurate data analysis.
-		</span>
-	</small>
-</section>
+<div class="flex flex-col items-center justify-center space-x-2">
+	<section>
+		<div class="flex flex-row items-center justify-center space-x-2">
+		  <Tittle title="Hey, I'm Gabriel Leon Castro"/>
+		  <a class="hover:scale-105" href="https://www.linkedin.com/in/gaboelc/" target="_blank" rel="noopener">
+		    <Badge badge='Available for Hire!' />
+		  </a>
+		</div>
 
-<section>
-	<nav class="flex gap-x-2 mt-5">
-		<SocialPill href="https://www.linkedin.com/in/gaboelc/">
-			<LinkedInIcon class="w-6 h-6"/>
-			LinkedIn
-		</SocialPill>
+		<small class="text-4xl ms-2 font-semibold text-gray-500">
+			+4 years of experience. Data Analyst. From San Jose, Costa Rica.
+			<span class="text-[#FC6D09]">
+				Specialized in creating accurate data analysis.
+			</span>
+		</small>
+	</section>
 
-		<SocialPill href="https://github.com/Gaboelc" >
-			<GitHubIcon class="w-6 h-6"/>
-			GitHub
-		</SocialPill>
-	</nav>
-</section>
+	<section>
+		<nav class="flex gap-x-5 mt-5">
+			<SocialPill href="https://www.linkedin.com/in/gaboelc/">
+				<LinkedInIcon class="w-8 h-8"/>
+				LinkedIn
+			</SocialPill>
+
+			<SocialPill href="https://github.com/Gaboelc" >
+				<GitHubIcon class="w-8 h-8"/>
+				GitHub
+			</SocialPill>
+		</nav>
+	</section>
+</div>
