@@ -9,19 +9,19 @@ importers:
   .:
     dependencies:
       '@astrojs/cloudflare':
-        specifier: ^11.0.4
+        specifier: ^11.1.0
         version: 11.1.0(astro@4.16.3(@types/node@22.7.5)(rollup@4.24.0)(typescript@5.6.3))
       '@astrojs/tailwind':
-        specifier: ^5.1.0
+        specifier: ^5.1.2
         version: 5.1.2(astro@4.16.3(@types/node@22.7.5)(rollup@4.24.0)(typescript@5.6.3))(tailwindcss@3.4.13)
       '@fontsource/rajdhani':
         specifier: ^5.1.0
         version: 5.1.0
       astro:
-        specifier: ^4.15.4
+        specifier: ^4.16.3
         version: 4.16.3(@types/node@22.7.5)(rollup@4.24.0)(typescript@5.6.3)
       tailwindcss:
-        specifier: ^3.4.11
+        specifier: ^3.4.13
         version: 3.4.13
 
 packages:
@@ -2103,8 +2103,8 @@ packages:
   vfile@6.0.3:
     resolution: {integrity: sha512-KzIbH/9tXat2u30jf+smMwFCsno4wHVdNmzFyL+T/L3UGqqk6JKfVqOFOZEpZSHADH1k40ab6NUIXZq422ov3Q==}
 
-  vite@5.4.8:
-    resolution: {integrity: sha512-FqrItQ4DT1NC4zCUqMB4c4AZORMKIa0m8/URVCZ77OZ/QSNeJ54bU1vrFADbDsuwfIPcgknRkmqakQcgnL4GiQ==}
+  vite@5.4.9:
+    resolution: {integrity: sha512-20OVpJHh0PAM0oSOELa5GaZNWeDjcAvQjGXy2Uyr+Tp+/D2/Hdz6NLgpJLsarPTA2QJ6v8mX2P1ZfbsSKvdMkg==}
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
     peerDependencies:
@@ -3022,8 +3022,8 @@ snapshots:
       tsconfck: 3.1.4(typescript@5.6.3)
       unist-util-visit: 5.0.0
       vfile: 6.0.3
-      vite: 5.4.8(@types/node@22.7.5)
-      vitefu: 1.0.2(vite@5.4.8(@types/node@22.7.5))
+      vite: 5.4.9(@types/node@22.7.5)
+      vitefu: 1.0.2(vite@5.4.9(@types/node@22.7.5))
       which-pm: 3.0.0
       xxhash-wasm: 1.0.2
       yargs-parser: 21.1.1
@@ -4598,7 +4598,7 @@ snapshots:
       '@types/unist': 3.0.3
       vfile-message: 4.0.2
 
-  vite@5.4.8(@types/node@22.7.5):
+  vite@5.4.9(@types/node@22.7.5):
     dependencies:
       esbuild: 0.21.5
       postcss: 8.4.47
@@ -4607,9 +4607,9 @@ snapshots:
       '@types/node': 22.7.5
       fsevents: 2.3.3
 
-  vitefu@1.0.2(vite@5.4.8(@types/node@22.7.5)):
+  vitefu@1.0.2(vite@5.4.9(@types/node@22.7.5)):
     optionalDependencies:
-      vite: 5.4.8(@types/node@22.7.5)
+      vite: 5.4.9(@types/node@22.7.5)
 
   web-namespaces@2.0.1: {}
 
