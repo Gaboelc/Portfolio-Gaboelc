@@ -1,5 +1,5 @@
 ---
-interface Props{
+interface Props {
   badge: string;
 }
 
@@ -7,13 +7,14 @@ const { badge } = Astro.props;
 ---
 
 <span
-	class="bg-blue-100 
-		  text-blue-800 
-		  dark:bg-blue-900 
-		  dark:text-blue-300
-		  text-base 
-		  font-medium 
-		  me-2 
-		  px-2.5 
-		  py-0.5 
-		  rounded"> {badge} </span>
+  class="bg-blue-100 
+         text-blue-800 
+         dark:bg-blue-900 
+         dark:text-blue-300
+         text-sm 
+         md:text-base 
+         font-medium 
+         me-2 
+         px-2.5 
+         py-0.5 
+         rounded">{badge}</span>
