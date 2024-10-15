@@ -4,6 +4,7 @@ import Tittle from './Tittle.astro';
 import SocialPill from './SocialPill.astro';
 import LinkedInIcon from '../icons/LinkedInIcon.astro';
 import GitHubIcon from '../icons/GitHubIcon.astro';
+import CVIcon from '../icons/CVIcon.astro';
 ---
 <div class="flex flex-col items-center justify-center space-x-2">
 	<section>
@@ -40,6 +41,11 @@ import GitHubIcon from '../icons/GitHubIcon.astro';
 			<SocialPill href="https://github.com/Gaboelc" >
 				<GitHubIcon class="w-8 h-8"/>
 				GitHub
+			</SocialPill>
+
+			<SocialPill href="../../public/Gabriel_Leon_Castro_CV.pdf" >
+				<CVIcon class="w-8 h-8"/>
+				Download CV
 			</SocialPill>
 		</nav>
 	</section>
