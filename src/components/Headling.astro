@@ -6,47 +6,38 @@ import LinkedInIcon from '../icons/LinkedInIcon.astro';
 import GitHubIcon from '../icons/GitHubIcon.astro';
 import CVIcon from '../icons/CVIcon.astro';
 ---
-<div class="flex flex-col items-center justify-center space-x-2">
+<div class="flex flex-col items-center justify-center container mx-auto px-4">
 	<section>
-		<div class="flex flex-row items-center justify-center space-x-2">
-		  <Tittle title="Hey, I'm Gabriel Leon Castro"/>
+		<div class="flex flex-col md:flex-row items-center justify-center space-y-4 md:space-y-0 md:space-x-2 mt-4">
+		  <Tittle title="Hey, I'm Gabriel Leon Castro" />
 		  <a class="hover:scale-105" href="https://www.linkedin.com/in/gaboelc/" target="_blank" rel="noopener">
 		    <Badge badge='Available for Hire!' />
 		  </a>
 		</div>
 
-		<small class="text-4xl ms-2 font-semibold text-gray-500">
-			<span class="text-[#FC6D09]">
-				+4 years of experience.
-			</span> 
-			Data Analyst. From San Jose, Costa Rica.
-			<span class="text-[#FC6D09]">
-				SQL, Python, Microsoft Power BI.
-			</span>
-			Skilled in analysis solutions.
-			<span class="text-[#FC6D09]">
-				Collaborative, innovative problem-solver.
-			</span>
-			
+		<small class="text-base md:text-2xl lg:text-4xl font-semibold text-gray-500 text-center md:text-left mt-4">
+		  <span class="text-[#FC6D09]">+4 years of experience.</span> Data Analyst. From San Jose, Costa Rica.
+		  <span class="text-[#FC6D09]">SQL, Python, Microsoft Power BI.</span> Skilled in analysis solutions.
+		  <span class="text-[#FC6D09]">Collaborative, innovative problem-solver.</span>
 		</small>
 	</section>
 
 	<section>
-		<nav class="flex gap-x-5 mt-5">
-			<SocialPill href="https://www.linkedin.com/in/gaboelc/">
-				<LinkedInIcon class="w-8 h-8"/>
-				LinkedIn
-			</SocialPill>
-
-			<SocialPill href="https://github.com/Gaboelc" >
-				<GitHubIcon class="w-8 h-8"/>
-				GitHub
-			</SocialPill>
-
-			<SocialPill href="../../public/Gabriel_Leon_Castro_CV.pdf" >
-				<CVIcon class="w-8 h-8"/>
-				Download CV
-			</SocialPill>
+		<nav class="flex flex-col md:flex-row gap-y-4 md:gap-x-5 mt-5 items-center">
+		  <SocialPill href="https://www.linkedin.com/in/gaboelc/">
+		    <LinkedInIcon class="w-6 h-6 md:w-8 md:h-8" />
+		    LinkedIn
+		  </SocialPill>
+	  
+		  <SocialPill href="https://github.com/Gaboelc">
+		    <GitHubIcon class="w-6 h-6 md:w-8 md:h-8" />
+		    GitHub
+		  </SocialPill>
+	  
+		  <SocialPill href="../../public/Gabriel_Leon_Castro_CV.pdf">
+		    <CVIcon class="w-6 h-6 md:w-8 md:h-8" />
+		    Download CV
+		  </SocialPill>
 		</nav>
 	</section>
 </div>
