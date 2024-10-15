@@ -1,0 +1,31 @@
+---
+import Tittle from "./Tittle.astro";
+import XIcon from "../icons/XIcon.astro";
+import EmailIcon from "../icons/EmailIcon.astro";
+import LinkedInIcon from "../icons/LinkedInIcon.astro";
+import GitHubIcon from "../icons/GitHubIcon.astro";
+---
+
+<section id="contact" class="bg-dark py-16 text-center">
+  <div class="container mx-auto px-6">
+    <Tittle title="Connect With Me" />
+    <div class="flex flex-wrap justify-center gap-8">
+      <!-- Email -->
+      <a href="mailto:gabrielleon917@gmail.com" class="bg-gray-700 hover:bg-gray-600 transition-colors duration-300 text-white w-24 h-24 flex items-center justify-center rounded-lg shadow-lg">
+        <EmailIcon class="w-10 h-10"/>
+      </a>
+	  <!-- LinkedIn -->
+      <a href="https://www.linkedin.com/in/gaboelc/" target="_blank" class="bg-blue-700 hover:bg-blue-600 transition-colors duration-300 text-white w-24 h-24 flex items-center justify-center rounded-lg shadow-lg">
+        <LinkedInIcon class="w-10 h-10">
+      </a>
+	   <!-- GitHub -->
+      <a href="https://github.com/Gaboelc" target="_blank" class="bg-gray-900 hover:bg-gray-800 transition-colors duration-300 text-white w-24 h-24 flex items-center justify-center rounded-lg shadow-lg">
+        <GitHubIcon class="w-10 h-10"/>
+      </a>
+      <!-- X -->
+      <!-- <a href="https://x.com/" target="_blank" class="bg-black hover:bg-gray-700 transition-colors duration-300 text-white w-24 h-24 flex items-center justify-center rounded-lg shadow-lg">
+		<XIcon class="w-10 h-10"/> -->
+      </a>
+    </div>
+  </div>
+</section>
