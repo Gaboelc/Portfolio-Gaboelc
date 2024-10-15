@@ -1,22 +1,32 @@
 ---
-// src/components/Skills.astro
+import Tittle from "./Tittle.astro";
+// import PowerBIIcon from "../icons/PowerbiIcon.astro";
+import PythonIcon from "../icons/PythonIcon.astro";
+import PostgreSQLIcon from "../icons/PostgreSQLIcon.astro";
+import RLanguageIcon from "../icons/RLanguageIcon.astro";
+import MongoDBIcon from "../icons/MongoBDIcon.astro";
+import PowerAppsIcon from "../icons/PowerAppsIcon.astro";
+import PowerAutomateIcon from "../icons/PowerAutomateIcon.astro";
+import AzureIcon from "../icons/AzureIcon.astro";
+import TableauIcon from "../icons/TableauIcon.astro";
+import AWSIcon from "../icons/AWSIcon.astro";
+import TensorFlowIcon from "../icons/TensorFlowIcon.astro";
+import PandasIcon from "../icons/PandasIcon.astro";
 ---
-<section id="skills">
-  <h2>Habilidades</h2>
-  <ul>
-    <li>Python</li>
-    <li>SQL</li>
-    <li>Microsoft Power BI</li>
-    <li>Power Apps</li>
-    <li>Power Automate</li>
-	<li>Project Managemnt</li>	
-	<li>Defining Requirements</li>
-	<li>Communication</li>
-	<li>Ad Hoc Analysis</li>
-	<li>Microsoft Power Apps</li>
-	<li>Microsoft Power Automate</li>
-	<li>Team Leadership</li>
-	<li>Machine Learning</li>
-	<li>Agile Methodologies</li>
-  </ul>
-</section>
+
+<Tittle title="Technologies" />
+
+<div class="columns-6">
+	<PythonIcon class="w-24 h-24"/>
+	<RLanguageIcon class="w-24 h-24"/>
+	<TensorFlowIcon class="w-24 h-24"/>
+	<PandasIcon class="w-24 h-24"/>
+	<PostgreSQLIcon class="w-24 h-24"/>
+	<MongoDBIcon class="w-24 h-24"/>
+	<!-- <PowerBIIcon class="w-24 h-24"/> -->
+	<TableauIcon class="w-24 h-24"/>
+	<PowerAppsIcon class="w-24 h-24"/>
+	<PowerAutomateIcon class="w-24 h-24"/>
+	<AzureIcon class="w-24 h-24"/>
+	<AWSIcon class="w-24 h-24"/>
+</div>

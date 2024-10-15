@@ -1,0 +1,21 @@
+---
+interface Props{
+  title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<h1 class="text-gray-300  
+  text-4xl 
+  md:text-5xl 
+  lg:text-6xl 
+  font-extrabold
+  tracking-tight
+  leading-none 
+  py-6
+  pb-2">
+  <a href="https://www.linkedin.com/in/gaboelc/" target="_blank" 
+		rel="noopener"></a>
+      { title }
+</h1>
