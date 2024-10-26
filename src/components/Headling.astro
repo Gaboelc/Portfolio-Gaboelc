@@ -7,37 +7,43 @@ import GitHubIcon from '../icons/GitHubIcon.astro';
 import CVIcon from '../icons/CVIcon.astro';
 ---
 <div class="flex flex-col items-center justify-center container mx-auto px-4">
-	<section>
-		<div class="flex flex-col md:flex-row items-center justify-center flex-wrap space-y-4 md:space-y-0 md:space-x-4 mt-4 mb-4">
-		  <Tittle title="Hey, I'm Gabriel Leon Castro" />
-		  <a class="hover:scale-105 mt-4 md:mt-0" href="https://www.linkedin.com/in/gaboelc/" target="_blank" rel="noopener">
-		    <Badge badge='Available for Hire!' />
-		  </a>
-		</div>
+  <section>
+    <div class="flex flex-col md:flex-row items-center justify-center flex-wrap space-y-4 md:space-y-0 md:space-x-4 mt-4 mb-4">
+      <Tittle title="Hey, I'm Gabriel Leon Castro" />
+      <h2 class="text-gray-300 text-2xl md:text-3xl lg:text-4xl font-extrabold tracking-tight leading-none py-6 pb-2 text-center">
+        WHERE DATA GUIDES, DECISIONS THRIVE
+      </h2>
+    </div>
 
-		<small class="text-base md:text-2xl lg:text-4xl font-semibold text-gray-500 text-center md:text-left mt-4">
-		  <span class="text-[#FC6D09]">+4 years of experience.</span> Data Analyst. From San Jose, Costa Rica.
-		  <span class="text-[#FC6D09]">SQL, Python, Microsoft Power BI.</span> Skilled in analysis solutions.
-		  <span class="text-[#FC6D09]">Collaborative, innovative problem-solver.</span>
-		</small>
-	</section>
+    <div class="flex flex-col items-center mt-4 space-y-4">
+      <a class="hover:scale-105" href="https://www.linkedin.com/in/gaboelc/" target="_blank" rel="noopener">
+        <Badge badge='Available for Hire!' />
+      </a>
 
-	<section>
-		<nav class="flex flex-col md:flex-row gap-y-4 md:gap-x-5 mt-5 items-center">
-		  <SocialPill href="https://www.linkedin.com/in/gaboelc/">
-		    <LinkedInIcon class="w-6 h-6 md:w-8 md:h-8" />
-		    LinkedIn
-		  </SocialPill>
-	  
-		  <SocialPill href="https://github.com/Gaboelc">
-		    <GitHubIcon class="w-6 h-6 md:w-8 md:h-8" />
-		    GitHub
-		  </SocialPill>
-	  
-		  <SocialPill href="/Gabriel_Leon_Castro_CV.pdf">
-		    <CVIcon class="w-6 h-6 md:w-8 md:h-8" />
-		    Download CV
-		  </SocialPill>
-		</nav>
-	</section>
+      <small class="text-base md:text-2xl lg:text-4xl font-semibold text-gray-500">
+        <span class="text-[#FC6D09]">+4 years of experience.</span> Data Analyst. From San Jose, Costa Rica.
+        <span class="text-[#FC6D09]">SQL, Python, Microsoft Power BI.</span> Skilled in analysis solutions.
+        <span class="text-[#FC6D09]">Collaborative, innovative problem-solver.</span>
+      </small>
+    </div>
+  </section>
+
+  <section>
+    <nav class="flex flex-col md:flex-row gap-y-4 md:gap-x-5 mt-5 items-center">
+      <SocialPill href="https://www.linkedin.com/in/gaboelc/">
+        <LinkedInIcon class="w-6 h-6 md:w-8 md:h-8" />
+        LinkedIn
+      </SocialPill>
+  
+      <SocialPill href="https://github.com/Gaboelc">
+        <GitHubIcon class="w-6 h-6 md:w-8 md:h-8" />
+        GitHub
+      </SocialPill>
+  
+      <SocialPill href="/Gabriel_Leon_Castro_CV.pdf">
+        <CVIcon class="w-6 h-6 md:w-8 md:h-8" />
+        Download CV
+      </SocialPill>
+    </nav>
+  </section>
 </div>
