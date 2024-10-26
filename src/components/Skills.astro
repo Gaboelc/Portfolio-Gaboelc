@@ -12,57 +12,117 @@ import TableauIcon from "../icons/TableauIcon.astro";
 import AWSIcon from "../icons/AWSIcon.astro";
 import TensorFlowIcon from "../icons/TensorFlowIcon.astro";
 import PandasIcon from "../icons/PandasIcon.astro";
+import NumpyIcon from "../icons/NumpyIcon.astro";
+import ScikitLearnIcon from "../icons/ScikitLearnIcon.astro";
+import StreamlitIcon from "../icons/StreamlitIcon.astro";
 ---
 
-<Tittle title="Technologies" />
+<Tittle title="Skills" />
 
-<div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 justify-items-center mt-8">
-  <div class="flex flex-col items-center">
-    <PythonIcon class="w-16 h-16 md:w-24 md:h-24" />
-    <span class="mt-2 text-sm md:text-base text-gray-400 dark:text-gray-300">Python</span>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 text-white mt-8">
+  <!-- programming languages Category -->
+  <div class="bg-white/10 rounded-lg p-6 text-center">
+    <h3 class="mb-4 font-bold">Programming Languages</h3>
+    <div class="flex flex-col gap-4">
+      <div class="flex items-center gap-2">
+        <PythonIcon class="w-6 h-6" />
+        <span>Python</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <RLanguageIcon class="w-6 h-6" />
+        <span>R Language</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <PostgreSQLIcon class="w-6 h-6" />
+        <span>PostgreSQL</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <MongoDBIcon class="w-6 h-6" />
+        <span>MongoDB</span>
+      </div>
+    </div>
   </div>
-  <div class="flex flex-col items-center">
-    <RLanguageIcon class="w-16 h-16 md:w-24 md:h-24" />
-    <span class="mt-2 text-sm md:text-base text-gray-400 dark:text-gray-300">R Language</span>
+  
+  <!-- Data analysis & AI libraries Category -->
+  <div class="bg-white/10 rounded-lg p-6 text-center">
+    <h3 class="mb-4 font-bold">Data analysis & AI libraries</h3>
+    <div class="flex flex-col gap-4">
+      <div class="flex items-center gap-2">
+        <TensorFlowIcon class="w-6 h-6" />
+        <span>TensorFlow</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <ScikitLearnIcon class="w-6 h-6" />
+        <span>Scikit-Learn</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <PandasIcon class="w-6 h-6" />
+        <span>Pandas</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <NumpyIcon class="w-6 h-6" />
+        <span>NumPy</span>
+      </div>
+    </div>
   </div>
-  <div class="flex flex-col items-center">
-    <TensorFlowIcon class="w-16 h-16 md:w-24 md:h-24" />
-    <span class="mt-2 text-sm md:text-base text-gray-400 dark:text-gray-300">TensorFlow</span>
+
+  <!-- Data visualization Category -->
+  <div class="bg-white/10 rounded-lg p-6 text-center">
+    <h3 class="mb-4 font-bold">Data visualization</h3>
+    <div class="flex flex-col gap-4">
+      <div class="flex items-center gap-2">
+        <PowerBIIcon class="w-6 h-6" />
+        <span>Power BI</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <TableauIcon class="w-6 h-6" />
+        <span>Tableau</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <StreamlitIcon class="w-6 h-6" />
+        <span>Streamlit</span>
+      </div>
+    </div>
   </div>
-  <div class="flex flex-col items-center">
-    <PandasIcon class="w-16 h-16 md:w-24 md:h-24" />
-    <span class="mt-2 text-sm md:text-base text-gray-400 dark:text-gray-300">Pandas</span>
+
+  <!-- Tools Category -->
+  <div class="bg-white/10 rounded-lg p-6 text-center">
+    <h3 class="mb-4 font-bold">Tools</h3>
+    <div class="flex flex-col gap-4">
+      <div class="flex items-center gap-2">
+        <PowerAppsIcon class="w-6 h-6" />
+        <span>Power Apps</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <PowerAutomateIcon class="w-6 h-6" />
+        <span>Power Automate</span>
+      </div>
+    </div>
   </div>
-  <div class="flex flex-col items-center">
-    <PostgreSQLIcon class="w-16 h-16 md:w-24 md:h-24" />
-    <span class="mt-2 text-sm md:text-base text-gray-400 dark:text-gray-300">PostgreSQL</span>
+
+  <!-- Cloud Category -->
+  <div class="bg-white/10 rounded-lg p-6 text-center">
+    <h3 class="mb-4 font-bold">Cloud</h3>
+    <div class="flex flex-col gap-4">
+      <div class="flex items-center gap-2">
+        <AzureIcon class="w-6 h-6" />
+        <span>Azure</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <AWSIcon class="w-6 h-6" />
+        <span>AWS</span>
+      </div>
+    </div>
   </div>
-  <div class="flex flex-col items-center">
-    <MongoDBIcon class="w-16 h-16 md:w-24 md:h-24" />
-    <span class="mt-2 text-sm md:text-base text-gray-400 dark:text-gray-300">MongoDB</span>
-  </div>
-  <div class="flex flex-col items-center">
-    <PowerBIIcon class="w-16 h-16 md:w-24 md:h-24" />
-    <span class="mt-2 text-sm md:text-base text-gray-400 dark:text-gray-300">Power BI</span>
-  </div>
-  <div class="flex flex-col items-center">
-    <TableauIcon class="w-16 h-16 md:w-24 md:h-24" />
-    <span class="mt-2 text-sm md:text-base text-gray-400 dark:text-gray-300">Tableau</span>
-  </div>
-  <div class="flex flex-col items-center">
-    <PowerAppsIcon class="w-16 h-16 md:w-24 md:h-24" />
-    <span class="mt-2 text-sm md:text-base text-gray-400 dark:text-gray-300">Power Apps</span>
-  </div>
-  <div class="flex flex-col items-center">
-    <PowerAutomateIcon class="w-16 h-16 md:w-24 md:h-24" />
-    <span class="mt-2 text-sm md:text-base text-gray-400 dark:text-gray-300">Power Automate</span>
-  </div>
-  <div class="flex flex-col items-center">
-    <AzureIcon class="w-16 h-16 md:w-24 md:h-24" />
-    <span class="mt-2 text-sm md:text-base text-gray-400 dark:text-gray-300">Azure</span>
-  </div>
-  <div class="flex flex-col items-center">
-    <AWSIcon class="w-16 h-16 md:w-24 md:h-24" />
-    <span class="mt-2 text-sm md:text-base text-gray-400 dark:text-gray-300">AWS</span>
+
+  <!-- Learning Category -->
+  <div class="bg-white/10 rounded-lg p-6 text-center">
+    <h3 class="mb-4 font-bold">Learning</h3>
+    <div class="flex flex-col gap-4">
+      <div class="flex items-center gap-2">
+        <PythonIcon class="w-6 h-6" />
+        <span>Python</span>
+      </div>
+    </div>
   </div>
 </div>
