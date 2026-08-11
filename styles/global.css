@@ -1,10 +1,12 @@
 :root {
 	color-scheme: dark;
-	--paynes-gray: #4e5a66;
-	--reseda-green: #6d7863;
-	--white-smoke: #f2f2f2;
-	--jasper: #cd533b;
-	--orange-pantone: #fe5f00;
+
+	/* The whole palette lives here. Values are RGB channels so Tailwind can
+	   apply opacity modifiers to them (see tailwind.config.mjs). Changing the
+	   accent is now one edit rather than twenty-two. */
+	--accent: 252 109 9; /* #FC6D09 */
+	--ink: 2 6 23; /* page background */
+
 	--header-height: 4.5rem;
 }
 
@@ -40,6 +42,15 @@ a {
 	transition: color 0.3s ease;
 }
 
+/* One focus ring for the whole site. :focus-visible rather than :focus, so it
+   appears for keyboard users without flashing on every mouse click. The accent
+   sits at 7:1 against the page, well past the 3:1 non-text minimum. */
+:focus-visible {
+	outline: 2px solid rgb(var(--accent));
+	outline-offset: 3px;
+	border-radius: 2px;
+}
+
 button {
 	color: white;
 	border: none;
@@ -52,6 +63,40 @@ button {
 	padding: 1rem;
 }
 
+/* Horizontal rules echoing the gridlines of a plot. Written here rather than as
+   a Tailwind arbitrary value because the repeating gradient is long enough that
+   inlining it would bury the markup. */
+.backdrop-lines {
+	background-image: repeating-linear-gradient(
+		to bottom,
+		rgb(255 255 255 / 0.05) 0 1px,
+		transparent 1px 34px
+	);
+}
+
+/* Fine grain over the flat background, so large dark areas stop looking like
+   plastic. Generated inline rather than fetched — it is a few hundred bytes. */
+.noise {
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+	opacity: 0.035;
+	pointer-events: none;
+}
+
+/* Reveal on scroll. Scoped to .js so content is never hidden without a script
+   to bring it back. */
+.js [data-reveal] {
+	opacity: 0;
+	transform: translateY(1.25rem);
+	transition:
+		opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+		transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.js [data-reveal].is-revealed {
+	opacity: 1;
+	transform: none;
+}
+
 @media print {
 	body {
 		background: #fff;
@@ -59,6 +104,12 @@ button {
 
 	.no-print {
 		display: none !important;
+	}
+
+	/* Never let an unrevealed element print blank. */
+	.js [data-reveal] {
+		opacity: 1 !important;
+		transform: none !important;
 	}
 }
 
@@ -72,5 +123,10 @@ button {
 	*::after {
 		animation-duration: 0.01ms !important;
 		transition-duration: 0.01ms !important;
+	}
+
+	.js [data-reveal] {
+		opacity: 1;
+		transform: none;
 	}
 }

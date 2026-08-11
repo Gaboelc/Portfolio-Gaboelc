@@ -13,12 +13,12 @@ const links = [
 ---
 
 <header
-  class="sticky top-0 z-50 w-full border-b border-white/5 bg-[#020617]/80 backdrop-blur-md print:hidden">
+  class="sticky top-0 z-50 w-full border-b border-white/5 bg-ink/80 backdrop-blur-md print:hidden">
   <div class="max-w-screen-lg mx-auto flex justify-between items-center gap-4 py-3 px-4 md:px-6">
     <a href="/" class="flex items-center flex-shrink-0" aria-label="Home">
       <img
-        class="w-11 h-11 md:w-12 md:h-12 p-1 rounded-full ring-2 ring-gray-600 hover:ring-[#FC6D09] transition-colors duration-300"
-        src="/images/Gabriel_Leon_Photo.webp"
+        class="w-11 h-11 md:w-12 md:h-12 p-1 rounded-full ring-2 ring-gray-600 hover:ring-accent transition-colors duration-300"
+        src="/images/gabriel-96.webp"
         alt="Gabriel León Castro"
         width="48"
         height="48"
@@ -28,7 +28,7 @@ const links = [
     <nav class="hidden md:flex flex-row gap-x-8 text-gray-300">
       {
         links.map(({ href, label }) => (
-          <a href={href} class="hover:text-[#FC6D09] transition-colors duration-200">
+          <a href={href} class="hover:text-accent transition-colors duration-200">
             {label}
           </a>
         ))
@@ -58,7 +58,7 @@ const links = [
           <li>
             <a
               href={href}
-              class="block py-3 text-gray-300 border-b border-white/5 last:border-b-0 hover:text-[#FC6D09] transition-colors duration-200">
+              class="block py-3 text-gray-300 border-b border-white/5 last:border-b-0 hover:text-accent transition-colors duration-200">
               {label}
             </a>
           </li>

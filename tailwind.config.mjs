@@ -4,12 +4,21 @@ export default {
 	darkMode: 'class',
 	theme: {
 		extend: {
+			// Channels come from CSS custom properties in styles/global.css, so the
+			// palette has one home and Tailwind's opacity modifiers still work
+			// (accent/40, ink/80, ...).
 			colors: {
-				'paynes-gray': '#4e5a66',
-				'reseda-green': '#6d7863',
-				'white-smoke': '#f2f2f2',
-				jasper: '#cd533b',
-				'orange-pantone': '#fe5f00',
+				accent: 'rgb(var(--accent) / <alpha-value>)',
+				ink: 'rgb(var(--ink) / <alpha-value>)',
+			},
+			keyframes: {
+				reveal: {
+					from: { opacity: '0', transform: 'translateY(1.25rem)' },
+					to: { opacity: '1', transform: 'none' },
+				},
+			},
+			animation: {
+				reveal: 'reveal 0.6s cubic-bezier(0.22, 1, 0.36, 1) both',
 			},
 		},
 	},

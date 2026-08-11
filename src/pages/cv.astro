@@ -28,7 +28,7 @@ const contacts = [
         <h1 class="cv-name text-4xl md:text-5xl font-extrabold tracking-tight text-gray-100">
           {profile.name}
         </h1>
-        <p class="cv-role text-xl md:text-2xl font-bold text-[#FC6D09] mt-1">
+        <p class="cv-role text-xl md:text-2xl font-bold text-accent mt-1">
           {profile.role}
         </p>
         <p class="cv-muted text-sm text-gray-400 mt-1">{profile.location}</p>
@@ -37,7 +37,7 @@ const contacts = [
       <button
         type="button"
         id="print-cv"
-        class="no-print self-start md:self-auto inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 py-2.5 px-5 text-gray-200 hover:border-[#FC6D09]/50 hover:scale-105 transition-all duration-300">
+        class="no-print self-start md:self-auto inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 py-2.5 px-5 text-gray-200 hover:border-accent/50 hover:scale-105 transition-all duration-300">
         <PrintIcon class="w-5 h-5" />
         Download PDF
       </button>
@@ -48,7 +48,7 @@ const contacts = [
       {
         contacts.map(({ label, href }) => (
           <li>
-            <a href={href} class="hover:text-[#FC6D09] transition-colors duration-200">
+            <a href={href} class="hover:text-accent transition-colors duration-200">
               {label}
             </a>
           </li>
@@ -71,7 +71,7 @@ const contacts = [
             <li class="cv-entry">
               <div class="cv-entry-head">
                 <h3 class="cv-h3 text-lg font-semibold text-white">
-                  {role} <span class="cv-accent text-[#FC6D09]">· {company}</span>
+                  {role} <span class="cv-accent text-accent">· {company}</span>
                 </h3>
                 <p class="cv-muted cv-period text-sm text-gray-400">
                   {period} · {location}
@@ -79,7 +79,7 @@ const contacts = [
               </div>
               <ul class="cv-bullets mt-2 flex flex-col gap-1.5 text-sm md:text-base text-gray-300">
                 {highlights.map((highlight) => (
-                  <li class="pl-4 relative before:content-['▪'] before:absolute before:left-0 before:text-[#FC6D09]">
+                  <li class="pl-4 relative before:content-['▪'] before:absolute before:left-0 before:text-accent">
                     {highlight}
                   </li>
                 ))}
@@ -99,7 +99,7 @@ const contacts = [
             education.map(({ title, place, period, location }) => (
               <li class="cv-entry">
                 <h3 class="cv-h3 text-base font-semibold text-white">{title}</h3>
-                <p class="cv-accent text-sm text-[#FC6D09]">{place}</p>
+                <p class="cv-accent text-sm text-accent">{place}</p>
                 <p class="cv-muted text-sm text-gray-400">
                   {period}
                   {location && ` · ${location}`}
@@ -117,7 +117,7 @@ const contacts = [
             certifications.map(({ title, place, period }) => (
               <li class="cv-entry">
                 <h3 class="cv-h3 text-base font-semibold text-white">{title}</h3>
-                <p class="cv-accent text-sm text-[#FC6D09]">{place}</p>
+                <p class="cv-accent text-sm text-accent">{place}</p>
                 <p class="cv-muted text-sm text-gray-400">{period}</p>
               </li>
             ))
