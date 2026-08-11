@@ -1,0 +1,77 @@
+---
+import Tittle from "./Tittle.astro";
+import EducationIcon from "../icons/EducationIcon.astro";
+import CertificateIcon from "../icons/CertificateIcon.astro";
+
+const education = [
+  {
+    title: "Bachelor's Degree in Data Science",
+    place: "LEAD University",
+    period: "January 2020 - December 2023",
+    location: "San José, Costa Rica",
+  },
+  {
+    title: "Technical Degree in Computer Networking",
+    place: "Colegio Técnico Profesional de Hatillo",
+    period: "February 2017 - December 2019",
+    location: "San José, Costa Rica",
+  },
+];
+
+const certifications = [
+  {
+    title: "SnowPro Core Certified",
+    place: "Snowflake",
+    period: "Issued January 2025 · Valid through January 2027",
+    location: null,
+  },
+];
+---
+
+<div class="container mx-auto px-4 mt-8 md:mt-12">
+  <Tittle title="Education & Certifications" />
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+    <div class="bg-white/5 border border-white/10 rounded-lg p-6 transition-colors duration-300 hover:border-[#FC6D09]/40">
+      <h3 class="flex items-center gap-2 mb-6 font-bold text-white">
+        <EducationIcon class="w-6 h-6 text-[#FC6D09] flex-shrink-0" />
+        Education
+      </h3>
+      <ul class="flex flex-col gap-6">
+        {
+          education.map(({ title, place, period, location }) => (
+            <li>
+              <h4 class="text-base md:text-lg font-semibold text-gray-200">{title}</h4>
+              <p class="text-sm md:text-base text-[#FC6D09]">{place}</p>
+              <p class="text-sm text-gray-400">
+                {period}
+                {location && ` · ${location}`}
+              </p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <div class="bg-white/5 border border-white/10 rounded-lg p-6 transition-colors duration-300 hover:border-[#FC6D09]/40">
+      <h3 class="flex items-center gap-2 mb-6 font-bold text-white">
+        <CertificateIcon class="w-6 h-6 text-[#FC6D09] flex-shrink-0" />
+        Certifications
+      </h3>
+      <ul class="flex flex-col gap-6">
+        {
+          certifications.map(({ title, place, period, location }) => (
+            <li>
+              <h4 class="text-base md:text-lg font-semibold text-gray-200">{title}</h4>
+              <p class="text-sm md:text-base text-[#FC6D09]">{place}</p>
+              <p class="text-sm text-gray-400">
+                {period}
+                {location && ` · ${location}`}
+              </p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</div>

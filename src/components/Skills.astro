@@ -1,134 +1,114 @@
 ---
 import Tittle from "./Tittle.astro";
-import PowerBIIcon from "../icons/PowerBIIcon.astro";
+import SQLIcon from "../icons/SQLIcon.astro";
 import PythonIcon from "../icons/PythonIcon.astro";
-import PostgreSQLIcon from "../icons/PostgreSQLIcon.astro";
-import RLanguageIcon from "../icons/RLanguageIcon.astro";
-import MongoDBIcon from "../icons/MongoBDIcon.astro";
-import PowerAppsIcon from "../icons/PowerAppsIcon.astro";
-import PowerAutomateIcon from "../icons/PowerAutomateIcon.astro";
-import AzureIcon from "../icons/AzureIcon.astro";
+import PowerBIIcon from "../icons/PowerBIIcon.astro";
 import TableauIcon from "../icons/TableauIcon.astro";
-import AWSIcon from "../icons/AWSIcon.astro";
-import TensorFlowIcon from "../icons/TensorFlowIcon.astro";
+import SnowflakeIcon from "../icons/SnowflakeIcon.astro";
+import ETLIcon from "../icons/ETLIcon.astro";
+import DataModelingIcon from "../icons/DataModelingIcon.astro";
+import DataWarehouseIcon from "../icons/DataWarehouseIcon.astro";
 import PandasIcon from "../icons/PandasIcon.astro";
 import NumpyIcon from "../icons/NumpyIcon.astro";
+import PostgreSQLIcon from "../icons/PostgreSQLIcon.astro";
+import MongoDBIcon from "../icons/MongoBDIcon.astro";
+import ExcelIcon from "../icons/ExcelIcon.astro";
+import PowerAppsIcon from "../icons/PowerAppsIcon.astro";
+import PowerAutomateIcon from "../icons/PowerAutomateIcon.astro";
+import RLanguageIcon from "../icons/RLanguageIcon.astro";
+import TensorFlowIcon from "../icons/TensorFlowIcon.astro";
 import ScikitLearnIcon from "../icons/ScikitLearnIcon.astro";
 import StreamlitIcon from "../icons/StreamlitIcon.astro";
+import AzureIcon from "../icons/AzureIcon.astro";
+import AWSIcon from "../icons/AWSIcon.astro";
 import HadoopIcon from "../icons/HadoopIcon.astro";
 import SparkIcon from "../icons/SparkIcon.astro";
+
+const groups = [
+  {
+    title: "Data & Analytics",
+    items: [
+      { name: "SQL", Icon: SQLIcon },
+      { name: "Python", Icon: PythonIcon },
+      { name: "Power BI", Icon: PowerBIIcon },
+      { name: "Tableau", Icon: TableauIcon },
+      { name: "Snowflake", Icon: SnowflakeIcon },
+    ],
+  },
+  {
+    title: "Data Engineering",
+    items: [
+      { name: "ETL / ELT", Icon: ETLIcon },
+      { name: "Data Modeling", Icon: DataModelingIcon },
+      { name: "Data Warehousing", Icon: DataWarehouseIcon },
+    ],
+  },
+  {
+    title: "Programming & Libraries",
+    items: [
+      { name: "Pandas", Icon: PandasIcon },
+      { name: "NumPy", Icon: NumpyIcon },
+    ],
+  },
+  {
+    title: "Databases",
+    items: [
+      { name: "SQL Databases", Icon: PostgreSQLIcon },
+      { name: "NoSQL Databases", Icon: MongoDBIcon },
+    ],
+  },
+  {
+    title: "Tools & Productivity",
+    items: [
+      { name: "Excel (Advanced)", Icon: ExcelIcon },
+      { name: "Power Apps", Icon: PowerAppsIcon },
+      { name: "Power Automate", Icon: PowerAutomateIcon },
+    ],
+  },
+];
+
+const alsoFamiliar = [
+  { name: "R Language", Icon: RLanguageIcon },
+  { name: "TensorFlow", Icon: TensorFlowIcon },
+  { name: "Scikit-Learn", Icon: ScikitLearnIcon },
+  { name: "Streamlit", Icon: StreamlitIcon },
+  { name: "Azure", Icon: AzureIcon },
+  { name: "AWS", Icon: AWSIcon },
+  { name: "Apache Hadoop", Icon: HadoopIcon },
+  { name: "Apache Spark", Icon: SparkIcon },
+];
 ---
 
 <Tittle title="Skills" />
 
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 text-white mt-8">
-  <!-- programming languages Category -->
-  <div class="bg-white/10 rounded-lg p-6 text-center">
-    <h3 class="mb-4 font-bold">Programming Languages</h3>
-    <div class="flex flex-col gap-4">
-      <div class="flex items-center gap-2">
-        <PythonIcon class="w-6 h-6" />
-        <span>Python</span>
+  {
+    groups.map(({ title, items }) => (
+      <div class="bg-white/5 border border-white/10 rounded-lg p-6 text-center transition-colors duration-300 hover:border-[#FC6D09]/40">
+        <h3 class="mb-4 font-bold text-gray-200">{title}</h3>
+        <div class="flex flex-col gap-4">
+          {items.map(({ name, Icon }) => (
+            <div class="flex items-center gap-2">
+              <Icon class="w-6 h-6 flex-shrink-0" />
+              <span>{name}</span>
+            </div>
+          ))}
+        </div>
       </div>
-      <div class="flex items-center gap-2">
-        <RLanguageIcon class="w-6 h-6" />
-        <span>R Language</span>
-      </div>
-      <div class="flex items-center gap-2">
-        <PostgreSQLIcon class="w-6 h-6" />
-        <span>PostgreSQL</span>
-      </div>
-      <div class="flex items-center gap-2">
-        <MongoDBIcon class="w-6 h-6" />
-        <span>MongoDB</span>
-      </div>
-    </div>
-  </div>
-  
-  <!-- Data analysis & AI libraries Category -->
-  <div class="bg-white/10 rounded-lg p-6 text-center">
-    <h3 class="mb-4 font-bold">Data analysis & AI libraries</h3>
-    <div class="flex flex-col gap-4">
-      <div class="flex items-center gap-2">
-        <TensorFlowIcon class="w-6 h-6" />
-        <span>TensorFlow</span>
-      </div>
-      <div class="flex items-center gap-2">
-        <ScikitLearnIcon class="w-6 h-6" />
-        <span>Scikit-Learn</span>
-      </div>
-      <div class="flex items-center gap-2">
-        <PandasIcon class="w-6 h-6" />
-        <span>Pandas</span>
-      </div>
-      <div class="flex items-center gap-2">
-        <NumpyIcon class="w-6 h-6" />
-        <span>NumPy</span>
-      </div>
-    </div>
-  </div>
+    ))
+  }
 
-  <!-- Data visualization Category -->
-  <div class="bg-white/10 rounded-lg p-6 text-center">
-    <h3 class="mb-4 font-bold">Data visualization</h3>
-    <div class="flex flex-col gap-4">
-      <div class="flex items-center gap-2">
-        <PowerBIIcon class="w-6 h-6" />
-        <span>Power BI</span>
-      </div>
-      <div class="flex items-center gap-2">
-        <TableauIcon class="w-6 h-6" />
-        <span>Tableau</span>
-      </div>
-      <div class="flex items-center gap-2">
-        <StreamlitIcon class="w-6 h-6" />
-        <span>Streamlit</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- Tools Category -->
-  <div class="bg-white/10 rounded-lg p-6 text-center">
-    <h3 class="mb-4 font-bold">Tools</h3>
-    <div class="flex flex-col gap-4">
-      <div class="flex items-center gap-2">
-        <PowerAppsIcon class="w-6 h-6" />
-        <span>Power Apps</span>
-      </div>
-      <div class="flex items-center gap-2">
-        <PowerAutomateIcon class="w-6 h-6" />
-        <span>Power Automate</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- Cloud Category -->
-  <div class="bg-white/10 rounded-lg p-6 text-center">
-    <h3 class="mb-4 font-bold">Cloud</h3>
-    <div class="flex flex-col gap-4">
-      <div class="flex items-center gap-2">
-        <AzureIcon class="w-6 h-6" />
-        <span>Azure</span>
-      </div>
-      <div class="flex items-center gap-2">
-        <AWSIcon class="w-6 h-6" />
-        <span>AWS</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- Learning Category -->
-  <div class="bg-white/10 rounded-lg p-6 text-center">
-    <h3 class="mb-4 font-bold">Learning</h3>
-    <div class="flex flex-col gap-4">
-      <div class="flex items-center gap-2">
-        <HadoopIcon class="w-6 h-6" />
-        <span>Apache Hadoop</span>
-      </div>
-      <div class="flex items-center gap-2">
-        <SparkIcon class="w-6 h-6" />
-        <span>Apache Spark</span>
-      </div>
+  <div class="bg-white/[0.02] border border-white/5 rounded-lg p-6 text-center md:col-span-2 lg:col-span-1">
+    <h3 class="mb-4 font-bold text-gray-400">Also familiar with</h3>
+    <div class="flex flex-wrap justify-center gap-2">
+      {
+        alsoFamiliar.map(({ name, Icon }) => (
+          <span class="flex items-center gap-2 rounded-full border border-white/10 bg-white/5 py-1.5 px-3 text-sm text-gray-300">
+            <Icon class="w-4 h-4 flex-shrink-0" />
+            {name}
+          </span>
+        ))
+      }
     </div>
   </div>
 </div>
