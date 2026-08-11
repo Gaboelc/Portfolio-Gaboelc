@@ -1,20 +1,15 @@
 ---
 import Tittle from "./Tittle.astro";
+import { profile } from "../data/cv";
 ---
 <div class="container mx-auto px-4 mt-8 md:mt-12">
 	<Tittle title="About" />
 
 	<p class="mb-4 text-base md:text-xl text-gray-200 leading-relaxed md:leading-loose">
-		Analytics Engineer with 5+ years building scalable data models, semantic
-		layers, and BI solutions on modern stacks (Snowflake, Power BI, SQL-based
-		ELT). Proven track record designing production-ready reporting solutions,
-		defining business metrics, and performing deep-dive analysis to identify
-		root causes and improvement opportunities.
+		{profile.summary}
 	</p>
 	<p class="text-base md:text-lg text-gray-400 leading-relaxed md:leading-loose">
-		I enjoy translating business requirements into analytical solutions and
-		dashboards that support operational decision-making across cross-functional
-		teams. With a Data Science degree from LEAD University and a SnowPro Core
+		With a Data Science degree from LEAD University and a SnowPro Core
 		certification, my approach is rooted in precision and a passion for
 		continuous improvement — turning messy data into models that people
 		actually trust and use.

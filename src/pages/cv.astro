@@ -1,0 +1,316 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import PrintIcon from '../icons/PrintIcon.astro';
+import {
+  profile,
+  experience,
+  education,
+  certifications,
+  skillGroups,
+  alsoFamiliar,
+} from '../data/cv';
+
+const contacts = [
+  { label: profile.email, href: `mailto:${profile.email}` },
+  { label: 'linkedin.com/in/gaboelc', href: profile.links.linkedin },
+  { label: 'github.com/Gaboelc', href: profile.links.github },
+  { label: 'gaboelc.dev', href: profile.links.website },
+];
+---
+
+<MainLayout
+  title="Gabriel León Castro - CV"
+  description="Curriculum vitae of Gabriel León Castro, Analytics Engineer.">
+  <article class="cv w-full mx-auto lg:w-[850px] py-10 md:py-14">
+    <!-- Header -->
+    <header class="cv-head flex flex-col md:flex-row md:items-end md:justify-between gap-4 pb-6 border-b border-white/10">
+      <div>
+        <h1 class="cv-name text-4xl md:text-5xl font-extrabold tracking-tight text-gray-100">
+          {profile.name}
+        </h1>
+        <p class="cv-role text-xl md:text-2xl font-bold text-[#FC6D09] mt-1">
+          {profile.role}
+        </p>
+        <p class="cv-muted text-sm text-gray-400 mt-1">{profile.location}</p>
+      </div>
+
+      <button
+        type="button"
+        id="print-cv"
+        class="no-print self-start md:self-auto inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 py-2.5 px-5 text-gray-200 hover:border-[#FC6D09]/50 hover:scale-105 transition-all duration-300">
+        <PrintIcon class="w-5 h-5" />
+        Download PDF
+      </button>
+    </header>
+
+    <!-- Contact -->
+    <ul class="cv-contact flex flex-wrap gap-x-5 gap-y-1 mt-4 text-sm text-gray-400">
+      {
+        contacts.map(({ label, href }) => (
+          <li>
+            <a href={href} class="hover:text-[#FC6D09] transition-colors duration-200">
+              {label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+
+    <!-- Summary -->
+    <section class="cv-section mt-8">
+      <h2 class="cv-h2">Profile</h2>
+      <p class="cv-body text-gray-300 leading-relaxed">{profile.summary}</p>
+    </section>
+
+    <!-- Experience -->
+    <section class="cv-section mt-8">
+      <h2 class="cv-h2">Experience</h2>
+      <ol class="flex flex-col gap-6">
+        {
+          experience.map(({ period, role, company, location, highlights }) => (
+            <li class="cv-entry">
+              <div class="cv-entry-head">
+                <h3 class="cv-h3 text-lg font-semibold text-white">
+                  {role} <span class="cv-accent text-[#FC6D09]">· {company}</span>
+                </h3>
+                <p class="cv-muted cv-period text-sm text-gray-400">
+                  {period} · {location}
+                </p>
+              </div>
+              <ul class="cv-bullets mt-2 flex flex-col gap-1.5 text-sm md:text-base text-gray-300">
+                {highlights.map((highlight) => (
+                  <li class="pl-4 relative before:content-['▪'] before:absolute before:left-0 before:text-[#FC6D09]">
+                    {highlight}
+                  </li>
+                ))}
+              </ul>
+            </li>
+          ))
+        }
+      </ol>
+    </section>
+
+    <!-- Education & Certifications -->
+    <div class="cv-grid grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
+      <section class="cv-section">
+        <h2 class="cv-h2">Education</h2>
+        <ul class="flex flex-col gap-4">
+          {
+            education.map(({ title, place, period, location }) => (
+              <li class="cv-entry">
+                <h3 class="cv-h3 text-base font-semibold text-white">{title}</h3>
+                <p class="cv-accent text-sm text-[#FC6D09]">{place}</p>
+                <p class="cv-muted text-sm text-gray-400">
+                  {period}
+                  {location && ` · ${location}`}
+                </p>
+              </li>
+            ))
+          }
+        </ul>
+      </section>
+
+      <section class="cv-section">
+        <h2 class="cv-h2">Certifications</h2>
+        <ul class="flex flex-col gap-4">
+          {
+            certifications.map(({ title, place, period }) => (
+              <li class="cv-entry">
+                <h3 class="cv-h3 text-base font-semibold text-white">{title}</h3>
+                <p class="cv-accent text-sm text-[#FC6D09]">{place}</p>
+                <p class="cv-muted text-sm text-gray-400">{period}</p>
+              </li>
+            ))
+          }
+        </ul>
+      </section>
+    </div>
+
+    <!-- Skills -->
+    <section class="cv-section mt-8">
+      <h2 class="cv-h2">Technical Skills</h2>
+      <ul class="flex flex-col gap-2">
+        {
+          skillGroups.map(({ title, items }) => (
+            <li class="cv-skill text-sm md:text-base text-gray-300">
+              <span class="cv-accent font-semibold text-white">{title}:</span>{' '}
+              {items.join(', ')}
+            </li>
+          ))
+        }
+        <li class="cv-skill text-sm md:text-base text-gray-300">
+          <span class="cv-accent font-semibold text-white">Also familiar with:</span>{' '}
+          {alsoFamiliar.join(', ')}
+        </li>
+      </ul>
+    </section>
+  </article>
+</MainLayout>
+
+<script>
+  document.getElementById('print-cv')?.addEventListener('click', () => window.print());
+</script>
+
+<style>
+  .cv-h2 {
+    font-family: 'Roboto', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #9ca3af;
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid rgb(255 255 255 / 0.1);
+  }
+
+  /* Print: black on white, and compressed hard so the whole CV lands on one
+     A4 page. Heights were measured against the 1017px usable page height;
+     see the entry head going flex, which saves a full line per role. */
+  @media print {
+    /* Sized for US Letter, which is 18mm shorter than A4 — fitting Letter
+       means it also fits A4, not the other way round. */
+    @page {
+      margin: 1.1cm;
+    }
+
+    :global(body) {
+      min-height: 0 !important;
+    }
+
+    :global(main) {
+      padding: 0 !important;
+      max-width: none !important;
+    }
+
+    .cv,
+    .cv-body,
+    .cv-h3,
+    .cv-bullets,
+    .cv-skill {
+      color: #111 !important;
+    }
+
+    .cv {
+      width: 100% !important;
+      padding: 0 !important;
+    }
+
+    /* Header */
+    .cv-head {
+      display: flex !important;
+      flex-direction: row !important;
+      align-items: baseline !important;
+      gap: 0.6rem !important;
+      border-bottom: 1.5pt solid #111 !important;
+      padding-bottom: 0.25rem !important;
+    }
+
+    .cv-name {
+      font-size: 19pt !important;
+      line-height: 1.1 !important;
+    }
+
+    .cv-role {
+      font-size: 11pt !important;
+      color: #111 !important;
+      margin-top: 0 !important;
+    }
+
+    .cv-head .cv-muted {
+      margin-top: 0 !important;
+    }
+
+    .cv-contact {
+      margin-top: 0.3rem !important;
+      gap: 0 0.9rem !important;
+      font-size: 8pt !important;
+    }
+
+    /* Section headings */
+    .cv-h2 {
+      color: #111;
+      font-size: 8.5pt;
+      letter-spacing: 0.12em;
+      border-bottom: 0.5pt solid #999;
+      padding-bottom: 0.12rem;
+      margin-bottom: 0.28rem;
+    }
+
+    .cv-section {
+      margin-top: 0.45rem !important;
+    }
+
+    .cv-section :global(.flex),
+    .cv-section :global(ol),
+    .cv-section :global(ul) {
+      gap: 0.25rem !important;
+    }
+
+    /* Role + period share one line instead of stacking. */
+    .cv-entry-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 0.8rem;
+    }
+
+    .cv-period {
+      white-space: nowrap;
+      text-align: right;
+    }
+
+    .cv-h3 {
+      font-size: 9.5pt !important;
+      line-height: 1.25 !important;
+    }
+
+    .cv-muted,
+    .cv-contact,
+    .cv-contact a {
+      color: #444 !important;
+      font-size: 8pt !important;
+    }
+
+    .cv-accent {
+      color: #111 !important;
+    }
+
+    .cv-body,
+    .cv-bullets,
+    .cv-skill {
+      font-size: 8.4pt !important;
+      line-height: 1.28 !important;
+    }
+
+    .cv-bullets {
+      margin-top: 0.1rem !important;
+      gap: 0.05rem !important;
+    }
+
+    .cv-bullets li {
+      padding-left: 0.6rem !important;
+    }
+
+    .cv-bullets li::before {
+      color: #111 !important;
+    }
+
+    /* The print viewport is the paper width (~711px), which is below
+       Tailwind's md breakpoint, so md:grid-cols-2 never fires and these two
+       would stack. The columns are set explicitly here instead. */
+    .cv-grid {
+      display: grid !important;
+      grid-template-columns: 1fr 1fr !important;
+      align-items: start !important;
+      margin-top: 0.45rem !important;
+      gap: 0 1.5rem !important;
+    }
+
+    /* An entry splitting across a page break reads as two half-jobs, but the
+       section as a whole must stay breakable or it gets pushed to page two. */
+    .cv-entry {
+      break-inside: avoid;
+    }
+  }
+</style>

@@ -1,17 +1,20 @@
 ---
+// Root-relative so the anchors still resolve from /cv, where these sections
+// do not exist on the page.
 const links = [
-  { href: '#About', label: 'About' },
-  { href: '#Experience', label: 'Experience' },
-  { href: '#Skills', label: 'Skills' },
-  { href: '#Education', label: 'Education' },
-  { href: '#Contact', label: 'Contact' },
+  { href: '/#About', label: 'About' },
+  { href: '/#Experience', label: 'Experience' },
+  { href: '/#Skills', label: 'Skills' },
+  { href: '/#Education', label: 'Education' },
+  { href: '/#Contact', label: 'Contact' },
+  { href: '/cv', label: 'CV' },
 ];
 ---
 
 <header
-  class="sticky top-0 z-50 w-full border-b border-white/5 bg-[#020617]/80 backdrop-blur-md">
+  class="sticky top-0 z-50 w-full border-b border-white/5 bg-[#020617]/80 backdrop-blur-md print:hidden">
   <div class="max-w-screen-lg mx-auto flex justify-between items-center gap-4 py-3 px-4 md:px-6">
-    <a href="#top" class="flex items-center flex-shrink-0" aria-label="Back to top">
+    <a href="/" class="flex items-center flex-shrink-0" aria-label="Home">
       <img
         class="w-11 h-11 md:w-12 md:h-12 p-1 rounded-full ring-2 ring-gray-600 hover:ring-[#FC6D09] transition-colors duration-300"
         src="/images/Gabriel_Leon_Photo.webp"
