@@ -10,7 +10,6 @@ export default {
 			colors: {
 				accent: 'rgb(var(--accent) / <alpha-value>)',
 				ink: 'rgb(var(--ink) / <alpha-value>)',
-				haze: 'rgb(var(--haze) / <alpha-value>)',
 			},
 			keyframes: {
 				reveal: {

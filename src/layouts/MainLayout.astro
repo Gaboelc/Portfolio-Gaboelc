@@ -60,17 +60,16 @@ const ogImage = new URL('/images/og-image.png', siteUrl).href;
   </head>
 
   <body class="min-h-screen flex flex-col">
-    <!-- Ambient layers. Fixed, so they hold still while the page scrolls and
-         read as atmosphere rather than decoration sliding past. -->
+    <!-- Ambient layers, stacked bottom-up: plot gridlines, an accent wash at the
+         top, a fade that sinks the lines into the dark, then grain. Fixed, so
+         they hold still while the page scrolls. -->
     <div class="fixed inset-0 -z-10 print:hidden bg-ink overflow-hidden" aria-hidden="true">
+      <div class="backdrop-lines absolute inset-0"></div>
       <div
-        class="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_-10%,rgb(var(--haze)/0.38),transparent_70%)]">
+        class="absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_50%_0%,rgb(var(--accent)/0.14),transparent_70%)]">
       </div>
       <div
-        class="absolute top-1/4 -left-48 w-[34rem] h-[34rem] rounded-full bg-accent/[0.07] blur-[110px]">
-      </div>
-      <div
-        class="absolute -bottom-40 -right-40 w-[34rem] h-[34rem] rounded-full bg-haze/[0.12] blur-[110px]">
+        class="absolute inset-0 bg-[linear-gradient(180deg,transparent_38%,rgb(var(--ink))_92%)]">
       </div>
       <div class="noise absolute inset-0"></div>
     </div>
