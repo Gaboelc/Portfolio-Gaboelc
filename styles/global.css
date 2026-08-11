@@ -57,12 +57,6 @@ button {
 	cursor: pointer;
 }
 
-.container {
-	max-width: 1200px;
-	margin: 0 auto;
-	padding: 1rem;
-}
-
 /* Horizontal rules echoing the gridlines of a plot. Written here rather than as
    a Tailwind arbitrary value because the repeating gradient is long enough that
    inlining it would bury the markup. */

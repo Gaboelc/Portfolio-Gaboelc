@@ -57,10 +57,13 @@ const icons: Record<string, any> = {
 
 <Tittle title="Skills" />
 
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 text-white mt-8">
+{/* Columns rather than a grid: the groups hold 5, 3, 2, 2, 3 and 8 items, so
+    rows would always leave dead space under the shorter cards. Flowing them
+    down columns lets each card take only the height it needs. */}
+<div class="columns-1 md:columns-2 lg:columns-3 gap-6 text-white mt-8">
   {
     skillGroups.map(({ title, items }) => (
-      <div class="bg-white/5 border border-white/10 rounded-lg p-6 text-center transition-colors duration-300 hover:border-accent/40">
+      <div class="break-inside-avoid mb-6 bg-white/5 border border-white/10 rounded-lg p-6 text-center transition-colors duration-300 hover:border-accent/40">
         <h3 class="mb-4 font-bold text-gray-200">{title}</h3>
         <div class="flex flex-col gap-4">
           {items.map((name) => {
@@ -77,7 +80,7 @@ const icons: Record<string, any> = {
     ))
   }
 
-  <div class="bg-white/[0.02] border border-white/5 rounded-lg p-6 text-center md:col-span-2 lg:col-span-1">
+  <div class="break-inside-avoid mb-6 bg-white/[0.02] border border-white/5 rounded-lg p-6 text-center">
     <h3 class="mb-4 font-bold text-gray-400">Also familiar with</h3>
     <div class="flex flex-wrap justify-center gap-2">
       {

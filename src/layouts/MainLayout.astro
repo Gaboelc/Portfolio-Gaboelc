@@ -18,15 +18,22 @@ import { profile, education, certifications, skillGroups } from '../data/cv';
 interface Props {
   title: string;
   description?: string;
+  /** Keeps a page out of search results. Only the 404 needs it. */
+  noindex?: boolean;
 }
 
 const {
   title,
-  description = 'Analytics Engineer with 5+ years building scalable data models, semantic layers, and BI solutions on Snowflake, Power BI and SQL-based ELT.',
+  description = 'Analytics Engineer in San José, Costa Rica. 5+ years building data models, semantic layers and BI solutions on Snowflake, Power BI and SQL-based ELT.',
+  noindex = false,
 } = Astro.props;
 
-const siteUrl = 'https://www.gaboelc.dev/';
+const siteUrl = Astro.site!.href;
 const ogImage = new URL('/images/og-image.png', siteUrl).href;
+
+// Per page, not per site. These were hardcoded to the home page, which told
+// search engines that /cv was a duplicate of / and should not be indexed.
+const canonical = new URL(Astro.url.pathname, siteUrl).href;
 
 // Structured data, built from the same CV source as the pages themselves so it
 // cannot drift. Tells search engines this is a person, what they do, and which
@@ -70,7 +77,8 @@ const personSchema = {
     <title>{title}</title>
     <meta name="description" content={description}>
     <meta name="author" content="Gabriel León Castro">
-    <link rel="canonical" href={siteUrl}>
+    <link rel="canonical" href={canonical}>
+    {noindex && <meta name="robots" content="noindex, follow" />}
 
     <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.webp">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.webp">
@@ -79,7 +87,7 @@ const personSchema = {
     <meta property="og:site_name" content="Gabriel León Castro">
     <meta property="og:title" content={title}>
     <meta property="og:description" content={description}>
-    <meta property="og:url" content={siteUrl}>
+    <meta property="og:url" content={canonical}>
     <meta property="og:image" content={ogImage}>
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
