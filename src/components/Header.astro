@@ -1,18 +1,93 @@
-<header class="flex justify-between items-center py-3 w-full mx-auto mt-6 px-3">
-  <div class="flex items-center">
-    <img
-      class="w-12 h-12 md:w-16 md:h-16 p-1 rounded-full ring-2 ring-gray-500 dark:ring-gray-600"
-      src="/images/Gabriel_Leon_Photo.webp"
-      alt="Gabriel Leon"
-    />
+---
+const links = [
+  { href: '#About', label: 'About' },
+  { href: '#Experience', label: 'Experience' },
+  { href: '#Skills', label: 'Skills' },
+  { href: '#Education', label: 'Education' },
+  { href: '#Contact', label: 'Contact' },
+];
+---
+
+<header
+  class="sticky top-0 z-50 w-full border-b border-white/5 bg-[#020617]/80 backdrop-blur-md">
+  <div class="max-w-screen-lg mx-auto flex justify-between items-center gap-4 py-3 px-4 md:px-6">
+    <a href="#top" class="flex items-center flex-shrink-0" aria-label="Back to top">
+      <img
+        class="w-11 h-11 md:w-12 md:h-12 p-1 rounded-full ring-2 ring-gray-600 hover:ring-[#FC6D09] transition-colors duration-300"
+        src="/images/Gabriel_Leon_Photo.webp"
+        alt="Gabriel León Castro"
+        width="48"
+        height="48"
+      />
+    </a>
+
+    <nav class="hidden md:flex flex-row gap-x-8 text-gray-300">
+      {
+        links.map(({ href, label }) => (
+          <a href={href} class="hover:text-[#FC6D09] transition-colors duration-200">
+            {label}
+          </a>
+        ))
+      }
+    </nav>
+
+    <button
+      id="menu-toggle"
+      type="button"
+      class="md:hidden inline-flex items-center justify-center w-10 h-10 rounded-lg border border-white/10 bg-white/5 text-gray-200"
+      aria-label="Open menu"
+      aria-controls="mobile-menu"
+      aria-expanded="false">
+      <svg id="menu-icon-open" class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M4 7h16M4 12h16M4 17h16" />
+      </svg>
+      <svg id="menu-icon-close" class="w-6 h-6 hidden" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M6 6l12 12M18 6L6 18" />
+      </svg>
+    </button>
   </div>
 
-  <nav class="hidden md:flex flex-row gap-x-10 opacity-80">
-    <a href="#About">About</a>
-    <a href="#Experience">Experience</a>
-    <a href="#Skills">Skills</a>
-    <!-- <a href="#Education">Education</a> -->
-    <!-- <a href="#Projects">Projects</a> -->
-    <a href="#Contact">Contact</a>
+  <nav id="mobile-menu" class="hidden md:hidden border-t border-white/5 px-4 pb-4">
+    <ul class="flex flex-col">
+      {
+        links.map(({ href, label }) => (
+          <li>
+            <a
+              href={href}
+              class="block py-3 text-gray-300 border-b border-white/5 last:border-b-0 hover:text-[#FC6D09] transition-colors duration-200">
+              {label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
   </nav>
 </header>
+
+<script>
+  const toggle = document.getElementById('menu-toggle');
+  const menu = document.getElementById('mobile-menu');
+  const iconOpen = document.getElementById('menu-icon-open');
+  const iconClose = document.getElementById('menu-icon-close');
+
+  const setOpen = (open: boolean) => {
+    menu?.classList.toggle('hidden', !open);
+    iconOpen?.classList.toggle('hidden', open);
+    iconClose?.classList.toggle('hidden', !open);
+    toggle?.setAttribute('aria-expanded', String(open));
+    toggle?.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+  };
+
+  toggle?.addEventListener('click', () => {
+    setOpen(menu?.classList.contains('hidden') ?? false);
+  });
+
+  // Close the menu after picking a destination, and when going back to desktop.
+  menu?.querySelectorAll('a').forEach((link) => {
+    link.addEventListener('click', () => setOpen(false));
+  });
+
+  window.matchMedia('(min-width: 768px)').addEventListener('change', (event) => {
+    if (event.matches) setOpen(false);
+  });
+</script>

@@ -1,31 +1,55 @@
 ---
 import Tittle from "./Tittle.astro";
-// import XIcon from "../icons/XIcon.astro";
 import EmailIcon from "../icons/EmailIcon.astro";
 import LinkedInIcon from "../icons/LinkedInIcon.astro";
 import GitHubIcon from "../icons/GitHubIcon.astro";
+
+const channels = [
+  {
+    href: "mailto:gabrielleon917@gmail.com",
+    label: "Email",
+    Icon: EmailIcon,
+    classes: "bg-gray-700 hover:bg-gray-600",
+    external: false,
+  },
+  {
+    href: "https://www.linkedin.com/in/gaboelc/",
+    label: "LinkedIn",
+    Icon: LinkedInIcon,
+    classes: "bg-blue-700 hover:bg-blue-600",
+    external: true,
+  },
+  {
+    href: "https://github.com/Gaboelc",
+    label: "GitHub",
+    Icon: GitHubIcon,
+    classes: "bg-gray-900 hover:bg-gray-800",
+    external: true,
+  },
+];
 ---
 
-<section id="contact" class="bg-dark py-16 text-center">
-  <div class="container mx-auto px-6">
-    <Tittle title="Connect With Me" />
-    <div class="flex flex-wrap justify-center gap-8 mt-8">
-      <!-- Email -->
-      <a href="mailto:gabrielleon917@gmail.com" class="bg-gray-700 hover:bg-gray-600 transition-colors duration-300 text-white w-20 h-20 md:w-24 md:h-24 flex items-center justify-center rounded-lg shadow-lg">
-        <EmailIcon class="w-8 h-8 md:w-10 md:h-10" />
-      </a>
-      <!-- LinkedIn -->
-      <a href="https://www.linkedin.com/in/gaboelc/" target="_blank" rel="noopener" class="bg-blue-700 hover:bg-blue-600 transition-colors duration-300 text-white w-20 h-20 md:w-24 md:h-24 flex items-center justify-center rounded-lg shadow-lg">
-        <LinkedInIcon class="w-8 h-8 md:w-10 md:h-10" />
-      </a>
-      <!-- GitHub -->
-      <a href="https://github.com/Gaboelc" target="_blank" rel="noopener" class="bg-gray-900 hover:bg-gray-800 transition-colors duration-300 text-white w-20 h-20 md:w-24 md:h-24 flex items-center justify-center rounded-lg shadow-lg">
-        <GitHubIcon class="w-8 h-8 md:w-10 md:h-10" />
-      </a>
-      <!-- X -->
-      <!-- <a href="https://x.com/" target="_blank" rel="noopener" class="bg-black hover:bg-gray-700 transition-colors duration-300 text-white w-20 h-20 md:w-24 md:h-24 flex items-center justify-center rounded-lg shadow-lg">
-        <XIcon class="w-8 h-8 md:w-10 md:h-10" />
-      </a> -->
-    </div>
+<div class="container mx-auto px-4 mt-8 md:mt-12 text-center">
+  <Tittle title="Connect With Me" />
+
+  <div class="flex flex-wrap justify-center gap-6 md:gap-8 mt-8">
+    {
+      channels.map(({ href, label, Icon, classes, external }) => (
+        <a
+          href={href}
+          aria-label={label}
+          target={external ? "_blank" : undefined}
+          rel={external ? "noopener" : undefined}
+          class:list={[
+            "group flex flex-col items-center justify-center gap-2 w-24 h-24 md:w-28 md:h-28 rounded-lg shadow-lg text-white transition-all duration-300 hover:scale-105",
+            classes,
+          ]}>
+          <Icon class="w-8 h-8 md:w-9 md:h-9" />
+          <span class="text-xs md:text-sm text-gray-300 group-hover:text-white">
+            {label}
+          </span>
+        </a>
+      ))
+    }
   </div>
-</section>
+</div>
