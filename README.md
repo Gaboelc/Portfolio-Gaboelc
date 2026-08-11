@@ -1,95 +1,111 @@
 # Portfolio-Gaboelc
 
-Welcome to my personal portfolio project! This repository contains the source code for my professional portfolio, showcasing my skills, projects, and experiences. The website is built using Astro, a modern static site generator that delivers fast and optimized web experiences.
+Source for [gaboelc.dev](https://www.gaboelc.dev/) — the personal portfolio of
+Gabriel León Castro, Analytics Engineer.
 
-## Table of Contents
+Built with [Astro](https://astro.build) and Tailwind CSS, server-rendered and
+deployed on Cloudflare Pages.
 
-- [Portfolio-Gaboelc](#portfolio-gaboelc)
-  - [Table of Contents](#table-of-contents)
-  - [Overview](#overview)
-  - [Features](#features)
-  - [Technologies Used](#technologies-used)
-  - [Installation](#installation)
-  - [Project Structure](#project-structure)
-  - [License](#license)
-  - [Contact](#contact)
+## Contents
 
-## Overview
+- [Pages](#pages)
+- [Content lives in one file](#content-lives-in-one-file)
+- [Running it locally](#running-it-locally)
+- [Project structure](#project-structure)
+- [Deployment](#deployment)
+- [License](#license)
+- [Contact](#contact)
 
-This portfolio serves as a comprehensive showcase of my work, including my skills, selected projects, and contact information. Built with Astro, the site focuses on performance, speed, and a seamless user experience. This `Stable` branch contains the most recent stable version of the portfolio.
+## Pages
 
-## Features
+| Route | What it is |
+| ----- | ---------- |
+| `/`   | The portfolio: about, experience, project case studies, skills, education and contact. |
+| `/cv` | A printable CV. Reads dark on screen like the rest of the site, prints black on white, and is tuned to fit a single US Letter page. The download button calls `window.print()`, so there is no PDF file to keep in sync. |
 
-- **Fast Performance**: Built with Astro to deliver fast loading times and optimized performance.
-- **Responsive Design**: Optimized for viewing on desktop, tablet, and mobile devices.
-- **Dynamic Content**: Features projects with descriptions, images, and links to live demos or GitHub repositories.
-- **Interactive Elements**: Includes animations, smooth scrolling, and interactive components.
-- **Contact Form**: Integrated contact form for easy communication.
+## Content lives in one file
 
-## Technologies Used
+Every CV fact — roles, bullet points, education, certifications, skills, project
+case studies — is defined in [`src/data/cv.ts`](src/data/cv.ts). Both the home
+page sections and `/cv` import from it.
 
-- **Astro**: Static site generator that optimizes for speed and performance.
-- **HTML5 & CSS3**: Markup and styling, using modern CSS techniques like Flexbox and Grid.
-- **JavaScript/TypeScript**: For adding interactivity and dynamic behavior to the website.
-- **Tailwind CSS**: Utility-first CSS framework for rapid UI development.
-- **Git & GitHub**: Version control and code hosting.
-- **CloudFlare Pages**: Deployment.
+**Edit that file, not the components.** Changing a component directly will make
+the home page and the printable CV disagree with each other.
 
-## Installation
+Skill *names* live in the data file; the mapping from a name to its icon stays
+in `Skills.astro`, because `.astro` components cannot be imported from a `.ts`
+module.
 
-To run this project locally, follow these steps:
+## Running it locally
 
-1. **Clone the repository**:
+Requires [Node](https://nodejs.org) and [pnpm](https://pnpm.io). Both versions
+are pinned — Node in `.node-version`, pnpm in the `packageManager` field of
+`package.json` — so local and CI builds resolve the same dependency tree.
 
-   ```bash
-   git clone https://github.com/Gaboelc/Portfolio-Gaboelc.git
-   ```
+```bash
+git clone https://github.com/Gaboelc/Portfolio-Gaboelc.git
+cd Portfolio-Gaboelc
+pnpm install
+pnpm dev
+```
 
-2. **Install dependencies:**:
+The site runs at `http://localhost:4321`.
 
-   ```bash
-   npm install
-   ```
+> **On Windows PowerShell**, `&&` is not a valid separator. Run the commands
+> individually, or chain them with `;`.
 
-3. **Start the development server:**:
+`pnpm-workspace.yaml` is required to build. pnpm blocks dependency install
+scripts by default, and `esbuild`, `sharp` and `workerd` need theirs to fetch
+native binaries — the file allows exactly those three. Without it, `pnpm
+install` exits 1 and the build never starts.
 
-   ```bash
-   npm run dev
-   ```
+### Scripts
 
-## Project Structure
+| Command | What it does |
+| ------- | ------------ |
+| `pnpm dev` | Start the dev server |
+| `pnpm build` | Build to `dist/` |
+| `pnpm preview` | Serve the production build locally |
+
+## Project structure
 
 ```bash
 Portfolio-Gaboelc/
 │
-├── public/                  # Static assets like images, fonts, etc.
-│   ├── favicon.ico
-│   └── ...
+├── public/
+│   ├── favicon/
+│   └── images/              # Profile photo at three sizes, Open Graph card
 │
-├── src/                     # Source files
-│   ├── components/          # Astro components and framework components (React, Vue, Svelte)
-│   ├── layouts/             # Layout components for pages
-│   ├── pages/               # Main pages (Home, About, Projects, Contact)
-│   ├── styles/              # Global and component-specific styles
-│   └── data/                # Data files (JSON, Markdown) for content
+├── src/
+│   ├── components/          # Astro components
+│   ├── data/cv.ts           # Single source of truth for all CV content
+│   ├── icons/               # Inline SVG icon components
+│   ├── layouts/             # MainLayout: meta, fonts, backdrop, JSON-LD
+│   ├── pages/               # index.astro, cv.astro, 404.astro
+│   └── middleware.ts        # Cache-Control on HTML responses
 │
-├── astro.config.mjs         # Astro configuration file
-├── package.json             # Project dependencies and scripts
-├── .gitignore               # Git ignore file
-├── README.md                # Project documentation
-└── ...
+├── styles/global.css        # Design tokens, base styles, print rules
+│
+├── .node-version            # Pinned Node version
+├── astro.config.mjs
+├── pnpm-workspace.yaml      # Allowed dependency build scripts
+└── tailwind.config.mjs      # Colour tokens read from CSS custom properties
 ```
+
+## Deployment
+
+Cloudflare Pages watches this repository, so **pushing is deploying**. There is
+no deploy command and no `wrangler.toml`.
+
+Work lands on `dev`, which produces a preview deployment on a temporary URL.
+Production goes out when `dev` is merged into `main` through a pull request.
 
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE](https://github.com/Gaboelc/Portfolio-Gaboelc/blob/main/LICENSE) file for more details.
+MIT. See [LICENSE](LICENSE).
 
 ## Contact
 
-For any questions, feedback, or inquiries, please contact me via:
-
-- Email: <gaboelc@example.com>
-- LinkedIn: linkedin.com/in/gaboelc
-- Feel free to explore the code and reach out if you have any suggestions or would like to collaborate!
-
-Thank you for visiting my portfolio repository!
+- **Email:** <gabrielleon917@gmail.com>
+- **LinkedIn:** [linkedin.com/in/gaboelc](https://www.linkedin.com/in/gaboelc/)
+- **Website:** [gaboelc.dev](https://www.gaboelc.dev/)
