@@ -1,0 +1,72 @@
+---
+import Tittle from "./Tittle.astro";
+import { projects } from "../data/cv";
+
+const parts = [
+  { key: "problem", label: "The problem" },
+  { key: "approach", label: "What I did" },
+  { key: "outcome", label: "The outcome" },
+] as const;
+---
+
+<div class="container mx-auto px-4 mt-8 md:mt-12">
+  <Tittle title="Projects" />
+
+  <p class="max-w-2xl mb-8 text-sm md:text-base text-gray-400 leading-relaxed">
+    Client work can't be shown, so these are written as case studies: the
+    problem, what I built, and what changed as a result.
+  </p>
+
+  <ol class="flex flex-col gap-6">
+    {
+      projects.map((project) => (
+        <li class="bg-white/5 border border-white/10 rounded-lg p-6 md:p-8 transition-colors duration-300 hover:border-[#FC6D09]/40">
+          <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-4 pb-5 border-b border-white/5">
+            <div>
+              <h3 class="text-xl md:text-2xl font-semibold text-white">
+                {project.title}
+              </h3>
+              <p class="text-sm md:text-base text-gray-400 mt-1">
+                <span class="text-[#FC6D09]">{project.company}</span>
+                {" · "}
+                {project.period}
+              </p>
+            </div>
+
+            {project.metric && (
+              <div class="flex-shrink-0 md:text-right">
+                <p class="text-2xl md:text-3xl font-extrabold text-[#FC6D09] leading-none">
+                  {project.metric.value}
+                </p>
+                <p class="text-xs md:text-sm text-gray-400 mt-1">
+                  {project.metric.label}
+                </p>
+              </div>
+            )}
+          </div>
+
+          <dl class="mt-5 flex flex-col gap-4">
+            {parts.map(({ key, label }) => (
+              <div>
+                <dt class="text-xs font-bold uppercase tracking-[0.15em] text-gray-400 mb-1">
+                  {label}
+                </dt>
+                <dd class="text-sm md:text-base text-gray-300 leading-relaxed">
+                  {project[key]}
+                </dd>
+              </div>
+            ))}
+          </dl>
+
+          <ul class="flex flex-wrap gap-2 mt-5">
+            {project.stack.map((tech) => (
+              <li class="rounded-full border border-white/10 bg-white/5 py-1 px-3 text-xs md:text-sm text-gray-300">
+                {tech}
+              </li>
+            ))}
+          </ul>
+        </li>
+      ))
+    }
+  </ol>
+</div>
