@@ -1,5 +1,7 @@
 ---
 import Tittle from "./Tittle.astro";
+import { skillGroups, alsoFamiliar } from "../data/cv";
+
 import SQLIcon from "../icons/SQLIcon.astro";
 import PythonIcon from "../icons/PythonIcon.astro";
 import PowerBIIcon from "../icons/PowerBIIcon.astro";
@@ -24,75 +26,52 @@ import AWSIcon from "../icons/AWSIcon.astro";
 import HadoopIcon from "../icons/HadoopIcon.astro";
 import SparkIcon from "../icons/SparkIcon.astro";
 
-const groups = [
-  {
-    title: "Data & Analytics",
-    items: [
-      { name: "SQL", Icon: SQLIcon },
-      { name: "Python", Icon: PythonIcon },
-      { name: "Power BI", Icon: PowerBIIcon },
-      { name: "Tableau", Icon: TableauIcon },
-      { name: "Snowflake", Icon: SnowflakeIcon },
-    ],
-  },
-  {
-    title: "Data Engineering",
-    items: [
-      { name: "ETL / ELT", Icon: ETLIcon },
-      { name: "Data Modeling", Icon: DataModelingIcon },
-      { name: "Data Warehousing", Icon: DataWarehouseIcon },
-    ],
-  },
-  {
-    title: "Programming & Libraries",
-    items: [
-      { name: "Pandas", Icon: PandasIcon },
-      { name: "NumPy", Icon: NumpyIcon },
-    ],
-  },
-  {
-    title: "Databases",
-    items: [
-      { name: "SQL Databases", Icon: PostgreSQLIcon },
-      { name: "NoSQL Databases", Icon: MongoDBIcon },
-    ],
-  },
-  {
-    title: "Tools & Productivity",
-    items: [
-      { name: "Excel (Advanced)", Icon: ExcelIcon },
-      { name: "Power Apps", Icon: PowerAppsIcon },
-      { name: "Power Automate", Icon: PowerAutomateIcon },
-    ],
-  },
-];
-
-const alsoFamiliar = [
-  { name: "R Language", Icon: RLanguageIcon },
-  { name: "TensorFlow", Icon: TensorFlowIcon },
-  { name: "Scikit-Learn", Icon: ScikitLearnIcon },
-  { name: "Streamlit", Icon: StreamlitIcon },
-  { name: "Azure", Icon: AzureIcon },
-  { name: "AWS", Icon: AWSIcon },
-  { name: "Apache Hadoop", Icon: HadoopIcon },
-  { name: "Apache Spark", Icon: SparkIcon },
-];
+// Skill names live in src/data/cv.ts so the printable CV shares them; the icon
+// for each name is presentation, so the mapping stays here.
+const icons: Record<string, any> = {
+  SQL: SQLIcon,
+  Python: PythonIcon,
+  "Power BI": PowerBIIcon,
+  Tableau: TableauIcon,
+  Snowflake: SnowflakeIcon,
+  "ETL / ELT": ETLIcon,
+  "Data Modeling": DataModelingIcon,
+  "Data Warehousing": DataWarehouseIcon,
+  Pandas: PandasIcon,
+  NumPy: NumpyIcon,
+  "SQL Databases": PostgreSQLIcon,
+  "NoSQL Databases": MongoDBIcon,
+  "Excel (Advanced)": ExcelIcon,
+  "Power Apps": PowerAppsIcon,
+  "Power Automate": PowerAutomateIcon,
+  "R Language": RLanguageIcon,
+  TensorFlow: TensorFlowIcon,
+  "Scikit-Learn": ScikitLearnIcon,
+  Streamlit: StreamlitIcon,
+  Azure: AzureIcon,
+  AWS: AWSIcon,
+  "Apache Hadoop": HadoopIcon,
+  "Apache Spark": SparkIcon,
+};
 ---
 
 <Tittle title="Skills" />
 
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 text-white mt-8">
   {
-    groups.map(({ title, items }) => (
+    skillGroups.map(({ title, items }) => (
       <div class="bg-white/5 border border-white/10 rounded-lg p-6 text-center transition-colors duration-300 hover:border-[#FC6D09]/40">
         <h3 class="mb-4 font-bold text-gray-200">{title}</h3>
         <div class="flex flex-col gap-4">
-          {items.map(({ name, Icon }) => (
-            <div class="flex items-center gap-2">
-              <Icon class="w-6 h-6 flex-shrink-0" />
-              <span>{name}</span>
-            </div>
-          ))}
+          {items.map((name) => {
+            const Icon = icons[name];
+            return (
+              <div class="flex items-center gap-2">
+                {Icon && <Icon class="w-6 h-6 flex-shrink-0" />}
+                <span>{name}</span>
+              </div>
+            );
+          })}
         </div>
       </div>
     ))
@@ -102,12 +81,15 @@ const alsoFamiliar = [
     <h3 class="mb-4 font-bold text-gray-400">Also familiar with</h3>
     <div class="flex flex-wrap justify-center gap-2">
       {
-        alsoFamiliar.map(({ name, Icon }) => (
-          <span class="flex items-center gap-2 rounded-full border border-white/10 bg-white/5 py-1.5 px-3 text-sm text-gray-300">
-            <Icon class="w-4 h-4 flex-shrink-0" />
-            {name}
-          </span>
-        ))
+        alsoFamiliar.map((name) => {
+          const Icon = icons[name];
+          return (
+            <span class="flex items-center gap-2 rounded-full border border-white/10 bg-white/5 py-1.5 px-3 text-sm text-gray-300">
+              {Icon && <Icon class="w-4 h-4 flex-shrink-0" />}
+              {name}
+            </span>
+          );
+        })
       }
     </div>
   </div>

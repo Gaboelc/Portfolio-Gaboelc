@@ -1,8 +1,14 @@
+---
+// External links open in a new tab by default; internal ones pass target="_self".
+// The prop is destructured rather than spread so it actually overrides.
+const { target = '_blank', ...rest } = Astro.props;
+---
+
 <a
-  target="_blank" 
-  rel="noopener"
-  class="rounded-full border border-white/10 flex justify-center 
+  target={target}
+  rel={target === '_blank' ? 'noopener' : undefined}
+  class="rounded-full border border-white/10 flex justify-center
          items-center gap-x-2 py-2 px-4 md:py-3 md:px-5 bg-white/5 hover:scale-110 transition-transform duration-300"
-  {...Astro.props}>
+  {...rest}>
   <slot />
 </a>

@@ -52,6 +52,16 @@ button {
 	padding: 1rem;
 }
 
+@media print {
+	body {
+		background: #fff;
+	}
+
+	.no-print {
+		display: none !important;
+	}
+}
+
 @media (prefers-reduced-motion: reduce) {
 	html {
 		scroll-behavior: auto;
