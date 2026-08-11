@@ -8,54 +8,79 @@ import CVIcon from '../icons/CVIcon.astro';
 
 const stack = ['Snowflake', 'SQL', 'Python', 'Power BI'];
 ---
-<div class="flex flex-col items-center justify-center container mx-auto px-4 text-center">
-  <section class="flex flex-col items-center">
-    <Tittle as="h1" title="Hey, I'm Gabriel León Castro" />
+<div class="container mx-auto px-4">
+  <div class="flex flex-col md:grid md:grid-cols-[1.35fr_1fr] gap-10 md:gap-12 items-center">
+    <div class="order-2 md:order-1 flex flex-col items-center md:items-start text-center md:text-left">
+      <a
+        class="inline-block hover:scale-105 transition-transform duration-300"
+        href="https://www.linkedin.com/in/gaboelc/"
+        target="_blank"
+        rel="noopener">
+        <Badge badge="Available for Hire!" />
+      </a>
 
-    <p class="text-[#FC6D09] text-lg md:text-2xl font-bold tracking-[0.2em] uppercase mb-8">
-      Where data guides, decisions thrive
-    </p>
+      <Tittle as="h1" title="Hey, I'm Gabriel León Castro" />
 
-    <a class="inline-block hover:scale-105 transition-transform duration-300" href="https://www.linkedin.com/in/gaboelc/" target="_blank" rel="noopener">
-      <Badge badge="Available for Hire!" />
-    </a>
+      <p class="text-accent text-base md:text-xl font-bold tracking-[0.2em] uppercase -mt-2 mb-6">
+        Where data guides, decisions thrive
+      </p>
 
-    <p class="max-w-2xl mt-8 text-lg md:text-2xl font-semibold text-gray-300 leading-snug">
-      <span class="text-white">Analytics Engineer</span> with
-      <span class="text-white">5+ years</span> building scalable data models,
-      semantic layers and BI solutions.
-    </p>
+      <p class="max-w-xl text-lg md:text-2xl font-semibold text-gray-300 leading-snug">
+        <span class="text-white">Analytics Engineer</span> with
+        <span class="text-white">5+ years</span> building scalable data models,
+        semantic layers and BI solutions.
+      </p>
 
-    <ul class="flex flex-wrap justify-center items-center gap-x-3 gap-y-2 mt-6 text-sm md:text-base text-gray-400">
-      {
-        stack.map((tech) => (
-          <li class="after:content-['·'] after:ml-3 after:text-gray-600 last:after:content-['']">
-            {tech}
-          </li>
-        ))
-      }
-      <li class="basis-full md:basis-auto md:before:content-['—'] md:before:mr-3 md:before:text-gray-600">
-        San José, Costa Rica
-      </li>
-    </ul>
-  </section>
+      <ul class="flex flex-wrap justify-center md:justify-start items-center gap-x-3 gap-y-2 mt-5 text-sm md:text-base text-gray-400">
+        {
+          stack.map((tech) => (
+            <li class="after:content-['·'] after:ml-3 after:text-gray-600 last:after:content-['']">
+              {tech}
+            </li>
+          ))
+        }
+        <li class="basis-full md:basis-auto md:before:content-['—'] md:before:mr-3 md:before:text-gray-600">
+          San José, Costa Rica
+        </li>
+      </ul>
 
-  <section>
-    <nav class="flex flex-col md:flex-row gap-y-4 md:gap-x-5 mt-10 items-center">
-      <SocialPill href="https://www.linkedin.com/in/gaboelc/">
-        <LinkedInIcon class="w-6 h-6 md:w-8 md:h-8" />
-        LinkedIn
-      </SocialPill>
+      <nav class="flex flex-col sm:flex-row gap-y-3 sm:gap-x-4 mt-8 items-center">
+        <SocialPill href="https://www.linkedin.com/in/gaboelc/">
+          <LinkedInIcon class="w-5 h-5 md:w-6 md:h-6" />
+          LinkedIn
+        </SocialPill>
 
-      <SocialPill href="https://github.com/Gaboelc">
-        <GitHubIcon class="w-6 h-6 md:w-8 md:h-8" />
-        GitHub
-      </SocialPill>
+        <SocialPill href="https://github.com/Gaboelc">
+          <GitHubIcon class="w-5 h-5 md:w-6 md:h-6" />
+          GitHub
+        </SocialPill>
 
-      <SocialPill href="/cv" target="_self">
-        <CVIcon class="w-6 h-6 md:w-8 md:h-8" />
-        View CV
-      </SocialPill>
-    </nav>
-  </section>
+        <SocialPill href="/cv" target="_self">
+          <CVIcon class="w-5 h-5 md:w-6 md:h-6" />
+          View CV
+        </SocialPill>
+      </nav>
+    </div>
+
+    <div class="order-1 md:order-2 flex justify-center md:justify-end">
+      <div class="relative w-40 h-40 sm:w-52 sm:h-52 md:w-60 md:h-60 lg:w-72 lg:h-72">
+        <div
+          class="absolute -inset-6 rounded-full bg-accent/25 blur-3xl"
+          aria-hidden="true">
+        </div>
+        <div
+          class="absolute -inset-1 rounded-full bg-gradient-to-br from-accent/70 via-accent/10 to-transparent"
+          aria-hidden="true">
+        </div>
+        <img
+          class="relative w-full h-full rounded-full object-cover ring-1 ring-white/10 shadow-2xl"
+          src="/images/Gabriel_Leon_Photo.webp"
+          alt="Gabriel León Castro"
+          width="288"
+          height="288"
+          fetchpriority="high"
+        />
+      </div>
+    </div>
+  </div>
 </div>

@@ -16,16 +16,16 @@ const columns = [
   <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
     {
       columns.map(({ heading, Icon, entries }) => (
-        <div class="bg-white/5 border border-white/10 rounded-lg p-6 transition-colors duration-300 hover:border-[#FC6D09]/40">
+        <div class="bg-white/5 border border-white/10 rounded-lg p-6 transition-colors duration-300 hover:border-accent/40">
           <h3 class="flex items-center gap-2 mb-6 font-bold text-white">
-            <Icon class="w-6 h-6 text-[#FC6D09] flex-shrink-0" />
+            <Icon class="w-6 h-6 text-accent flex-shrink-0" />
             {heading}
           </h3>
           <ul class="flex flex-col gap-6">
             {entries.map(({ title, place, period, location }) => (
               <li>
                 <h4 class="text-base md:text-lg font-semibold text-gray-200">{title}</h4>
-                <p class="text-sm md:text-base text-[#FC6D09]">{place}</p>
+                <p class="text-sm md:text-base text-accent">{place}</p>
                 <p class="text-sm text-gray-400">
                   {period}
                   {location && ` · ${location}`}

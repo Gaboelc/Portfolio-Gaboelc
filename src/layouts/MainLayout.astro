@@ -30,6 +30,9 @@ const ogImage = new URL('/images/og-image.png', siteUrl).href;
 
 <html lang="en">
   <head>
+    <!-- Marks that scripting is available, so the reveal animation can hide
+         elements without risking permanently invisible content. -->
+    <script is:inline>document.documentElement.classList.add('js');</script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{title}</title>
@@ -57,9 +60,19 @@ const ogImage = new URL('/images/og-image.png', siteUrl).href;
   </head>
 
   <body class="min-h-screen flex flex-col">
-    <div
-      class="fixed inset-0 -z-10 print:hidden bg-[#020617] bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(109,120,99,0.4),rgba(242,242,242,0))]"
-      aria-hidden="true">
+    <!-- Ambient layers. Fixed, so they hold still while the page scrolls and
+         read as atmosphere rather than decoration sliding past. -->
+    <div class="fixed inset-0 -z-10 print:hidden bg-ink overflow-hidden" aria-hidden="true">
+      <div
+        class="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_-10%,rgb(var(--haze)/0.38),transparent_70%)]">
+      </div>
+      <div
+        class="absolute top-1/4 -left-48 w-[34rem] h-[34rem] rounded-full bg-accent/[0.07] blur-[110px]">
+      </div>
+      <div
+        class="absolute -bottom-40 -right-40 w-[34rem] h-[34rem] rounded-full bg-haze/[0.12] blur-[110px]">
+      </div>
+      <div class="noise absolute inset-0"></div>
     </div>
 
     <Header />
@@ -69,5 +82,46 @@ const ogImage = new URL('/images/og-image.png', siteUrl).href;
     </main>
 
     <Footer />
+
+    <script>
+      // Reveal-on-scroll. Hiding content behind an animation means every
+      // failure mode has to end with the content visible, so there are three
+      // guards: the .js class set in <head> covers this script never loading,
+      // the reduced-motion branch covers the preference, and the timeout below
+      // covers the observer loading but never delivering.
+      const items = document.querySelectorAll<HTMLElement>('[data-reveal]');
+      const revealAll = () => items.forEach((el) => el.classList.add('is-revealed'));
+      const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      if (reduced || !('IntersectionObserver' in window)) {
+        revealAll();
+      } else {
+        let delivered = false;
+
+        const observer = new IntersectionObserver(
+          (entries) => {
+            delivered = true;
+            entries.forEach((entry) => {
+              if (!entry.isIntersecting) return;
+              entry.target.classList.add('is-revealed');
+              observer.unobserve(entry.target);
+            });
+          },
+          // threshold 0 rather than a fraction: sections taller than the
+          // viewport can never expose a large share of their own area.
+          { rootMargin: '0px 0px -10% 0px', threshold: 0 }
+        );
+
+        items.forEach((el) => observer.observe(el));
+
+        // An observer delivers an initial entry for every element it is given,
+        // intersecting or not. Silence means it is not running at all.
+        setTimeout(() => {
+          if (delivered) return;
+          observer.disconnect();
+          revealAll();
+        }, 1200);
+      }
+    </script>
   </body>
 </html>
