@@ -1,15 +1,15 @@
 // Single source of truth for CV content.
 // Both the home page sections and the printable /cv page read from here, so
 // updating a role or a skill only ever happens in one file.
+// Mirrors "CV 7.0 — Analytics Engineer"; keep the two in step.
 
 export const profile = {
   name: 'Gabriel León Castro',
   role: 'Analytics Engineer',
   location: 'San José, Costa Rica',
   email: 'gabrielleon917@gmail.com',
-  tagline: 'Where data guides, decisions thrive',
   summary:
-    'Analytics Engineer with 5+ years building scalable data models, semantic layers, and BI solutions on modern stacks (Snowflake, Power BI, SQL-based ELT). Proven track record designing production-ready reporting solutions, defining business metrics, and performing deep-dive analysis to identify root causes and improvement opportunities. Experienced translating business requirements into analytical solutions and dashboards that support operational decision-making across cross-functional teams.',
+    "Analytics engineer with 6+ years in data, working between the warehouse and the business: SQL transformations in Snowflake and Redshift, star-schema semantic models and the Power BI reports on top. Migrated a global bakery manufacturer's semantic models from SQL Server to Snowflake at Hakkōda (an IBM company), cutting refresh time ~42%, and re-engineered Vivo Gaming's reporting layer from 60+ to ~10-minute refreshes. Fluent in English.",
   links: {
     linkedin: 'https://www.linkedin.com/in/gaboelc/',
     github: 'https://github.com/Gaboelc',
@@ -18,60 +18,97 @@ export const profile = {
 } as const;
 
 export interface Role {
-  period: string;
+  /** YYYY-MM. Kept machine-readable so the work table can sort and print it. */
+  start: string;
+  end: string;
   role: string;
   company: string;
   location: string;
+  /** One line of context on the employer, where the name alone says little. */
+  context?: string;
+  /** The single figure a reader should leave the row with. */
+  metric?: string;
   highlights: string[];
 }
 
+const months = [
+  'January', 'February', 'March', 'April', 'May', 'June',
+  'July', 'August', 'September', 'October', 'November', 'December',
+];
+
+/** "2024-10" -> "October 2024". */
+export const formatMonth = (yearMonth: string) => {
+  const [year, month] = yearMonth.split('-');
+  return `${months[Number(month) - 1]} ${year}`;
+};
+
+export const formatPeriod = ({ start, end }: Pick<Role, 'start' | 'end'>) =>
+  `${formatMonth(start)} - ${formatMonth(end)}`;
+
 export const experience: Role[] = [
   {
-    period: 'October 2024 - February 2026',
+    start: '2026-04',
+    end: '2026-10',
+    role: 'Business Intelligence Analyst',
+    company: 'Vivo Gaming',
+    location: 'Remote',
+    context:
+      'B2B live-casino provider. Sole BI analyst for Risk, Finance and studio managers. Role eliminated in company-wide layoffs.',
+    metric: '60+ → ~10 min refresh',
+    highlights: [
+      'Moved transformation logic from Power Query into Redshift SQL views, removed duplicate and stale loads and added incremental refresh: refresh time fell from 60+ minutes to a ~10-minute average, ending recurring timeouts.',
+      'Optimized DAX calculated columns and measures and cut Power Query steps by ~50% across the full report suite.',
+      "Built on-demand, RLS-secured billing reports for 3 B2B clients, replacing Finance's manual monthly statements (2–3-day turnaround); gathered requirements directly with each client.",
+      'Built daily Power Automate alerts on 6 risk metrics, replacing a manual check that was sometimes skipped.',
+      "Eliminated a single point of failure by moving daily Excel feeds from an ex-employee's network share to SharePoint.",
+    ],
+  },
+  {
+    start: '2024-10',
+    end: '2026-02',
     role: 'Consultant II, Analytics Engineering',
     company: 'Hakkōda, an IBM Company',
     location: 'Heredia, Costa Rica',
+    metric: '−42% refresh time',
     highlights: [
-      'Redesigned Power BI semantic models that cut dataset refresh times by ~42% (from ~60 to ~35 min), improving usability for 6 business stakeholders.',
-      'Developed and supported Snowflake-based data warehouse solutions, including data modeling, ingestion pipelines, and transformation layers aligned with analytics best practices.',
-      'Collaborated with cross-functional teams (data engineers, analysts, and business users) to gather requirements and deliver scalable, production-ready analytics solutions.',
+      "Migrated a global bakery manufacturer's 2 semantic models from SQL Server to Snowflake during its migration, rebuilding them as star schemas with SQL pushdown and incremental refresh; refresh time fell ~42% (60 to 35 min).",
+      "Led the client's Power BI workstream for 14 months (8 reports, ~20 users), presenting progress directly to its directors.",
+      'Migrated 30 of 90+ Tableau reports to Power BI for a medical-sector client during a 3-month engagement.',
     ],
   },
   {
-    period: 'August 2022 - August 2024',
+    start: '2022-08',
+    end: '2024-08',
     role: 'Data Analyst',
-    company: 'SGF Global',
+    company: 'Intel Corporation (via SGF Global)',
     location: 'Heredia, Costa Rica',
+    metric: '~20 Power BI reports',
     highlights: [
-      'Developed and maintained dashboards and reports using Power BI and Tableau.',
-      'Designed SQL queries and scripts to extract, transform, and analyze data from relational databases.',
-      'Built forms and automations using Power Apps and Power Automate to improve operational workflows.',
-      'Built automated reporting and exploratory analysis in Python/Pandas on survey and operational datasets.',
+      "Built ~20 Power BI reports for Supply Chain, Finance, HR and Manufacturing on Intel's internal BI services team.",
+      'Wrote SQL for extraction and transformation, automated reports in Python (pandas) and built Power Apps forms.',
     ],
   },
   {
-    period: 'May 2021 - April 2022',
+    start: '2021-05',
+    end: '2022-04',
     role: 'Data Specialist',
     company: 'DHL',
     location: 'Heredia, Costa Rica',
+    metric: 'Excel → SQL Server',
     highlights: [
-      "Designed and implemented a centralized database infrastructure for the Americas Service Desk.",
-      'Built a Gradient Boosting classifier forecasting Service Desk demand a quarter ahead, deployed on Azure as an alerting system; widening the training history lifted accuracy from 63% to 81%.',
-      'Analyzed agent KPIs to support performance improvement and compensation models.',
-      'Built dashboards and reports using Power BI and Python to communicate insights to stakeholders.',
-      'Cleaned, transformed, and analyzed large datasets using SQL.',
+      "Designed and built a centralized SQL Server database for the Americas Service Desk, replacing Excel files in a shared folder with direct ingestion from the agents' call-tracking tool.",
+      'As the Americas data analyst, tracked KPIs for ~50 service desk agents with Power BI and Python dashboards.',
     ],
   },
   {
-    period: 'October 2019 - April 2021',
+    start: '2019-10',
+    end: '2021-04',
     role: 'Data Analyst',
     company: 'Intel Corporation',
     location: 'Heredia, Costa Rica',
     highlights: [
-      'Developed SQL queries and Python scripts to automate data collection and analysis.',
-      'Conducted exploratory data analysis to identify trends and performance improvement opportunities.',
-      'Built dashboards and reports using Power BI and Excel for leadership teams.',
-      'Modeled and analyzed processor architecture data to support current architecture optimization and future architecture development.',
+      'Automated data collection and analysis with SQL and Python, and built Power BI and Excel dashboards for leadership.',
+      'Modeled and analyzed processor architecture data to inform current optimizations and future architecture design.',
     ],
   },
 ];
@@ -88,12 +125,6 @@ export const education: Credential[] = [
     title: "Bachelor's Degree in Data Science",
     place: 'LEAD University',
     period: 'January 2020 - December 2023',
-    location: 'San José, Costa Rica',
-  },
-  {
-    title: 'Technical Degree in Computer Networking',
-    place: 'Colegio Técnico Profesional de Hatillo',
-    period: 'February 2017 - December 2019',
     location: 'San José, Costa Rica',
   },
 ];
@@ -114,25 +145,38 @@ export interface SkillGroup {
 
 export const skillGroups: SkillGroup[] = [
   {
-    title: 'Data & Analytics',
-    items: ['SQL', 'Python', 'Power BI', 'Tableau', 'Snowflake'],
+    title: 'SQL & data platforms',
+    items: ['SQL', 'Snowflake', 'Amazon Redshift', 'Microsoft SQL Server'],
   },
   {
-    title: 'Data Engineering',
-    items: ['ETL / ELT', 'Data Modeling', 'Data Warehousing'],
+    title: 'Modeling & BI',
+    items: [
+      'Star schema',
+      'Semantic models',
+      'DAX',
+      'Power Query (M)',
+      'Incremental refresh',
+      'RLS',
+      'Calculation groups',
+    ],
   },
   {
-    title: 'Programming & Libraries',
-    items: ['Pandas', 'NumPy'],
+    title: 'Tools & automation',
+    items: [
+      'Tabular Editor',
+      'DAX Studio',
+      'Paginated reports',
+      'Gateways',
+      'Tableau',
+      'Power Automate',
+      'Python (pandas)',
+    ],
   },
-  {
-    title: 'Databases',
-    items: ['SQL Databases', 'NoSQL Databases'],
-  },
-  {
-    title: 'Tools & Productivity',
-    items: ['Excel (Advanced)', 'Power Apps', 'Power Automate'],
-  },
+];
+
+export const languages = [
+  { name: 'Spanish', code: 'es', level: 'native' },
+  { name: 'English', code: 'en', level: 'fluent' },
 ];
 
 export interface Project {
@@ -145,35 +189,37 @@ export interface Project {
   approach: string;
   outcome: string;
   stack: string[];
+  /** Older work kept for range; shown short, after the main case studies. */
+  earlier?: boolean;
 }
 
 // Case studies rather than artefacts: client work cannot be shown, so each one
 // is problem -> what I did -> measured result. No screenshots, by design.
 export const projects: Project[] = [
   {
-    title: 'Forecasting Service Desk demand',
-    company: 'DHL',
-    period: '2021 - 2022',
-    metric: { value: '63% → 81%', label: 'prediction accuracy' },
+    title: 'Getting a report suite under ten minutes',
+    company: 'Vivo Gaming',
+    period: '2026',
+    metric: { value: '60+ → ~10 min', label: 'average refresh time' },
     problem:
-      'Staffing at the Americas Service Desk was purely reactive. When call and chat volume rose the team hired agents, and when it fell they let them go. Nobody could see a surge coming, so every swing in demand became a hiring or firing decision made under pressure.',
+      "As the only BI analyst for Risk, Finance and the studio managers, I inherited a report suite that took more than an hour to refresh and regularly timed out. The transformation logic lived in Power Query, loads were duplicated or stale, Finance built each B2B client's monthly statement by hand in two to three days, and the daily Excel feeds sat on the network share of someone who no longer worked there.",
     approach:
-      'A Gradient Boosting classifier predicting, one quarter ahead, whether incoming volume would exceed what the existing team could absorb. The threshold came from the agents’ actual daily capacity, so the output mapped onto a staffing decision rather than an abstract number. The first version trained on 2021 alone and reached 63%; extending the window back to 2018 lifted it to 81%, because the wider history exposed the model to both pre-pandemic and pandemic demand instead of a single regime.',
+      'Moved the transformation logic out of Power Query into Redshift SQL views, removed the duplicate and stale loads and added incremental refresh. Rewrote the heaviest DAX calculated columns and measures and cut Power Query steps by about half across the suite. Built on-demand, RLS-secured billing reports for three B2B clients after gathering requirements directly with each of them, set up daily Power Automate alerts on six risk metrics, and moved the Excel feeds to SharePoint.',
     outcome:
-      'Deployed on Azure as an alerting system: when the model projected that a team lead’s group would struggle to meet volume, an automated email went out and we reviewed it together. Team leads moved from reacting to volume swings to planning staffing weeks ahead on a data-backed basis.',
-    stack: ['Python', 'scikit-learn', 'Gradient Boosting', 'Azure', 'SQL'],
+      'Average refresh dropped to about ten minutes and the timeouts stopped. Finance no longer assembles client statements by hand, the risk check runs every day instead of when someone remembers, and no feed depends on a single person’s folder any more.',
+    stack: ['Amazon Redshift', 'SQL', 'Power BI', 'DAX', 'Power Query', 'RLS', 'Power Automate'],
   },
   {
-    title: 'Rebuilding reporting on Snowflake',
+    title: 'Rebuilding semantic models on Snowflake',
     company: 'Hakkōda, an IBM Company',
     period: '2024 - 2026',
     metric: { value: '~42%', label: 'faster dataset refresh' },
     problem:
-      'Reporting ran on Microsoft SQL Server while the client moved its warehouse to Snowflake. The Power BI semantic models refreshed several times a day at roughly 60 minutes each, so refresh cycles collided — a new one starting before the previous had finished. The models carried unused columns, bidirectional relationships, heavy Power Query transformations, and DAX doing work that belonged upstream.',
+      'Reporting ran on Microsoft SQL Server while the client, a global bakery manufacturer, moved its warehouse to Snowflake. The Power BI semantic models refreshed several times a day at roughly 60 minutes each, so refresh cycles collided — a new one starting before the previous had finished. The models carried unused columns, bidirectional relationships, heavy Power Query transformations, and DAX doing work that belonged upstream.',
     approach:
-      'Worked alongside the data engineer to migrate the warehouse to Snowflake, using Snowpipe for ingestion and SQL for the transformation layer, and modeled the star schema underneath it. With the warehouse in place I pushed the transformations and calculations down into it, so they run once against Snowflake instead of on every refresh, and rebuilt the semantic models on top of the star schema.',
+      'Worked alongside the data engineer during the Snowflake migration, with Snowpipe for ingestion and SQL for the transformation layer, and modeled the star schema underneath it. I pushed the transformations and calculations down into the warehouse, so they run once against Snowflake instead of on every refresh, and rebuilt both semantic models on top of the star schema with incremental refresh.',
     outcome:
-      'Refresh time fell from ~60 to ~35 minutes. The refresh cycles stopped overlapping, and the six business stakeholders who rely on these models stopped competing with the pipeline for their own data.',
+      'Refresh time fell from ~60 to ~35 minutes and the refresh cycles stopped overlapping. I led the client’s Power BI workstream for 14 months — 8 reports, ~20 users — presenting progress directly to its directors.',
     stack: ['Snowflake', 'Snowpipe', 'SQL', 'Power BI', 'Star schema'],
   },
   {
@@ -186,17 +232,20 @@ export const projects: Project[] = [
       'Analyzed simulation output, built new components into the processor model itself, and added performance counters to capture behaviour that was not being measured. The work spanned Python, C++ and SQL over large simulation datasets, with the reporting layer built in Power BI and Streamlit so results could be explored rather than only read.',
     outcome:
       'The analysis fed directly to the principal engineer leading the architecture, informing both optimization of the current design and decisions on future ones.',
-    stack: ['Python', 'C++', 'SQL', 'Big Data', 'Power BI', 'Streamlit'],
+    stack: ['Python', 'C++', 'SQL', 'Power BI', 'Streamlit'],
   },
-];
-
-export const alsoFamiliar: string[] = [
-  'R Language',
-  'TensorFlow',
-  'Scikit-Learn',
-  'Streamlit',
-  'Azure',
-  'AWS',
-  'Apache Hadoop',
-  'Apache Spark',
+  {
+    title: 'Forecasting Service Desk demand',
+    company: 'DHL',
+    period: '2021 - 2022',
+    earlier: true,
+    metric: { value: '63% → 81%', label: 'prediction accuracy' },
+    problem:
+      'Staffing at the Americas Service Desk was purely reactive: when volume rose the team hired, when it fell they let people go, and nobody could see a surge coming.',
+    approach:
+      'A Gradient Boosting classifier predicting, one quarter ahead, whether incoming volume would exceed what the team could absorb, with the threshold taken from the agents’ actual daily capacity. Training on 2021 alone reached 63%; extending the history back to 2018 lifted it to 81%.',
+    outcome:
+      'Deployed on Azure as an alerting system that emailed team leads when their group was projected to fall short, so staffing was planned weeks ahead instead of decided under pressure.',
+    stack: ['Python', 'scikit-learn', 'Azure', 'SQL'],
+  },
 ];

@@ -1,6 +1,6 @@
 ---
 import Tittle from "./Tittle.astro";
-import { skillGroups, alsoFamiliar } from "../data/cv";
+import { skillGroups } from "../data/cv";
 
 import SQLIcon from "../icons/SQLIcon.astro";
 import PythonIcon from "../icons/PythonIcon.astro";
@@ -80,20 +80,4 @@ const icons: Record<string, any> = {
     ))
   }
 
-  <div class="break-inside-avoid mb-6 bg-white/[0.02] border border-white/5 rounded-lg p-6 text-center">
-    <h3 class="mb-4 font-bold text-gray-400">Also familiar with</h3>
-    <div class="flex flex-wrap justify-center gap-2">
-      {
-        alsoFamiliar.map((name) => {
-          const Icon = icons[name];
-          return (
-            <span class="flex items-center gap-2 rounded-full border border-white/10 bg-white/5 py-1.5 px-3 text-sm text-gray-300">
-              {Icon && <Icon class="w-4 h-4 flex-shrink-0" />}
-              {name}
-            </span>
-          );
-        })
-      }
-    </div>
-  </div>
 </div>
