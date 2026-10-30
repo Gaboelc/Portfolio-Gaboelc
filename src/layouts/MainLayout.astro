@@ -13,7 +13,7 @@ import '@fontsource/roboto/800.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import '../../styles/global.css';
-import { profile, education, certifications, skillGroups } from '../data/cv';
+import { profile, education, certifications, skillGroups, languages } from '../data/cv';
 
 interface Props {
   title: string;
@@ -24,7 +24,7 @@ interface Props {
 
 const {
   title,
-  description = 'Analytics Engineer in San José, Costa Rica. 5+ years building data models, semantic layers and BI solutions on Snowflake, Power BI and SQL-based ELT.',
+  description = 'Analytics engineer in San José, Costa Rica. 6+ years between the warehouse and the business: SQL in Snowflake and Redshift, star-schema semantic models and Power BI.',
   noindex = false,
 } = Astro.props;
 
@@ -64,6 +64,7 @@ const personSchema = {
     recognizedBy: { '@type': 'Organization', name: entry.place },
   })),
   knowsAbout: skillGroups.flatMap((group) => group.items),
+  knowsLanguage: languages.map(({ code }) => code),
 };
 ---
 

@@ -1,6 +1,6 @@
 # Portfolio-Gaboelc
 
-Source for [gaboelc.dev](https://www.gaboelc.dev/) — the personal portfolio of
+Source for [portfolio-gaboelc.pages.dev](https://portfolio-gaboelc.pages.dev/) — the personal portfolio of
 Gabriel León Castro, Analytics Engineer.
 
 Built with [Astro](https://astro.build) and Tailwind CSS, server-rendered and
@@ -108,4 +108,4 @@ MIT. See [LICENSE](LICENSE).
 
 - **Email:** <gabrielleon917@gmail.com>
 - **LinkedIn:** [linkedin.com/in/gaboelc](https://www.linkedin.com/in/gaboelc/)
-- **Website:** [gaboelc.dev](https://www.gaboelc.dev/)
+- **Website:** [portfolio-gaboelc.pages.dev](https://portfolio-gaboelc.pages.dev/)

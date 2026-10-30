@@ -7,20 +7,21 @@ import {
   education,
   certifications,
   skillGroups,
-  alsoFamiliar,
+  languages,
+  formatPeriod,
 } from '../data/cv';
 
 const contacts = [
   { label: profile.email, href: `mailto:${profile.email}` },
   { label: 'linkedin.com/in/gaboelc', href: profile.links.linkedin },
   { label: 'github.com/Gaboelc', href: profile.links.github },
-  { label: 'gaboelc.dev', href: profile.links.website },
+  { label: 'portfolio-gaboelc.pages.dev', href: profile.links.website },
 ];
 ---
 
 <MainLayout
   title="CV — Gabriel León Castro, Analytics Engineer"
-  description="Full CV of Gabriel León Castro: Analytics Engineering at Hakkōda, Data Analyst roles at SGF Global, DHL and Intel, a Data Science degree and SnowPro Core certification.">
+  description="Full CV of Gabriel León Castro: BI at Vivo Gaming, Analytics Engineering at Hakkōda (an IBM company), data roles at Intel and DHL, a Data Science degree and SnowPro Core certification.">
   <article class="cv w-full mx-auto lg:w-[850px] py-10 md:py-14">
     <!-- Header -->
     <header class="cv-head flex flex-col md:flex-row md:items-end md:justify-between gap-4 pb-6 border-b border-white/10">
@@ -67,14 +68,14 @@ const contacts = [
       <h2 class="cv-h2">Experience</h2>
       <ol class="flex flex-col gap-6">
         {
-          experience.map(({ period, role, company, location, highlights }) => (
+          experience.map(({ start, end, role, company, location, highlights }) => (
             <li class="cv-entry">
               <div class="cv-entry-head">
                 <h3 class="cv-h3 text-lg font-semibold text-white">
                   {role} <span class="cv-accent text-accent">· {company}</span>
                 </h3>
                 <p class="cv-muted cv-period text-sm text-gray-400">
-                  {period} · {location}
+                  {formatPeriod({ start, end })} · {location}
                 </p>
               </div>
               <ul class="cv-bullets mt-2 flex flex-col gap-1.5 text-sm md:text-base text-gray-300">
@@ -139,8 +140,8 @@ const contacts = [
           ))
         }
         <li class="cv-skill text-sm md:text-base text-gray-300">
-          <span class="cv-accent font-semibold text-white">Also familiar with:</span>{' '}
-          {alsoFamiliar.join(', ')}
+          <span class="cv-accent font-semibold text-white">Languages:</span>{' '}
+          {languages.map(({ name, level }) => `${name} (${level})`).join(', ')}
         </li>
       </ul>
     </section>
