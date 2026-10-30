@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.gaboelc.dev/sitemap.xml
+Sitemap: https://portfolio-gaboelc.pages.dev/sitemap.xml
