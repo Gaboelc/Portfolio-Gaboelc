@@ -1,0 +1,19 @@
+---
+// The home page, shared by / and /es/. Every section reads the language from
+// the URL, so the two pages differ only in where they live.
+import MainLayout from '../layouts/MainLayout.astro';
+import Hero from '../components/Hero.astro';
+import WorkTable from '../components/WorkTable.astro';
+import CaseStudies from '../components/CaseStudies.astro';
+import StackTable from '../components/StackTable.astro';
+import AboutFile from '../components/AboutFile.astro';
+import Contact from '../components/Contact.astro';
+---
+<MainLayout title="Gabriel León Castro — Analytics Engineer">
+  <Hero />
+  <WorkTable />
+  <CaseStudies index="02" />
+  <StackTable index="03" />
+  <AboutFile index="04" />
+  <Contact index="05" />
+</MainLayout>

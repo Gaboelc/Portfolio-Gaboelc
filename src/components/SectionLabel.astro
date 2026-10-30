@@ -1,0 +1,21 @@
+---
+import FileBadge, { type FileType } from './FileBadge.astro';
+
+interface Props {
+  index: string;
+  file: string;
+  type: FileType;
+  /** Rendered as the section's heading, so the outline stays meaningful. */
+  as?: 'h2' | 'p';
+}
+
+const { index, file, type, as: Tag = 'h2' } = Astro.props;
+---
+
+<Tag class="flex items-center gap-3 font-mono text-xs uppercase tracking-[0.12em] text-ink">
+  <span class="inline-flex h-6 min-w-[1.75rem] items-center justify-center border border-ink bg-paper px-1 font-pixel text-[11px] tracking-normal">
+    {index}
+  </span>
+  <FileBadge type={type} aria-hidden="true" />
+  <span class="normal-case tracking-normal text-sm">{file}</span>
+</Tag>

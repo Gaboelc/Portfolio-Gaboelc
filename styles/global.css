@@ -1,94 +1,165 @@
+/* Pixel display face. Self-hosted from the release on GitHub (OFL, see
+   public/fonts/DepartureMono-LICENSE.txt); it is not on Fontsource. Drawn on an
+   11px grid, so display sizes stay on multiples of 11 to keep the pixels crisp. */
+@font-face {
+	font-family: 'Departure Mono';
+	src: url('/fonts/DepartureMono-Regular.woff2') format('woff2');
+	font-weight: 400;
+	font-style: normal;
+	font-display: swap;
+}
+
 :root {
-	color-scheme: dark;
+	color-scheme: light;
 
-	/* The whole palette lives here. Values are RGB channels so Tailwind can
-	   apply opacity modifiers to them (see tailwind.config.mjs). Changing the
-	   accent is now one edit rather than twenty-two. */
-	--accent: 252 109 9; /* #FC6D09 */
-	--ink: 2 6 23; /* page background */
+	/* The palette is the one in "Paleta de colores", the same five colours the
+	   logo was made with. RGB channels so Tailwind's opacity modifiers work. */
+	--paper: 242 242 242; /* #F2F2F2 white smoke */
+	--ink: 16 18 20; /* #101214 Payne's gray, darkest step */
+	--muted: 78 90 102; /* #4E5A66 Payne's gray, 6.3:1 on paper */
+	--accent: 254 95 0; /* #FE5F00 orange: fills and markers only, never text */
+	--accent-ink: 169 64 43; /* #A9402B jasper, darker step: accent text at 5.4:1 */
 
-	--header-height: 4.5rem;
+	/* File-type keycaps. Each carries white text at 6:1 or better. */
+	--key-csv: 87 96 79; /* reseda green */
+	--key-sql: 78 90 102; /* Payne's gray */
+	--key-pbix: 169 64 43; /* jasper */
+	--key-md: 16 18 20; /* ink */
+	--key-pdf: 127 48 33; /* jasper, darkest usable step */
+
+	/* Sheet geometry. Every grid line on the page derives from these. */
+	--row: 1.75rem;
+	--gutter: 3rem;
+	--bar: 2.75rem;
+	--col-head: 1.5rem;
+	--tabs: 2.5rem;
 }
 
 html {
-	font-family: 'Rajdhani', system-ui, sans-serif;
 	font-size: 16px;
 	scroll-behavior: smooth;
+	/* Anchored sections land below the sticky bar and column headers. */
+	scroll-padding-top: calc(var(--bar) + var(--col-head) + var(--row));
 }
 
 body {
-	background: #020617;
+	background: rgb(var(--paper));
+	color: rgb(var(--ink));
 	min-height: 100vh;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-	font-family: 'Roboto', sans-serif;
-	line-height: 1.2;
-}
-
-/* Keeps anchored sections clear of the sticky header. */
-section[id] {
-	scroll-margin-top: var(--header-height);
-	border-radius: 0.5rem;
+	-webkit-font-smoothing: antialiased;
 }
 
 a {
 	text-decoration: none;
-	transition: color 0.3s ease;
 }
 
-/* One focus ring for the whole site. :focus-visible rather than :focus, so it
-   appears for keyboard users without flashing on every mouse click. The accent
-   sits at 7:1 against the page, well past the 3:1 non-text minimum. */
+/* One focus ring for the whole site, drawn like a selected cell. */
 :focus-visible {
 	outline: 2px solid rgb(var(--accent));
-	outline-offset: 3px;
-	border-radius: 2px;
+	outline-offset: 2px;
+}
+
+::selection {
+	background: rgb(var(--accent) / 0.3);
 }
 
 button {
-	color: white;
-	border: none;
 	cursor: pointer;
 }
 
-/* Horizontal rules echoing the gridlines of a plot. Written here rather than as
-   a Tailwind arbitrary value because the repeating gradient is long enough that
-   inlining it would bury the markup. */
-.backdrop-lines {
-	background-image: repeating-linear-gradient(
-		to bottom,
-		rgb(255 255 255 / 0.05) 0 1px,
-		transparent 1px 34px
-	);
+/* The cell grid behind the page: one line per row, one per column. Lines sit
+   on the bottom/right edge of each tile so they meet the gutter's borders. */
+.sheet-grid {
+	background-image:
+		linear-gradient(to top, rgb(var(--ink) / 0.07) 1px, transparent 1px),
+		linear-gradient(to left, rgb(var(--ink) / 0.07) 1px, transparent 1px);
+	background-size:
+		100% var(--row),
+		calc(100% / 12) 100%;
 }
 
-/* Fine grain over the flat background, so large dark areas stop looking like
-   plastic. Generated inline rather than fetched — it is a few hundred bytes. */
-.noise {
-	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-	opacity: 0.035;
-	pointer-events: none;
+@media (max-width: 767px) {
+	.sheet-grid {
+		background-image: linear-gradient(to top, rgb(var(--ink) / 0.06) 1px, transparent 1px);
+		background-size: 100% var(--row);
+	}
 }
 
-/* Reveal on scroll. Scoped to .js so content is never hidden without a script
-   to bring it back. */
-.js [data-reveal] {
-	opacity: 0;
-	transform: translateY(1.25rem);
-	transition:
-		opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1),
-		transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+/* Pixel type is drawn on whole pixels; smoothing only blurs it. */
+.font-pixel {
+	-webkit-font-smoothing: none;
+	font-smooth: never;
 }
 
-.js [data-reveal].is-revealed {
-	opacity: 1;
+.pixelated {
+	image-rendering: pixelated;
+}
+
+/* Typing effect for code blocks. Each line is a clipped inline box whose width
+   steps through its characters; --n is the line length, --d its start delay.
+   Pure CSS with fill-mode both, so with motion reduced or animation
+   unsupported the line simply shows complete. */
+.type-line {
+	display: inline-block;
+	vertical-align: top;
+	white-space: pre;
+	overflow: hidden;
+	width: calc(var(--n) * 1ch);
+	animation: type calc(var(--n) * 22ms) steps(var(--n), end) var(--d) both;
+}
+
+@keyframes type {
+	from {
+		width: 0;
+	}
+}
+
+.appear {
+	animation: appear 0.35s ease-out var(--d, 0s) both;
+}
+
+@keyframes appear {
+	from {
+		opacity: 0;
+	}
+}
+
+.caret::after {
+	content: '';
+	display: inline-block;
+	width: 0.55ch;
+	height: 1.1em;
+	margin-left: 1px;
+	vertical-align: -0.15em;
+	background: rgb(var(--accent));
+	animation: blink 1s steps(1) infinite;
+}
+
+@keyframes blink {
+	50% {
+		opacity: 0;
+	}
+}
+
+/* Bars that grow when their figure scrolls into view. Only the bar moves; the
+   numbers beside it are always there. Scoped to .js so a bar is never left at
+   zero without a script to grow it. */
+.grow {
+	transform-origin: left;
+}
+
+.js [data-reveal] .grow {
+	transform: scaleX(0);
+	transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1) var(--d, 0s);
+}
+
+.js [data-reveal].is-revealed .grow {
 	transform: none;
+}
+
+/* Controls that only work with the script are hidden without it. */
+html:not(.js) .js-only {
+	display: none !important;
 }
 
 @media print {
@@ -100,10 +171,17 @@ button {
 		display: none !important;
 	}
 
-	/* Never let an unrevealed element print blank. */
-	.js [data-reveal] {
+	.sheet-grid {
+		background: none;
+	}
+
+	/* Never let an ungrown or untyped element print blank. */
+	.js [data-reveal] .grow,
+	.type-line,
+	.appear {
 		opacity: 1 !important;
 		transform: none !important;
+		animation: none !important;
 	}
 }
 
@@ -116,11 +194,12 @@ button {
 	*::before,
 	*::after {
 		animation-duration: 0.01ms !important;
+		animation-delay: 0s !important;
+		animation-iteration-count: 1 !important;
 		transition-duration: 0.01ms !important;
 	}
 
-	.js [data-reveal] {
-		opacity: 1;
+	.js [data-reveal] .grow {
 		transform: none;
 	}
 }

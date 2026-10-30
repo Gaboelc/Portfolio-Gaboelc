@@ -3,7 +3,7 @@ import type { APIRoute } from 'astro';
 // Generated rather than checked in as a static file, so it is derived from
 // Astro.site and cannot drift from the configured origin. Add new routes here
 // when pages are added — the 404 is deliberately absent.
-const routes = ['/', '/cv'];
+const routes = ['/', '/cv', '/es/', '/es/cv'];
 
 export const GET: APIRoute = ({ site }) => {
   const urls = routes

@@ -1,0 +1,92 @@
+---
+import SectionLabel from './SectionLabel.astro';
+import FileBadge from './FileBadge.astro';
+import { skillGroups } from '../data/cv';
+import { t, langOf } from '../i18n';
+
+interface Props {
+  index: string;
+}
+
+const { index } = Astro.props;
+const lang = langOf(Astro.url);
+const copy = {
+  en: {
+    formula: '=QUERY(schema, "select name, type, used")',
+    file: 'schema.sql',
+    lede: "Only what I've used at work, and where I used it.",
+    columns: ['name', 'type', 'used'],
+    rows: 'rows',
+    none: 'Nothing cited yet',
+  },
+  es: {
+    formula: '=CONSULTA(esquema; "select nombre, tipo, uso")',
+    file: 'esquema.sql',
+    lede: 'Solo lo que he usado en el trabajo, y dónde lo usé.',
+    columns: ['nombre', 'tipo', 'uso'],
+    rows: 'filas',
+    none: 'Sin nada que citar aún',
+  },
+}[lang];
+
+// Skills as a data dictionary instead of a logo wall: what each one is and
+// where it was used. A skill with nothing to cite shows a dash, not filler.
+const total = skillGroups.reduce((n, group) => n + group.items.length, 0);
+---
+
+<section
+  id="stack"
+  data-cell
+  data-formula={copy.formula}
+  class="px-4 py-[calc(var(--row)*2)] md:px-0">
+  <div class="md:px-3">
+    <SectionLabel index={index} type="sql" file={copy.file} />
+  </div>
+
+  <p class="mt-[var(--row)] max-w-[40ch] text-[1.375rem] leading-[1.3] md:px-3 md:text-[1.625rem]">
+    {copy.lede}
+  </p>
+
+  <div class="mt-[var(--row)] md:px-3">
+    <div class="border border-ink bg-paper">
+      <p class="flex items-center gap-2 border-b border-ink px-3 py-1.5 font-mono text-xs">
+        <FileBadge type="sql" aria-hidden="true" />
+        gabriel.stack
+        <span class="ml-auto text-muted">{total} {copy.rows}</span>
+      </p>
+
+      <table class="w-full text-left">
+        <thead>
+          <tr class="bg-ink/5 font-mono text-[11px] uppercase tracking-[0.08em] text-muted">
+            <th scope="col" class="w-[38%] border-r border-ink/15 px-3 py-1.5 font-normal md:w-[24%]">{copy.columns[0]}</th>
+            <th scope="col" class="hidden w-[14%] border-r border-ink/15 px-3 py-1.5 font-normal md:table-cell">{copy.columns[1]}</th>
+            <th scope="col" class="px-3 py-1.5 font-normal">{copy.columns[2]}</th>
+          </tr>
+        </thead>
+        {
+          skillGroups.map(({ title, items }) => (
+            <tbody>
+              <tr>
+                <th colspan="3" scope="colgroup" class="border-t border-ink/15 bg-ink/[0.03] px-3 py-1.5 text-left font-mono text-xs font-normal text-muted">
+                  -- {t(title, lang).toLowerCase()}
+                </th>
+              </tr>
+              {items.map(({ name, type, used }) => (
+                <tr class="border-t border-ink/10 align-top transition-colors hover:bg-accent/[0.06]">
+                  <th scope="row" class="border-r border-ink/15 px-3 py-2 font-mono text-[13px] font-medium">
+                    {t(name, lang)}
+                    <span class="block text-[11px] font-normal text-muted md:hidden">{t(type, lang)}</span>
+                  </th>
+                  <td class="hidden border-r border-ink/15 px-3 py-2 font-mono text-[13px] text-muted md:table-cell">{t(type, lang)}</td>
+                  <td class="px-3 py-2 text-[15px] leading-snug">
+                    {used ? t(used, lang) : <span class="font-mono text-muted" aria-label={copy.none}>—</span>}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          ))
+        }
+      </table>
+    </div>
+  </div>
+</section>

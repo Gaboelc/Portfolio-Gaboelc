@@ -1,0 +1,131 @@
+---
+// The page as a worksheet: column letters across the top, row numbers down the
+// left, and the cell grid behind everything. Sections opt in to being tracked
+// with data-cell (and data-formula for the formula bar); the script below works
+// out which cells each one covers from its real position on the page.
+const columns = 'ABCDEFGHIJKL'.split('');
+
+// More rows than any page needs; the gutter clips to the content's height.
+const rows = Array.from({ length: 600 }, (_, i) => i + 1);
+---
+
+<div class="relative flex flex-1 flex-col">
+  <div
+    class="sticky top-[var(--bar)] z-30 hidden h-[var(--col-head)] border-b border-ink bg-paper font-mono text-[11px] text-muted md:flex print:hidden"
+    aria-hidden="true">
+    <span class="w-[var(--gutter)] shrink-0 border-r border-ink/20"></span>
+    <div class="relative grid flex-1 grid-cols-12">
+      <span id="col-band" class="absolute inset-y-0 left-0 w-0 bg-accent/15 shadow-[inset_0_-2px_0_rgb(var(--accent))] transition-all duration-200"></span>
+      {
+        columns.map((letter) => (
+          <span data-col class="relative flex items-center justify-center border-r border-ink/10">
+            {letter}
+          </span>
+        ))
+      }
+    </div>
+  </div>
+
+  <div class="flex flex-1">
+    <div class="relative hidden w-[var(--gutter)] shrink-0 border-r border-ink/20 md:block print:hidden" aria-hidden="true">
+      <div class="absolute inset-0 overflow-hidden">
+        <span id="row-band" class="absolute inset-x-0 top-0 h-0 bg-accent/15 shadow-[inset_-2px_0_0_rgb(var(--accent))] transition-all duration-200"></span>
+        <ol id="row-numbers" class="relative font-mono text-[11px] text-muted">
+          {
+            rows.map((n) => (
+              <li class="flex h-[var(--row)] items-center justify-center border-b border-ink/[0.07]">{n}</li>
+            ))
+          }
+        </ol>
+      </div>
+    </div>
+
+    <main id="main" data-sheet-cells class="sheet-grid min-w-0 flex-1">
+      <slot />
+    </main>
+  </div>
+</div>
+
+<script>
+  const cells = document.querySelector<HTMLElement>('[data-sheet-cells]');
+  const sections = [...document.querySelectorAll<HTMLElement>('[data-cell]')];
+  const nameBox = document.getElementById('name-box');
+  const formula = document.getElementById('formula');
+  const colBand = document.getElementById('col-band');
+  const rowBand = document.getElementById('row-band');
+  const letters = [...document.querySelectorAll<HTMLElement>('[data-col]')];
+  const tabs = [...document.querySelectorAll<HTMLElement>('[data-tab]')];
+  const firstRow = document.querySelector<HTMLElement>('#row-numbers li');
+  const L = 'ABCDEFGHIJKL';
+
+  const clamp = (n: number, lo: number, hi: number) => Math.min(hi, Math.max(lo, n));
+
+  const update = () => {
+    if (!cells || sections.length === 0) return;
+
+    // The section under a line a quarter of the way down the visible sheet,
+    // except at the very bottom, where the last section may never reach it.
+    const probe = window.innerHeight * 0.25 + 72;
+    const atBottom =
+      window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2;
+    const active = atBottom
+      ? sections[sections.length - 1]
+      : ([...sections].reverse().find((s) => s.getBoundingClientRect().top <= probe) ?? sections[0]);
+
+    const area = cells.getBoundingClientRect();
+    const box = active.getBoundingClientRect();
+    const rowH = firstRow?.getBoundingClientRect().height || 28;
+    const colW = area.width / 12;
+
+    const c0 = clamp(Math.floor((box.left - area.left + 1) / colW), 0, 11);
+    const c1 = clamp(Math.ceil((box.right - area.left - 1) / colW) - 1, c0, 11);
+    const r0 = Math.max(1, Math.floor((box.top - area.top) / rowH) + 1);
+    const r1 = Math.max(r0, Math.ceil((box.bottom - area.top) / rowH));
+
+    // Phones have no column headers and no room for a range: just the cell.
+    const wide = window.innerWidth >= 768;
+    if (nameBox) nameBox.textContent = wide ? `${L[c0]}${r0}:${L[c1]}${r1}` : `${L[c0]}${r0}`;
+    if (formula && active.dataset.formula) formula.textContent = active.dataset.formula;
+
+    if (colBand) {
+      colBand.style.left = `${c0 * colW}px`;
+      colBand.style.width = `${(c1 - c0 + 1) * colW}px`;
+    }
+    if (rowBand) {
+      rowBand.style.top = `${(r0 - 1) * rowH}px`;
+      rowBand.style.height = `${(r1 - r0 + 1) * rowH}px`;
+    }
+    letters.forEach((el, i) => {
+      el.classList.toggle('text-ink', i >= c0 && i <= c1);
+      el.classList.toggle('font-medium', i >= c0 && i <= c1);
+    });
+    tabs.forEach((tab) => tab.setAttribute('aria-current', String(tab.dataset.tab === active.id)));
+
+    // On narrow screens the tab strip scrolls; keep the active tab in it.
+    if (active.id !== lastActive) {
+      lastActive = active.id;
+      const tab = tabs.find((t) => t.dataset.tab === active.id);
+      const strip = tab?.closest('ul');
+      if (tab && strip && strip.scrollWidth > strip.clientWidth) {
+        const left = tab.offsetLeft - (strip.clientWidth - tab.offsetWidth) / 2;
+        strip.scrollTo({ left, behavior: 'smooth' });
+      }
+    }
+  };
+  let lastActive = '';
+
+  let queued = false;
+  const schedule = () => {
+    if (queued) return;
+    queued = true;
+    requestAnimationFrame(() => {
+      queued = false;
+      update();
+    });
+  };
+
+  window.addEventListener('scroll', schedule, { passive: true });
+  window.addEventListener('resize', schedule);
+  document.fonts?.ready.then(schedule);
+  update();
+</script>

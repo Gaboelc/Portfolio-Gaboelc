@@ -1,50 +1,92 @@
 ---
-import Tittle from "./Tittle.astro";
-import EmailIcon from "../icons/EmailIcon.astro";
-import LinkedInIcon from "../icons/LinkedInIcon.astro";
-import GitHubIcon from "../icons/GitHubIcon.astro";
+import SectionLabel from './SectionLabel.astro';
+import { profile } from '../data/cv';
+import { langOf, href } from '../i18n';
 
-// One surface treatment for all three. The brand colours - LinkedIn blue in
-// particular - were the only saturated thing on the page and shouted next to
-// the accent.
-const channels = [
-  {
-    href: "mailto:gabrielleon917@gmail.com",
-    label: "Email",
-    Icon: EmailIcon,
-    external: false,
+interface Props {
+  index: string;
+}
+
+const { index } = Astro.props;
+const lang = langOf(Astro.url);
+const copy = {
+  en: {
+    formula: `=HYPERLINK("mailto:${profile.email}")`,
+    file: 'contact',
+    pitch: 'Open to remote analytics engineering roles. San José, Costa Rica, UTC−6.',
+    copy: 'Copy email',
+    copied: 'Copied',
+    failed: 'Press ⌘/Ctrl+C',
+    vcf: 'contact.vcf',
+    setIn: 'Set in Departure Mono, Schibsted Grotesk and IBM Plex Mono',
+    source: 'Source',
   },
-  {
-    href: "https://www.linkedin.com/in/gaboelc/",
-    label: "LinkedIn",
-    Icon: LinkedInIcon,
-    external: true,
+  es: {
+    formula: `=HIPERVINCULO("mailto:${profile.email}")`,
+    file: 'contacto',
+    pitch: 'Abierto a puestos remotos de analytics engineering. San José, Costa Rica, UTC−6.',
+    copy: 'Copiar email',
+    copied: 'Copiado',
+    failed: 'Presiona ⌘/Ctrl+C',
+    vcf: 'contacto.vcf',
+    setIn: 'Tipografías: Departure Mono, Schibsted Grotesk e IBM Plex Mono',
+    source: 'Código fuente',
   },
-  {
-    href: "https://github.com/Gaboelc",
-    label: "GitHub",
-    Icon: GitHubIcon,
-    external: true,
-  },
-];
+}[lang];
+
+// A real vCard, so "save contact" is one tap on a phone. No phone number: the
+// site has never published one.
+const vcard = [
+  'BEGIN:VCARD',
+  'VERSION:3.0',
+  'N:León Castro;Gabriel;;;',
+  `FN:${profile.name}`,
+  `TITLE:${profile.role}`,
+  `EMAIL;TYPE=INTERNET:${profile.email}`,
+  `URL:${profile.links.linkedin}`,
+  'ADR;TYPE=WORK:;;;San José;;;Costa Rica',
+  'END:VCARD',
+].join('\r\n');
+const vcardHref = `data:text/vcard;charset=utf-8,${encodeURIComponent(vcard)}`;
+
+const year = new Date().getFullYear();
+const button = 'flex items-center gap-1.5 border border-ink px-3 py-1.5 transition-colors hover:bg-ink hover:text-paper';
 ---
 
-<div class="text-center">
-  <Tittle title="Connect With Me" />
-
-  <div class="flex flex-wrap justify-center gap-6 md:gap-8 mt-8">
-    {
-      channels.map(({ href, label, Icon, external }) => (
-        <a
-          href={href}
-          aria-label={label}
-          target={external ? "_blank" : undefined}
-          rel={external ? "noopener" : undefined}
-          class="group flex flex-col items-center justify-center gap-2 w-24 h-24 md:w-28 md:h-28 rounded-lg border border-white/10 bg-white/5 text-gray-300 transition-all duration-300 hover:border-accent/40 hover:text-white hover:scale-105">
-          <Icon class="w-8 h-8 md:w-9 md:h-9" />
-          <span class="text-xs md:text-sm">{label}</span>
-        </a>
-      ))
-    }
+<section
+  id="contact"
+  data-cell
+  data-formula={copy.formula}
+  class="px-4 pb-[var(--row)] pt-[calc(var(--row)*2)] md:px-0">
+  <div class="md:px-3">
+    <SectionLabel index={index} type="md" file={copy.file} />
   </div>
-</div>
+
+  <div class="mt-[var(--row)] md:px-3">
+    <a
+      href={`mailto:${profile.email}`}
+      class="inline-block break-all font-pixel text-[22px] leading-tight decoration-accent decoration-4 underline-offset-[0.2em] hover:underline sm:text-[33px] md:text-[44px] lg:text-[55px]">
+      {profile.email}
+    </a>
+
+    <p class="mt-4 max-w-[52ch] text-[1.125rem] leading-snug md:text-[1.25rem]">
+      {copy.pitch}
+    </p>
+
+    <div class="mt-[var(--row)] flex flex-wrap gap-2 font-mono text-xs">
+      <button type="button" data-copy={profile.email} data-copied={copy.copied} data-failed={copy.failed} class:list={['js-only', button]}>{copy.copy}</button>
+      <a href={profile.links.linkedin} target="_blank" rel="noopener" class={button}>LinkedIn <span aria-hidden="true">↗</span></a>
+      <a href={profile.links.github} target="_blank" rel="noopener" class={button}>GitHub <span aria-hidden="true">↗</span></a>
+      <a href={href('/cv', lang)} class={button}>CV</a>
+      <a href={vcardHref} download="gabriel_leon_castro.vcf" class={button}><span aria-hidden="true">↓</span> {copy.vcf}</a>
+    </div>
+  </div>
+
+  <p class="mt-[calc(var(--row)*3)] flex flex-wrap gap-x-4 gap-y-1 border-t border-ink/20 pt-3 font-mono text-[11px] text-muted md:px-3">
+    <span>© {year} {profile.name}</span>
+    <span>{copy.setIn}</span>
+    <a href="https://github.com/Gaboelc/Portfolio-Gaboelc" target="_blank" rel="noopener" class="hover:text-ink">
+      {copy.source} <span aria-hidden="true">↗</span>
+    </a>
+  </p>
+</section>

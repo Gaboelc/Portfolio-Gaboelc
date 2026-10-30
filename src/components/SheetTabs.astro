@@ -1,0 +1,47 @@
+---
+import FileBadge from './FileBadge.astro';
+import { langOf, href } from '../i18n';
+
+const lang = langOf(Astro.url);
+
+// One tab per section, named like sheets in a workbook. Root-relative so they
+// still resolve from /cv, where the sections are not on the page.
+const tabs = [
+  { id: 'top', label: { en: 'gabriel', es: 'gabriel' } },
+  { id: 'work', label: { en: 'work', es: 'trabajo' } },
+  { id: 'cases', label: { en: 'cases', es: 'casos' } },
+  { id: 'stack', label: { en: 'stack', es: 'stack' } },
+  { id: 'about', label: { en: 'about', es: 'sobre mí' } },
+  { id: 'contact', label: { en: 'contact', es: 'contacto' } },
+];
+---
+
+<nav
+  class="sticky bottom-0 z-40 flex h-[var(--tabs)] items-stretch border-t border-ink bg-paper font-mono text-sm print:hidden"
+  aria-label={lang === 'es' ? 'Secciones' : 'Sections'}>
+  <span class="hidden w-[var(--gutter)] shrink-0 items-center justify-center gap-1 border-r border-ink/20 text-muted md:flex" aria-hidden="true">
+    ◂ ▸
+  </span>
+
+  <ul class="flex min-w-0 flex-1 overflow-x-auto [scrollbar-width:none]">
+    {
+      tabs.map(({ id, label }) => (
+        <li class="shrink-0">
+          <a
+            href={`${href('/', lang)}#${id}`}
+            data-tab={id}
+            class="flex h-full items-center whitespace-nowrap border-r border-ink/20 px-4 text-muted transition-colors hover:bg-ink/5 hover:text-ink aria-[current=true]:bg-white aria-[current=true]:font-medium aria-[current=true]:text-ink aria-[current=true]:shadow-[inset_0_-2px_0_rgb(var(--accent))]">
+            {label[lang]}
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+
+  <a
+    href={href('/cv', lang)}
+    class="flex shrink-0 items-center gap-2 border-l border-ink px-4 transition-colors hover:bg-ink/5">
+    <FileBadge type="pdf" />
+    cv
+  </a>
+</nav>
