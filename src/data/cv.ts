@@ -113,12 +113,6 @@ export const experience: Role[] = [
   },
 ];
 
-/** Before/after refresh times quoted in the CV, for the hero's query result. */
-export const refreshLog = [
-  { client: 'Vivo Gaming', via: null, before: 60, beforeLabel: '60+ min', after: 10, afterLabel: '~10 min' },
-  { client: 'Global bakery mfr.', via: 'Hakkōda', before: 60, beforeLabel: '60 min', after: 35, afterLabel: '35 min' },
-];
-
 export interface Credential {
   title: string;
   place: string;
@@ -144,38 +138,51 @@ export const certifications: Credential[] = [
   },
 ];
 
+export interface Skill {
+  name: string;
+  /** What kind of thing it is, written like a column type. */
+  type: string;
+  /** Where it was used, from the CV. Empty until there is something to cite. */
+  used?: string;
+}
+
 export interface SkillGroup {
   title: string;
-  items: string[];
+  items: Skill[];
 }
 
 export const skillGroups: SkillGroup[] = [
   {
     title: 'SQL & data platforms',
-    items: ['SQL', 'Snowflake', 'Amazon Redshift', 'Microsoft SQL Server'],
+    items: [
+      { name: 'SQL', type: 'language', used: 'Every role since 2019: Redshift views, Snowflake transformations, SQL Server' },
+      { name: 'Snowflake', type: 'warehouse', used: 'SnowPro Core, valid through 01/2027; the Hakkōda semantic-model migration' },
+      { name: 'Amazon Redshift', type: 'warehouse', used: "The SQL views behind Vivo Gaming's reports" },
+      { name: 'Microsoft SQL Server', type: 'database', used: "DHL's Service Desk database; the source side of the Hakkōda migration" },
+    ],
   },
   {
     title: 'Modeling & BI',
     items: [
-      'Star schema',
-      'Semantic models',
-      'DAX',
-      'Power Query (M)',
-      'Incremental refresh',
-      'RLS',
-      'Calculation groups',
+      { name: 'Star schema', type: 'modeling', used: 'Both Hakkōda semantic models, rebuilt on Snowflake' },
+      { name: 'Semantic models', type: 'modeling', used: "2 at Hakkōda (8 reports, ~20 users); Vivo Gaming's report suite" },
+      { name: 'DAX', type: 'measures', used: 'Calculated columns and measures optimized at Vivo Gaming' },
+      { name: 'Power Query (M)', type: 'transformation', used: 'Steps cut by ~50% across the Vivo Gaming suite' },
+      { name: 'Incremental refresh', type: 'performance', used: 'Vivo Gaming and Hakkōda' },
+      { name: 'RLS', type: 'security', used: 'On-demand billing reports for 3 B2B clients' },
+      { name: 'Calculation groups', type: 'modeling' },
     ],
   },
   {
     title: 'Tools & automation',
     items: [
-      'Tabular Editor',
-      'DAX Studio',
-      'Paginated reports',
-      'Gateways',
-      'Tableau',
-      'Power Automate',
-      'Python (pandas)',
+      { name: 'Tabular Editor', type: 'tooling' },
+      { name: 'DAX Studio', type: 'tooling' },
+      { name: 'Paginated reports', type: 'reporting' },
+      { name: 'Gateways', type: 'infrastructure' },
+      { name: 'Tableau', type: 'bi', used: '30 of 90+ reports migrated to Power BI for a medical-sector client' },
+      { name: 'Power Automate', type: 'automation', used: 'Daily alerts on 6 risk metrics at Vivo Gaming' },
+      { name: 'Python (pandas)', type: 'scripting', used: 'Report automation at Intel; KPI dashboards at DHL' },
     ],
   },
 ];
@@ -188,9 +195,23 @@ export const languages = [
 export interface Project {
   title: string;
   company: string;
+  /** The client, where it differs from the employer. */
+  client?: string;
   period: string;
+  /** Shown as the case's file name; the extension picks its keycap. */
+  file: string;
   /** Headline figure. Omitted where there is no honest number to quote. */
   metric?: { value: string; label: string };
+  /** Before/after for the bar chart. lowerIsBetter for times, not for accuracy. */
+  chart?: {
+    unit: string;
+    max: number;
+    before: number;
+    after: number;
+    beforeLabel: string;
+    afterLabel: string;
+    lowerIsBetter: boolean;
+  };
   problem: string;
   approach: string;
   outcome: string;
@@ -206,11 +227,13 @@ export const projects: Project[] = [
     title: 'Getting a report suite under ten minutes',
     company: 'Vivo Gaming',
     period: '2026',
-    metric: { value: '60+ → ~10 min', label: 'average refresh time' },
+    file: 'vivo_gaming.pbix',
+    metric: { value: '60+ → ~10', label: 'minutes, average refresh' },
+    chart: { unit: 'min', max: 60, before: 60, after: 10, beforeLabel: '60+ min', afterLabel: '~10 min', lowerIsBetter: true },
     problem:
       "As the only BI analyst for Risk, Finance and the studio managers, I inherited a report suite that took more than an hour to refresh and regularly timed out. The transformation logic lived in Power Query, loads were duplicated or stale, Finance built each B2B client's monthly statement by hand in two to three days, and the daily Excel feeds sat on the network share of someone who no longer worked there.",
     approach:
-      'Moved the transformation logic out of Power Query into Redshift SQL views, removed the duplicate and stale loads and added incremental refresh. Rewrote the heaviest DAX calculated columns and measures and cut Power Query steps by about half across the suite. Built on-demand, RLS-secured billing reports for three B2B clients after gathering requirements directly with each of them, set up daily Power Automate alerts on six risk metrics, and moved the Excel feeds to SharePoint.',
+      'Moved the transformation logic out of Power Query into Redshift SQL views, removed the duplicate and stale loads and added incremental refresh. Optimized the DAX calculated columns and measures and cut Power Query steps by about half across the suite. Built on-demand, RLS-secured billing reports for three B2B clients after gathering requirements directly with each of them, set up daily Power Automate alerts on six risk metrics, and moved the Excel feeds to SharePoint.',
     outcome:
       'Average refresh dropped to about ten minutes and the timeouts stopped. Finance no longer assembles client statements by hand, the risk check runs every day instead of when someone remembers, and no feed depends on a single person’s folder any more.',
     stack: ['Amazon Redshift', 'SQL', 'Power BI', 'DAX', 'Power Query', 'RLS', 'Power Automate'],
@@ -218,8 +241,11 @@ export const projects: Project[] = [
   {
     title: 'Rebuilding semantic models on Snowflake',
     company: 'Hakkōda, an IBM Company',
+    client: 'Global bakery mfr.',
     period: '2024 - 2026',
-    metric: { value: '~42%', label: 'faster dataset refresh' },
+    file: 'snowflake_migration.sql',
+    metric: { value: '60 → 35', label: 'minutes per dataset refresh (−42%)' },
+    chart: { unit: 'min', max: 60, before: 60, after: 35, beforeLabel: '60 min', afterLabel: '35 min', lowerIsBetter: true },
     problem:
       'Reporting ran on Microsoft SQL Server while the client, a global bakery manufacturer, moved its warehouse to Snowflake. The Power BI semantic models refreshed several times a day at roughly 60 minutes each, so refresh cycles collided — a new one starting before the previous had finished. The models carried unused columns, bidirectional relationships, heavy Power Query transformations, and DAX doing work that belonged upstream.',
     approach:
@@ -232,6 +258,7 @@ export const projects: Project[] = [
     title: 'Modeling processors before the silicon exists',
     company: 'Intel Corporation',
     period: '2019 - 2021',
+    file: 'processor_simulation.csv',
     problem:
       'Processor architecture decisions are made long before there is any hardware to measure, so they rest entirely on what simulation can be made to reveal.',
     approach:
@@ -244,8 +271,10 @@ export const projects: Project[] = [
     title: 'Forecasting Service Desk demand',
     company: 'DHL',
     period: '2021 - 2022',
+    file: 'demand_forecast.py',
     earlier: true,
     metric: { value: '63% → 81%', label: 'prediction accuracy' },
+    chart: { unit: '%', max: 100, before: 63, after: 81, beforeLabel: '63%', afterLabel: '81%', lowerIsBetter: false },
     problem:
       'Staffing at the Americas Service Desk was purely reactive: when volume rose the team hired, when it fell they let people go, and nobody could see a surge coming.',
     approach:
@@ -255,3 +284,16 @@ export const projects: Project[] = [
     stack: ['Python', 'scikit-learn', 'Azure', 'SQL'],
   },
 ];
+
+/** Before/after refresh times, for the hero's query result. Same numbers as the
+ * case charts, so the two can never disagree. */
+export const refreshLog = projects
+  .filter((p) => p.chart?.unit === 'min')
+  .map(({ company, client, chart }) => ({
+    client: client ?? company,
+    via: client ? company.split(',')[0] : null,
+    before: chart!.before,
+    beforeLabel: chart!.beforeLabel,
+    after: chart!.after,
+    afterLabel: chart!.afterLabel,
+  }));

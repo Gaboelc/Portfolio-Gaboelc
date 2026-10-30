@@ -102,19 +102,6 @@ const record = [
 </section>
 
 <script>
-  // Copy the address, and say so where the button was.
-  document.querySelectorAll<HTMLButtonElement>('[data-copy]').forEach((button) => {
-    button.addEventListener('click', async () => {
-      try {
-        await navigator.clipboard.writeText(button.dataset.copy ?? '');
-        button.textContent = 'Copied';
-      } catch {
-        button.textContent = 'Press ⌘/Ctrl+C';
-      }
-      setTimeout(() => (button.textContent = 'Copy'), 1600);
-    });
-  });
-
   // Parse the name out of CSV noise: every letter cycles through delimiter and
   // digit glyphs, then settles left to right like a reader scanning a row.
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;

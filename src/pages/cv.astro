@@ -135,7 +135,7 @@ const contacts = [
           skillGroups.map(({ title, items }) => (
             <li class="cv-skill text-sm md:text-base text-ink/85">
               <span class="cv-accent font-semibold text-ink">{title}:</span>{' '}
-              {items.join(', ')}
+              {items.map(({ name }) => name).join(', ')}
             </li>
           ))
         }

@@ -9,7 +9,7 @@ const columns = 'ABCDEFGHIJKL'.split('');
 const rows = Array.from({ length: 600 }, (_, i) => i + 1);
 ---
 
-<div class="relative">
+<div class="relative flex flex-1 flex-col">
   <div
     class="sticky top-[var(--bar)] z-30 hidden h-[var(--col-head)] border-b border-ink bg-paper font-mono text-[11px] text-muted md:flex print:hidden"
     aria-hidden="true">
@@ -26,7 +26,7 @@ const rows = Array.from({ length: 600 }, (_, i) => i + 1);
     </div>
   </div>
 
-  <div class="flex">
+  <div class="flex flex-1">
     <div class="relative hidden w-[var(--gutter)] shrink-0 border-r border-ink/20 md:block print:hidden" aria-hidden="true">
       <div class="absolute inset-0 overflow-hidden">
         <span id="row-band" class="absolute inset-x-0 top-0 h-0 bg-accent/15 shadow-[inset_-2px_0_0_rgb(var(--accent))] transition-all duration-200"></span>
@@ -63,10 +63,14 @@ const rows = Array.from({ length: 600 }, (_, i) => i + 1);
   const update = () => {
     if (!cells || sections.length === 0) return;
 
-    // The section under a line a quarter of the way down the visible sheet.
+    // The section under a line a quarter of the way down the visible sheet,
+    // except at the very bottom, where the last section may never reach it.
     const probe = window.innerHeight * 0.25 + 72;
-    const active =
-      [...sections].reverse().find((s) => s.getBoundingClientRect().top <= probe) ?? sections[0];
+    const atBottom =
+      window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2;
+    const active = atBottom
+      ? sections[sections.length - 1]
+      : ([...sections].reverse().find((s) => s.getBoundingClientRect().top <= probe) ?? sections[0]);
 
     const area = cells.getBoundingClientRect();
     const box = active.getBoundingClientRect();
@@ -96,7 +100,19 @@ const rows = Array.from({ length: 600 }, (_, i) => i + 1);
       el.classList.toggle('font-medium', i >= c0 && i <= c1);
     });
     tabs.forEach((tab) => tab.setAttribute('aria-current', String(tab.dataset.tab === active.id)));
+
+    // On narrow screens the tab strip scrolls; keep the active tab in it.
+    if (active.id !== lastActive) {
+      lastActive = active.id;
+      const tab = tabs.find((t) => t.dataset.tab === active.id);
+      const strip = tab?.closest('ul');
+      if (tab && strip && strip.scrollWidth > strip.clientWidth) {
+        const left = tab.offsetLeft - (strip.clientWidth - tab.offsetWidth) / 2;
+        strip.scrollTo({ left, behavior: 'smooth' });
+      }
+    }
   };
+  let lastActive = '';
 
   let queued = false;
   const schedule = () => {

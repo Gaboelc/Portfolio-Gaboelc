@@ -1,0 +1,40 @@
+---
+import type { Project } from '../data/cv';
+
+interface Props {
+  chart: NonNullable<Project['chart']>;
+  caption: string;
+}
+
+const { chart, caption } = Astro.props;
+const { unit, max, before, after, beforeLabel, afterLabel } = chart;
+
+const ticks = [0, 0.25, 0.5, 0.75, 1].map((f) => Math.round(max * f));
+const width = (value: number) => `${(value / max) * 100}%`;
+
+// Quarter gridlines inside each track, matching the tick labels below.
+const track =
+  'relative h-4 bg-[linear-gradient(to_right,rgb(var(--ink)/0.12)_1px,transparent_1px)] bg-[length:25%_100%] border-r border-ink/[0.12]';
+---
+
+<figure data-reveal role="img" aria-label={`${caption}: ${beforeLabel} before, ${afterLabel} after.`}>
+  <div class="grid grid-cols-[3.25rem_minmax(0,1fr)_4.25rem] items-center gap-x-3 gap-y-2 font-mono text-xs" aria-hidden="true">
+    <span class="text-muted">before</span>
+    <span class={track}>
+      <span class="grow absolute inset-y-0 left-0 bg-ink/70" style={`width:${width(before)}`}></span>
+    </span>
+    <span class="tabular-nums">{beforeLabel}</span>
+
+    <span class="text-muted">after</span>
+    <span class={track}>
+      <span class="grow absolute inset-y-0 left-0 bg-accent" style={`width:${width(after)};--d:250ms`}></span>
+    </span>
+    <span class="font-medium tabular-nums">{afterLabel}</span>
+  </div>
+
+  <div class="ml-[calc(3.25rem+0.75rem)] mr-[calc(4.25rem+0.75rem)] mt-1.5 flex justify-between font-mono text-[10px] text-muted" aria-hidden="true">
+    {ticks.map((t) => <span>{t}</span>)}
+  </div>
+
+  <figcaption class="mt-1 font-mono text-[11px] text-muted" aria-hidden="true">{caption}, {unit}</figcaption>
+</figure>

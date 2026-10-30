@@ -62,7 +62,7 @@ const personSchema = {
     credentialCategory: 'certification',
     recognizedBy: { '@type': 'Organization', name: entry.place },
   })),
-  knowsAbout: skillGroups.flatMap((group) => group.items),
+  knowsAbout: skillGroups.flatMap((group) => group.items.map(({ name }) => name)),
   knowsLanguage: languages.map(({ code }) => code),
 };
 ---
@@ -103,7 +103,7 @@ const personSchema = {
     <script type="application/ld+json" set:html={JSON.stringify(personSchema)} is:inline></script>
   </head>
 
-  <body class="min-h-screen font-sans">
+  <body class="flex min-h-screen flex-col font-sans">
     <a
       href="#main"
       class="sr-only focus:not-sr-only focus:fixed focus:left-2 focus:top-2 focus:z-50 focus:bg-ink focus:px-3 focus:py-2 focus:text-paper">
@@ -119,7 +119,24 @@ const personSchema = {
     <SheetTabs />
 
     <script>
-      // Reveal-on-scroll. Hiding content behind an animation means every
+      // Copy buttons ([data-copy]) put their value on the clipboard and say so
+      // where the button was.
+      document.querySelectorAll<HTMLButtonElement>('[data-copy]').forEach((button) => {
+        const label = button.textContent;
+        button.addEventListener('click', async () => {
+          try {
+            await navigator.clipboard.writeText(button.dataset.copy ?? '');
+            button.textContent = 'Copied';
+          } catch {
+            button.textContent = 'Press ⌘/Ctrl+C';
+          }
+          setTimeout(() => (button.textContent = label), 1600);
+        });
+      });
+    </script>
+
+    <script>
+      // Reveal-on-scroll, which grows the chart bars. Hiding anything behind an animation means every
       // failure mode has to end with the content visible, so there are three
       // guards: the .js class set in <head> covers this script never loading,
       // the reduced-motion branch covers the preference, and the timeout below

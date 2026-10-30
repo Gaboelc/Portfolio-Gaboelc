@@ -1,7 +1,7 @@
 ---
 // A file-type keycap: the site's only icon system. Colour tells the type
 // apart at a glance; the label carries it for everyone else.
-export type FileType = 'csv' | 'sql' | 'pbix' | 'md' | 'pdf';
+export type FileType = 'csv' | 'sql' | 'pbix' | 'md' | 'pdf' | 'py';
 
 interface Props {
   type: FileType;
@@ -17,6 +17,7 @@ const fills: Record<FileType, string> = {
   pbix: 'bg-key-pbix',
   md: 'bg-key-md',
   pdf: 'bg-key-pdf',
+  py: 'bg-ink/60',
 };
 ---
 

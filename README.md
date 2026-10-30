@@ -10,6 +10,7 @@ deployed on Cloudflare Pages.
 
 - [Pages](#pages)
 - [Content lives in one file](#content-lives-in-one-file)
+- [Design](#design)
 - [Running it locally](#running-it-locally)
 - [Project structure](#project-structure)
 - [Deployment](#deployment)
@@ -32,9 +33,19 @@ page sections and `/cv` import from it.
 **Edit that file, not the components.** Changing a component directly will make
 the home page and the printable CV disagree with each other.
 
-Skill *names* live in the data file; the mapping from a name to its icon stays
-in `Skills.astro`, because `.astro` components cannot be imported from a `.ts`
-module.
+Skills carry a `used` note citing where each one was used; a skill with nothing
+to cite shows a dash on the page rather than filler.
+
+## Design
+
+The page is drawn as a worksheet: column letters and row numbers frame it, the
+Name Box and formula bar follow the section in view, and the sections are sheet
+tabs. Colours are the five in the brand palette, defined once as CSS custom
+properties in `styles/global.css`. Type is Departure Mono (pixel display,
+self-hosted from `public/fonts/`, OFL), Schibsted Grotesk and IBM Plex Mono.
+
+Every animation degrades to the finished state: without JavaScript, with
+reduced motion, or in print.
 
 ## Running it locally
 
@@ -74,13 +85,14 @@ Portfolio-Gaboelc/
 │
 ├── public/
 │   ├── favicon/
-│   └── images/              # Profile photo at three sizes, Open Graph card
+│   ├── fonts/               # Departure Mono and its licence
+│   └── images/              # Profile photo, its dithered version, Open Graph card
 │
 ├── src/
 │   ├── components/          # Astro components
 │   ├── data/cv.ts           # Single source of truth for all CV content
-│   ├── icons/               # Inline SVG icon components
-│   ├── layouts/             # MainLayout: meta, fonts, backdrop, JSON-LD
+│   ├── icons/               # The print icon used by /cv
+│   ├── layouts/             # MainLayout: meta, fonts, sheet frame, JSON-LD
 │   ├── pages/               # index.astro, cv.astro, 404.astro
 │   └── middleware.ts        # Cache-Control on HTML responses
 │
