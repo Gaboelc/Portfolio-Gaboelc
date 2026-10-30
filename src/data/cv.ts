@@ -13,7 +13,7 @@ export const profile = {
   links: {
     linkedin: 'https://www.linkedin.com/in/gaboelc/',
     github: 'https://github.com/Gaboelc',
-    website: 'https://www.gaboelc.dev/',
+    website: 'https://portfolio-gaboelc.pages.dev/',
   },
 } as const;
 
