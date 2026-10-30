@@ -1,14 +1,22 @@
 ---
 import { profile } from '../data/cv';
+import { langOf, pathIn, href, langs } from '../i18n';
+
+const lang = langOf(Astro.url);
+const names = { en: 'English', es: 'Español' };
+const formula = {
+  en: '=PARSE("gabriel_leon.csv")',
+  es: '=LEER.CSV("gabriel_leon.csv")',
+};
 ---
 
 <!-- The formula bar. The Name Box and the formula follow whichever section is
      in view; SheetFrame's script writes to both. -->
 <header class="sticky top-0 z-40 flex h-[var(--bar)] items-stretch border-b border-ink bg-paper font-mono text-sm print:hidden">
   <a
-    href="/"
+    href={href('/', lang)}
     class="flex w-20 shrink-0 items-center justify-between gap-2 border-r border-ink px-2 md:w-32"
-    aria-label="Back to the top">
+    aria-label={lang === 'es' ? 'Volver arriba' : 'Back to the top'}>
     <span id="name-box" class="truncate">A1</span>
     <svg class="h-3 w-3 shrink-0 text-muted" viewBox="0 0 12 12" aria-hidden="true">
       <path d="M2 4l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5" />
@@ -20,7 +28,7 @@ import { profile } from '../data/cv';
   </span>
 
   <p id="formula" class="flex min-w-0 flex-1 items-center truncate px-3" aria-live="off">
-    =PARSE("gabriel_leon.csv")
+    {formula[lang]}
   </p>
 
   <a
@@ -30,4 +38,20 @@ import { profile } from '../data/cv';
     class="hidden shrink-0 items-center gap-1 border-l border-ink px-4 transition-colors hover:bg-ink hover:text-paper sm:flex">
     LinkedIn <span aria-hidden="true">↗</span>
   </a>
+
+  <nav class="flex shrink-0 items-stretch border-l border-ink" aria-label={lang === 'es' ? 'Idioma' : 'Language'}>
+    {
+      langs.map((code) => (
+        <a
+          href={pathIn(code, Astro.url)}
+          hreflang={code}
+          lang={code}
+          aria-label={names[code]}
+          aria-current={code === lang ? 'true' : undefined}
+          class="flex items-center px-2.5 uppercase transition-colors hover:bg-ink/5 aria-[current=true]:bg-ink aria-[current=true]:text-paper sm:px-3">
+          {code}
+        </a>
+      ))
+    }
+  </nav>
 </header>

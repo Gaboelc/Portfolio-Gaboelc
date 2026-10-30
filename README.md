@@ -21,8 +21,9 @@ deployed on Cloudflare Pages.
 
 | Route | What it is |
 | ----- | ---------- |
-| `/`   | The portfolio: about, experience, project case studies, skills, education and contact. |
-| `/cv` | A printable CV. Reads dark on screen like the rest of the site, prints black on white, and is tuned to fit a single US Letter page. The download button calls `window.print()`, so there is no PDF file to keep in sync. |
+| `/`   | The portfolio: work history, case studies, stack, about and contact. |
+| `/cv` | A printable CV. Sits on the sheet on screen, prints black on white, and is tuned to fit a single US Letter page in both languages. The download button calls `window.print()`, so there is no PDF file to keep in sync. |
+| `/es/`, `/es/cv` | The same two pages in Spanish. |
 
 ## Content lives in one file
 
@@ -35,6 +36,13 @@ the home page and the printable CV disagree with each other.
 
 Skills carry a `used` note citing where each one was used; a skill with nothing
 to cite shows a dash on the page rather than filler.
+
+Prose is stored as `{ en, es }` and resolved with `t()` from
+[`src/i18n.ts`](src/i18n.ts); job titles, company names, dates and figures are
+written once and shared, so the two languages cannot drift apart. Each page
+reads its language from the URL (anything under `/es/`), and `src/views/` holds
+the page bodies that `/` and `/es/` both render. Interface strings live next to
+the component that uses them, in a small `copy` object per language.
 
 ## Design
 

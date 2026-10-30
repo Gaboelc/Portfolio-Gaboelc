@@ -1,19 +1,47 @@
 ---
 import SectionLabel from './SectionLabel.astro';
-import { experience, formatMonth } from '../data/cv';
+import { experience } from '../data/cv';
+import { t, langOf, formatMonthShort } from '../i18n';
+
+const lang = langOf(Astro.url);
+const copy = {
+  en: {
+    formula: '=IMPORTDATA("work.csv")',
+    file: 'work.csv',
+    download: 'gabriel_leon_work.csv',
+    view: 'View',
+    table: 'Table',
+    downloadLabel: 'Download',
+    lede: 'Every role moved me one layer closer to the warehouse: from Excel files and dashboards to SQL views and semantic models.',
+    columns: { start: 'start', end: 'end', company: 'company', role: 'role', location: 'location', metric: 'metric' },
+  },
+  es: {
+    formula: '=IMPORTARDATOS("trabajo.csv")',
+    file: 'trabajo.csv',
+    download: 'gabriel_leon_trabajo.csv',
+    view: 'Vista',
+    table: 'Tabla',
+    downloadLabel: 'Descargar',
+    lede: 'Cada puesto me acercó una capa más al warehouse: de archivos de Excel y dashboards a vistas SQL y modelos semánticos.',
+    columns: { start: 'inicio', end: 'fin', company: 'empresa', role: 'puesto', location: 'ubicacion', metric: 'metrica' },
+  },
+}[lang];
+const { columns } = copy;
 
 // The work history as data: one table, viewable formatted or as the raw CSV it
 // would export to, and downloadable as exactly that file.
-const columns = ['start', 'end', 'company', 'role', 'location', 'metric'] as const;
-
 const field = (value = '') => (/[",\n]/.test(value) ? `"${value.replace(/"/g, '""')}"` : value);
 const csv = [
-  columns.join(','),
-  ...experience.map((row) => columns.map((key) => field(row[key])).join(',')),
+  [columns.start, columns.end, columns.company, columns.role, columns.location, columns.metric].join(','),
+  ...experience.map((row) =>
+    [row.start, row.end, row.company, row.role, t(row.location, lang), row.metric ? t(row.metric, lang) : '']
+      .map(field)
+      .join(',')
+  ),
 ].join('\n');
 
 // A BOM so Excel opens the accents (Hakkōda, León) as UTF-8, not mojibake.
-const download = `data:text/csv;charset=utf-8,${encodeURIComponent('﻿' + csv)}`;
+const download = `data:text/csv;charset=utf-8,${encodeURIComponent('\uFEFF' + csv)}`;
 
 // For the raw view: delimiters picked out, commas inside quoted fields left
 // alone, everything else escaped.
@@ -36,43 +64,42 @@ const paint = (line: string) => {
 const csvLines = csv.split('\n').map(paint);
 
 const desktopCols = 'md:grid-cols-[2.5rem_5.5rem_5.5rem_minmax(0,1.15fr)_minmax(0,1.4fr)_minmax(0,1fr)_2.25rem]';
-const short = (yearMonth: string) => formatMonth(yearMonth).replace(/(\w{3})\w*/, '$1');
+const short = (yearMonth: string) => formatMonthShort(yearMonth, lang);
 ---
 
 <section
   id="work"
   data-cell
-  data-formula={'=IMPORTDATA("work.csv")'}
+  data-formula={copy.formula}
   class="px-4 py-[calc(var(--row)*2)] md:px-0">
   <div class="flex flex-wrap items-center justify-between gap-3 md:px-3">
-    <SectionLabel index="01" type="csv" file="work.csv" />
+    <SectionLabel index="01" type="csv" file={copy.file} />
 
     <div class="flex items-stretch font-mono text-xs">
-      <div class="js-only flex border border-ink" role="tablist" aria-label="View">
+      <div class="js-only flex border border-ink" role="tablist" aria-label={copy.view}>
         <button type="button" role="tab" data-view="table" aria-selected="true" aria-controls="work-table"
-          class="px-3 py-1 aria-selected:bg-ink aria-selected:text-paper">Table</button>
+          class="px-3 py-1 aria-selected:bg-ink aria-selected:text-paper">{copy.table}</button>
         <button type="button" role="tab" data-view="csv" aria-selected="false" aria-controls="work-csv"
           class="border-l border-ink px-3 py-1 aria-selected:bg-ink aria-selected:text-paper">CSV</button>
       </div>
       <a
         href={download}
-        download="gabriel_leon_work.csv"
+        download={copy.download}
         class="ml-2 flex items-center gap-1 border border-ink px-3 py-1 transition-colors hover:bg-ink hover:text-paper">
-        <span aria-hidden="true">↓</span> Download
+        <span aria-hidden="true">↓</span> {copy.downloadLabel}
       </a>
     </div>
   </div>
 
   <p class="mt-[var(--row)] max-w-[40ch] text-[1.375rem] leading-[1.3] md:px-3 md:text-[1.625rem]">
-    Every role moved me one layer closer to the warehouse: from Excel files and
-    dashboards to SQL views and semantic models.
+    {copy.lede}
   </p>
 
   <div class="mt-[var(--row)] border border-ink bg-paper md:mx-3">
     <div id="work-table" role="tabpanel">
       <div class:list={['hidden border-b border-ink bg-ink/5 font-mono text-[11px] uppercase tracking-[0.08em] text-muted md:grid', desktopCols]} aria-hidden="true">
         <span class="border-r border-ink/15 px-2 py-1.5 text-center">#</span>
-        {['start', 'end', 'company', 'role', 'metric'].map((h) => (
+        {[columns.start, columns.end, columns.company, columns.role, columns.metric].map((h) => (
           <span class="border-r border-ink/15 px-3 py-1.5">{h}</span>
         ))}
         <span></span>
@@ -91,7 +118,7 @@ const short = (yearMonth: string) => formatMonth(yearMonth).replace(/(\w{3})\w*/
                 <span class="block font-medium">{row.company}</span>
                 <span class="block text-sm">{row.role}</span>
                 <span class="mt-1 block font-mono text-xs text-muted">
-                  {row.start} → {row.end}{row.metric && <> · <span class="text-ink">{row.metric}</span></>}
+                  {row.start} → {row.end}{row.metric && <> · <span class="text-ink">{t(row.metric, lang)}</span></>}
                 </span>
               </span>
 
@@ -101,7 +128,7 @@ const short = (yearMonth: string) => formatMonth(yearMonth).replace(/(\w{3})\w*/
               <span class="hidden border-r border-ink/15 px-3 py-2.5 font-medium md:block">{row.company}</span>
               <span class="hidden border-r border-ink/15 px-3 py-2.5 md:block">{row.role}</span>
               <span class="hidden border-r border-ink/15 px-3 py-2.5 font-mono text-[13px] md:block">
-                {row.metric ?? <span class="text-muted">—</span>}
+                {row.metric ? t(row.metric, lang) : <span class="text-muted">—</span>}
               </span>
 
               <span class="flex items-start justify-center py-3.5 text-muted md:py-3" aria-hidden="true">
@@ -112,12 +139,12 @@ const short = (yearMonth: string) => formatMonth(yearMonth).replace(/(\w{3})\w*/
             </summary>
 
             <div class="border-t border-dashed border-ink/20 py-4 pl-[2rem] pr-4 md:pl-[calc(2.5rem+11rem)] md:pr-12">
-              <p class="font-mono text-xs text-muted">{row.location}</p>
-              {row.context && <p class="mt-2 max-w-[70ch] text-[15px] italic text-muted">{row.context}</p>}
+              <p class="font-mono text-xs text-muted">{t(row.location, lang)}</p>
+              {row.context && <p class="mt-2 max-w-[70ch] text-[15px] italic text-muted">{t(row.context, lang)}</p>}
               <ul class="mt-3 flex max-w-[70ch] flex-col gap-2 text-[15px] leading-relaxed">
                 {row.highlights.map((h) => (
                   <li class="relative pl-4 before:absolute before:left-0 before:top-[0.6em] before:h-1.5 before:w-1.5 before:bg-accent">
-                    {h}
+                    {t(h, lang)}
                   </li>
                 ))}
               </ul>

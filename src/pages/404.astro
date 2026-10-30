@@ -1,36 +1,60 @@
 ---
 import MainLayout from '../layouts/MainLayout.astro';
+import { langOf, href } from '../i18n';
 
-// A missing page is a broken cell reference: Excel's #REF!.
-const destinations = [
-  { href: '/', label: 'Back to the sheet' },
-  { href: '/#work', label: 'work' },
-  { href: '/#cases', label: 'cases' },
-  { href: '/cv', label: 'cv' },
-];
+// A missing page is a broken cell reference: Excel's #REF! (#¡REF! in Spanish).
+// Anything under /es/ gets the Spanish page.
+const lang = langOf(Astro.url);
+const copy = {
+  en: {
+    title: 'Page not found - Gabriel León Castro',
+    description: 'That page does not exist. Head back to the portfolio of Gabriel León Castro, Analytics Engineer.',
+    formula: '=VLOOKUP(url, site, 1, FALSE)',
+    error: '#REF!',
+    heading: "This cell doesn't exist.",
+    body: 'The link is out of date or slightly mistyped. Nothing is broken on your end.',
+    nav: 'Where to go',
+    links: ['Back to the sheet', 'work', 'cases', 'cv'],
+  },
+  es: {
+    title: 'Página no encontrada - Gabriel León Castro',
+    description: 'Esa página no existe. Vuelve al portafolio de Gabriel León Castro, Analytics Engineer.',
+    formula: '=BUSCARV(url; sitio; 1; FALSO)',
+    error: '#¡REF!',
+    heading: 'Esta celda no existe.',
+    body: 'El enlace está desactualizado o tiene un error de tipeo. No es nada de tu lado.',
+    nav: 'A dónde ir',
+    links: ['Volver a la hoja', 'trabajo', 'casos', 'cv'],
+  },
+}[lang];
+
+const destinations = ['/', '/#work', '/#cases', '/cv'].map((path, i) => ({
+  href: href(path, lang),
+  label: copy.links[i],
+}));
 ---
 
 <MainLayout
-  title="Page not found - Gabriel León Castro"
-  description="That page does not exist. Head back to the portfolio of Gabriel León Castro, Analytics Engineer."
+  title={copy.title}
+  description={copy.description}
   noindex>
   <section
     data-cell
-    data-formula={'=VLOOKUP(url, site, 1, FALSE)'}
+    data-formula={copy.formula}
     class="px-4 py-[calc(var(--row)*4)] md:px-3">
     <div class="relative inline-block border-2 border-ink bg-paper px-6 py-4">
       <span class="absolute left-0 top-0 h-0 w-0 border-r-[12px] border-t-[12px] border-r-transparent border-t-accent" aria-hidden="true"></span>
-      <p class="font-pixel text-[66px] leading-none md:text-[132px]" aria-hidden="true">#REF!</p>
+      <p class="font-pixel text-[66px] leading-none md:text-[132px]" aria-hidden="true">{copy.error}</p>
     </div>
 
     <h1 class="mt-[var(--row)] text-[1.75rem] font-medium leading-tight md:text-[2.25rem]">
-      This cell doesn't exist.
+      {copy.heading}
     </h1>
     <p class="mt-3 max-w-[48ch] text-lg leading-snug text-muted">
-      The link is out of date or slightly mistyped. Nothing is broken on your end.
+      {copy.body}
     </p>
 
-    <nav class="mt-[var(--row)] flex flex-wrap gap-2 font-mono text-xs" aria-label="Where to go">
+    <nav class="mt-[var(--row)] flex flex-wrap gap-2 font-mono text-xs" aria-label={copy.nav}>
       {
         destinations.map(({ href, label }, i) => (
           <a

@@ -1,12 +1,38 @@
 ---
 import SectionLabel from './SectionLabel.astro';
 import { profile } from '../data/cv';
+import { langOf, href } from '../i18n';
 
 interface Props {
   index: string;
 }
 
 const { index } = Astro.props;
+const lang = langOf(Astro.url);
+const copy = {
+  en: {
+    formula: `=HYPERLINK("mailto:${profile.email}")`,
+    file: 'contact',
+    pitch: 'Open to remote analytics engineering roles. San José, Costa Rica, UTC−6.',
+    copy: 'Copy email',
+    copied: 'Copied',
+    failed: 'Press ⌘/Ctrl+C',
+    vcf: 'contact.vcf',
+    setIn: 'Set in Departure Mono, Schibsted Grotesk and IBM Plex Mono',
+    source: 'Source',
+  },
+  es: {
+    formula: `=HIPERVINCULO("mailto:${profile.email}")`,
+    file: 'contacto',
+    pitch: 'Abierto a puestos remotos de analytics engineering. San José, Costa Rica, UTC−6.',
+    copy: 'Copiar email',
+    copied: 'Copiado',
+    failed: 'Presiona ⌘/Ctrl+C',
+    vcf: 'contacto.vcf',
+    setIn: 'Tipografías: Departure Mono, Schibsted Grotesk e IBM Plex Mono',
+    source: 'Código fuente',
+  },
+}[lang];
 
 // A real vCard, so "save contact" is one tap on a phone. No phone number: the
 // site has never published one.
@@ -30,10 +56,10 @@ const button = 'flex items-center gap-1.5 border border-ink px-3 py-1.5 transiti
 <section
   id="contact"
   data-cell
-  data-formula={`=HYPERLINK("mailto:${profile.email}")`}
+  data-formula={copy.formula}
   class="px-4 pb-[var(--row)] pt-[calc(var(--row)*2)] md:px-0">
   <div class="md:px-3">
-    <SectionLabel index={index} type="md" file="contact" />
+    <SectionLabel index={index} type="md" file={copy.file} />
   </div>
 
   <div class="mt-[var(--row)] md:px-3">
@@ -44,23 +70,23 @@ const button = 'flex items-center gap-1.5 border border-ink px-3 py-1.5 transiti
     </a>
 
     <p class="mt-4 max-w-[52ch] text-[1.125rem] leading-snug md:text-[1.25rem]">
-      Open to remote analytics engineering roles. San José, Costa Rica, UTC−6.
+      {copy.pitch}
     </p>
 
     <div class="mt-[var(--row)] flex flex-wrap gap-2 font-mono text-xs">
-      <button type="button" data-copy={profile.email} class:list={['js-only', button]}>Copy email</button>
+      <button type="button" data-copy={profile.email} data-copied={copy.copied} data-failed={copy.failed} class:list={['js-only', button]}>{copy.copy}</button>
       <a href={profile.links.linkedin} target="_blank" rel="noopener" class={button}>LinkedIn <span aria-hidden="true">↗</span></a>
       <a href={profile.links.github} target="_blank" rel="noopener" class={button}>GitHub <span aria-hidden="true">↗</span></a>
-      <a href="/cv" class={button}>CV</a>
-      <a href={vcardHref} download="gabriel_leon_castro.vcf" class={button}><span aria-hidden="true">↓</span> contact.vcf</a>
+      <a href={href('/cv', lang)} class={button}>CV</a>
+      <a href={vcardHref} download="gabriel_leon_castro.vcf" class={button}><span aria-hidden="true">↓</span> {copy.vcf}</a>
     </div>
   </div>
 
   <p class="mt-[calc(var(--row)*3)] flex flex-wrap gap-x-4 gap-y-1 border-t border-ink/20 pt-3 font-mono text-[11px] text-muted md:px-3">
     <span>© {year} {profile.name}</span>
-    <span>Set in Departure Mono, Schibsted Grotesk and IBM Plex Mono</span>
+    <span>{copy.setIn}</span>
     <a href="https://github.com/Gaboelc/Portfolio-Gaboelc" target="_blank" rel="noopener" class="hover:text-ink">
-      Source <span aria-hidden="true">↗</span>
+      {copy.source} <span aria-hidden="true">↗</span>
     </a>
   </p>
 </section>

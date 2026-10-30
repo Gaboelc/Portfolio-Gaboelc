@@ -1,14 +1,32 @@
 ---
 import FileBadge from './FileBadge.astro';
 import { refreshLog } from '../data/cv';
+import { t, langOf } from '../i18n';
+
+const lang = langOf(Astro.url);
+const copy = {
+  en: {
+    columns: ['client', 'before', 'after'],
+    readOnly: 'read-only',
+    chart: 'Chart',
+    footer: '2 rows · refresh time before and after my changes',
+  },
+  es: {
+    columns: ['cliente', 'antes', 'despues'],
+    readOnly: 'solo lectura',
+    chart: 'Gráfico',
+    footer: '2 filas · tiempo de actualización antes y después de mis cambios',
+  },
+}[lang];
+const [client, before, after] = copy.columns;
 
 // The query types itself out line by line (CSS only, see .type-line), then the
 // result rows appear. Line lengths drive the timing, so they are measured here.
 const keywords = new Set(['select', 'from', 'order', 'by', 'desc']);
 const source = [
-  'select client, before, after',
+  `select ${client}, ${before}, ${after}`,
   'from   gabriel.refresh_log',
-  'order  by before - after desc;',
+  `order  by ${before} - ${after} desc;`,
 ];
 
 const msPerChar = 22;
@@ -27,7 +45,7 @@ const resultsAt = cursor;
   <figcaption class="flex h-8 items-center gap-2 border-b border-ink px-3 font-mono text-xs">
     <FileBadge type="sql" />
     refresh_log.sql
-    <span class="ml-auto text-muted">read-only</span>
+    <span class="ml-auto text-muted">{copy.readOnly}</span>
   </figcaption>
 
   <code class="block overflow-x-auto px-3 py-3 font-mono text-[13px] leading-6">
@@ -43,27 +61,27 @@ const resultsAt = cursor;
   <table class="w-full border-t border-ink font-mono text-[13px]">
     <thead>
       <tr class="bg-ink/5 text-left text-[11px] uppercase tracking-[0.08em] text-muted">
-        <th scope="col" class="border-r border-ink/15 px-3 py-1.5 font-normal">client</th>
-        <th scope="col" class="border-r border-ink/15 px-3 py-1.5 font-normal">before</th>
-        <th scope="col" class="border-r border-ink/15 px-3 py-1.5 font-normal sm:border-r">after</th>
+        <th scope="col" class="border-r border-ink/15 px-3 py-1.5 font-normal">{client}</th>
+        <th scope="col" class="border-r border-ink/15 px-3 py-1.5 font-normal">{before}</th>
+        <th scope="col" class="border-r border-ink/15 px-3 py-1.5 font-normal sm:border-r">{after === 'despues' ? 'después' : after}</th>
         <th scope="col" class="hidden w-[34%] px-3 py-1.5 font-normal sm:table-cell">
-          <span class="sr-only">Chart</span>
+          <span class="sr-only">{copy.chart}</span>
         </th>
       </tr>
     </thead>
     <tbody>
       {
-        refreshLog.map(({ client, via, before, beforeLabel, after, afterLabel }, i) => (
+        refreshLog.map((row, i) => (
           <tr class="appear border-t border-ink/15" style={`--d:${resultsAt + i * 120}ms`}>
             <th scope="row" class="border-r border-ink/15 px-3 py-2 text-left font-normal">
-              {client}
-              {via && <span class="block text-[11px] text-muted">via {via}</span>}
+              {t(row.client, lang)}
+              {row.via && <span class="block text-[11px] text-muted">via {row.via}</span>}
             </th>
-            <td class="border-r border-ink/15 px-3 py-2 tabular-nums">{beforeLabel}</td>
-            <td class="border-r border-ink/15 px-3 py-2 font-medium tabular-nums">{afterLabel}</td>
+            <td class="border-r border-ink/15 px-3 py-2 tabular-nums">{row.beforeLabel}</td>
+            <td class="border-r border-ink/15 px-3 py-2 font-medium tabular-nums">{row.afterLabel}</td>
             <td class="hidden px-3 py-2 sm:table-cell" aria-hidden="true">
               <span class="block h-1.5 bg-ink/70" style="width:100%" />
-              <span class="mt-1 block h-1.5 bg-accent" style={`width:${(after / before) * 100}%`} />
+              <span class="mt-1 block h-1.5 bg-accent" style={`width:${(row.after / row.before) * 100}%`} />
             </td>
           </tr>
         ))
@@ -73,6 +91,6 @@ const resultsAt = cursor;
 
   <p class="appear flex items-center gap-2 border-t border-ink px-3 py-1.5 font-mono text-[11px] text-muted" style={`--d:${resultsAt + 300}ms`}>
     <span class="inline-block h-2 w-2 bg-accent" aria-hidden="true"></span>
-    2 rows · refresh time before and after my changes
+    {copy.footer}
   </p>
 </figure>
