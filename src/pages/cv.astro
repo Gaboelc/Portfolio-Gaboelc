@@ -22,34 +22,34 @@ const contacts = [
 <MainLayout
   title="CV — Gabriel León Castro, Analytics Engineer"
   description="Full CV of Gabriel León Castro: BI at Vivo Gaming, Analytics Engineering at Hakkōda (an IBM company), data roles at Intel and DHL, a Data Science degree and SnowPro Core certification.">
-  <article class="cv w-full mx-auto lg:w-[850px] py-10 md:py-14">
+  <article data-cell data-formula={'=PRINT("cv", "letter")'} class="cv mx-4 my-[calc(var(--row)*2)] border border-ink bg-paper px-5 py-8 md:mx-auto md:max-w-[850px] md:px-10 md:py-12">
     <!-- Header -->
-    <header class="cv-head flex flex-col md:flex-row md:items-end md:justify-between gap-4 pb-6 border-b border-white/10">
+    <header class="cv-head flex flex-col md:flex-row md:items-end md:justify-between gap-4 pb-6 border-b border-ink">
       <div>
-        <h1 class="cv-name text-4xl md:text-5xl font-extrabold tracking-tight text-gray-100">
+        <h1 class="cv-name font-pixel text-[44px] leading-none text-ink md:text-[66px]">
           {profile.name}
         </h1>
-        <p class="cv-role text-xl md:text-2xl font-bold text-accent mt-1">
+        <p class="cv-role mt-2 text-xl font-medium text-accent-ink md:text-2xl">
           {profile.role}
         </p>
-        <p class="cv-muted text-sm text-gray-400 mt-1">{profile.location}</p>
+        <p class="cv-muted text-sm text-muted mt-1">{profile.location}</p>
       </div>
 
       <button
         type="button"
         id="print-cv"
-        class="no-print self-start md:self-auto inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 py-2.5 px-5 text-gray-200 hover:border-accent/50 hover:scale-105 transition-all duration-300">
+        class="no-print inline-flex shrink-0 items-center gap-2 whitespace-nowrap self-start border border-ink px-4 py-2 font-mono text-sm transition-colors hover:bg-ink hover:text-paper md:self-auto">
         <PrintIcon class="w-5 h-5" />
         Download PDF
       </button>
     </header>
 
     <!-- Contact -->
-    <ul class="cv-contact flex flex-wrap gap-x-5 gap-y-1 mt-4 text-sm text-gray-400">
+    <ul class="cv-contact flex flex-wrap gap-x-5 gap-y-1 mt-4 text-sm text-muted">
       {
         contacts.map(({ label, href }) => (
           <li>
-            <a href={href} class="hover:text-accent transition-colors duration-200">
+            <a href={href} class="hover:text-accent-ink transition-colors duration-200">
               {label}
             </a>
           </li>
@@ -60,7 +60,7 @@ const contacts = [
     <!-- Summary -->
     <section class="cv-section mt-8">
       <h2 class="cv-h2">Profile</h2>
-      <p class="cv-body text-gray-300 leading-relaxed">{profile.summary}</p>
+      <p class="cv-body text-ink/85 leading-relaxed">{profile.summary}</p>
     </section>
 
     <!-- Experience -->
@@ -71,14 +71,14 @@ const contacts = [
           experience.map(({ start, end, role, company, location, highlights }) => (
             <li class="cv-entry">
               <div class="cv-entry-head">
-                <h3 class="cv-h3 text-lg font-semibold text-white">
-                  {role} <span class="cv-accent text-accent">· {company}</span>
+                <h3 class="cv-h3 text-lg font-semibold text-ink">
+                  {role} <span class="cv-accent text-accent-ink">· {company}</span>
                 </h3>
-                <p class="cv-muted cv-period text-sm text-gray-400">
+                <p class="cv-muted cv-period text-sm text-muted">
                   {formatPeriod({ start, end })} · {location}
                 </p>
               </div>
-              <ul class="cv-bullets mt-2 flex flex-col gap-1.5 text-sm md:text-base text-gray-300">
+              <ul class="cv-bullets mt-2 flex flex-col gap-1.5 text-sm md:text-base text-ink/85">
                 {highlights.map((highlight) => (
                   <li class="pl-4 relative before:content-['▪'] before:absolute before:left-0 before:text-accent">
                     {highlight}
@@ -99,9 +99,9 @@ const contacts = [
           {
             education.map(({ title, place, period, location }) => (
               <li class="cv-entry">
-                <h3 class="cv-h3 text-base font-semibold text-white">{title}</h3>
+                <h3 class="cv-h3 text-base font-semibold text-ink">{title}</h3>
                 <p class="cv-accent text-sm text-accent">{place}</p>
-                <p class="cv-muted text-sm text-gray-400">
+                <p class="cv-muted text-sm text-muted">
                   {period}
                   {location && ` · ${location}`}
                 </p>
@@ -117,9 +117,9 @@ const contacts = [
           {
             certifications.map(({ title, place, period }) => (
               <li class="cv-entry">
-                <h3 class="cv-h3 text-base font-semibold text-white">{title}</h3>
+                <h3 class="cv-h3 text-base font-semibold text-ink">{title}</h3>
                 <p class="cv-accent text-sm text-accent">{place}</p>
-                <p class="cv-muted text-sm text-gray-400">{period}</p>
+                <p class="cv-muted text-sm text-muted">{period}</p>
               </li>
             ))
           }
@@ -133,14 +133,14 @@ const contacts = [
       <ul class="flex flex-col gap-2">
         {
           skillGroups.map(({ title, items }) => (
-            <li class="cv-skill text-sm md:text-base text-gray-300">
-              <span class="cv-accent font-semibold text-white">{title}:</span>{' '}
+            <li class="cv-skill text-sm md:text-base text-ink/85">
+              <span class="cv-accent font-semibold text-ink">{title}:</span>{' '}
               {items.join(', ')}
             </li>
           ))
         }
-        <li class="cv-skill text-sm md:text-base text-gray-300">
-          <span class="cv-accent font-semibold text-white">Languages:</span>{' '}
+        <li class="cv-skill text-sm md:text-base text-ink/85">
+          <span class="cv-accent font-semibold text-ink">Languages:</span>{' '}
           {languages.map(({ name, level }) => `${name} (${level})`).join(', ')}
         </li>
       </ul>
@@ -154,15 +154,15 @@ const contacts = [
 
 <style>
   .cv-h2 {
-    font-family: 'Roboto', sans-serif;
-    font-size: 0.95rem;
-    font-weight: 700;
-    letter-spacing: 0.18em;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: #9ca3af;
+    color: rgb(var(--muted));
     padding-bottom: 0.5rem;
     margin-bottom: 1rem;
-    border-bottom: 1px solid rgb(255 255 255 / 0.1);
+    border-bottom: 1px solid rgb(var(--ink) / 0.2);
   }
 
   /* Print: black on white, and compressed hard so the whole CV lands on one
@@ -194,7 +194,10 @@ const contacts = [
 
     .cv {
       width: 100% !important;
+      max-width: none !important;
+      margin: 0 !important;
       padding: 0 !important;
+      border: 0 !important;
     }
 
     /* Header */
@@ -208,6 +211,8 @@ const contacts = [
     }
 
     .cv-name {
+      font-family: 'Schibsted Grotesk', sans-serif !important;
+      font-weight: 600 !important;
       font-size: 19pt !important;
       line-height: 1.1 !important;
     }

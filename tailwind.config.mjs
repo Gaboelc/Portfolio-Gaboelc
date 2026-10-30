@@ -1,15 +1,31 @@
 /** @type {import('tailwindcss').Config} */
+
+// Channels come from CSS custom properties in styles/global.css, so the palette
+// has one home and Tailwind's opacity modifiers still work (ink/10, accent/30).
+const token = (name) => `rgb(var(--${name}) / <alpha-value>)`;
+
 export default {
 	content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
-	darkMode: 'class',
 	theme: {
 		extend: {
-			// Channels come from CSS custom properties in styles/global.css, so the
-			// palette has one home and Tailwind's opacity modifiers still work
-			// (accent/40, ink/80, ...).
 			colors: {
-				accent: 'rgb(var(--accent) / <alpha-value>)',
-				ink: 'rgb(var(--ink) / <alpha-value>)',
+				paper: token('paper'),
+				ink: token('ink'),
+				muted: token('muted'),
+				accent: token('accent'),
+				'accent-ink': token('accent-ink'),
+				key: {
+					csv: token('key-csv'),
+					sql: token('key-sql'),
+					pbix: token('key-pbix'),
+					md: token('key-md'),
+					pdf: token('key-pdf'),
+				},
+			},
+			fontFamily: {
+				sans: ['"Schibsted Grotesk"', 'system-ui', 'sans-serif'],
+				mono: ['"IBM Plex Mono"', 'ui-monospace', 'monospace'],
+				pixel: ['"Departure Mono"', '"IBM Plex Mono"', 'monospace'],
 			},
 			keyframes: {
 				reveal: {

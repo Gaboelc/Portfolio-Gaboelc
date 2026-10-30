@@ -1,0 +1,31 @@
+---
+// A file-type keycap: the site's only icon system. Colour tells the type
+// apart at a glance; the label carries it for everyone else.
+export type FileType = 'csv' | 'sql' | 'pbix' | 'md' | 'pdf';
+
+interface Props {
+  type: FileType;
+  class?: string;
+  [attr: string]: unknown;
+}
+
+const { type, class: className, ...attrs } = Astro.props;
+
+const fills: Record<FileType, string> = {
+  csv: 'bg-key-csv',
+  sql: 'bg-key-sql',
+  pbix: 'bg-key-pbix',
+  md: 'bg-key-md',
+  pdf: 'bg-key-pdf',
+};
+---
+
+<span
+  class:list={[
+    'inline-flex h-[1.125rem] min-w-[2.25rem] items-center justify-center px-1 font-pixel text-[11px] uppercase leading-none text-white',
+    fills[type],
+    className,
+  ]}
+  {...attrs}>
+  {type}
+</span>

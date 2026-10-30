@@ -113,6 +113,12 @@ export const experience: Role[] = [
   },
 ];
 
+/** Before/after refresh times quoted in the CV, for the hero's query result. */
+export const refreshLog = [
+  { client: 'Vivo Gaming', via: null, before: 60, beforeLabel: '60+ min', after: 10, afterLabel: '~10 min' },
+  { client: 'Global bakery mfr.', via: 'Hakkōda', before: 60, beforeLabel: '60 min', after: 35, afterLabel: '35 min' },
+];
+
 export interface Credential {
   title: string;
   place: string;

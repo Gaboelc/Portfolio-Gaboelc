@@ -14,10 +14,10 @@ importers:
       '@astrojs/tailwind':
         specifier: ^5.1.3
         version: 5.1.3(astro@4.16.17(@types/node@22.10.2)(rollup@4.28.1)(typescript@5.6.3))(tailwindcss@3.4.16)
-      '@fontsource/rajdhani':
-        specifier: ^5.1.0
-        version: 5.1.0
-      '@fontsource/roboto':
+      '@fontsource/ibm-plex-mono':
+        specifier: ^5.3.0
+        version: 5.3.0
+      '@fontsource/schibsted-grotesk':
         specifier: ^5.3.0
         version: 5.3.0
       astro:
@@ -487,11 +487,11 @@ packages:
     resolution: {integrity: sha512-vBZP4NlzfOlerQTnba4aqZoMhE/a9HY7HRqoOPaETQcSQuWEIyZMHGfVu6w9wGtGK5fED5qRs2DteVCjOH60sA==}
     engines: {node: '>=14'}
 
-  '@fontsource/rajdhani@5.1.0':
-    resolution: {integrity: sha512-IpWFx4+c/QP+moXUhsDdjC+Pyq4vesl/XuX1NBQHSfR4/+uDv3cMHSB5cYHsWW2dzZonci4jscOzKOnj1qs5cA==}
+  '@fontsource/ibm-plex-mono@5.3.0':
+    resolution: {integrity: sha512-eTgnZjZEGk1QtD3ZstF+Vclo2HLAni8YMy34/DxllwZvyz1lR/1RF/xTiAquOBO7MvqBx8D2Ig2WCPMVfdZu7Q==}
 
-  '@fontsource/roboto@5.3.0':
-    resolution: {integrity: sha512-BapRJOWYP+LZ21zp+wBQjfpPYKRoxc4LspJ/RLuI+HSMBD5u/X4O+ESDrSvEqDSy0rAl7GwBJ+09mdc16cVQ1Q==}
+  '@fontsource/schibsted-grotesk@5.3.0':
+    resolution: {integrity: sha512-9k+Fd2eg7umKxI2JV2HtDcOkXEM0iJx0u4Iu1b+QHikVU8Sl/MtozJ/mtZfsltR6xnVGSQjpcxXQeJPW0KGpIA==}
 
   '@img/sharp-darwin-arm64@0.33.5':
     resolution: {integrity: sha512-UT4p+iz/2H4twwAoLCqfA9UH5pI6DggwKEGuaPy7nCVQ8ZsiY5PIcrRvD1DzuY3qYL07NtIQcWnBSY/heikIFQ==}
@@ -2656,9 +2656,9 @@ snapshots:
 
   '@fastify/busboy@2.1.1': {}
 
-  '@fontsource/rajdhani@5.1.0': {}
+  '@fontsource/ibm-plex-mono@5.3.0': {}
 
-  '@fontsource/roboto@5.3.0': {}
+  '@fontsource/schibsted-grotesk@5.3.0': {}
 
   '@img/sharp-darwin-arm64@0.33.5':
     optionalDependencies:

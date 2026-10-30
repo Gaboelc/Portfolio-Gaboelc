@@ -1,0 +1,33 @@
+---
+import { profile } from '../data/cv';
+---
+
+<!-- The formula bar. The Name Box and the formula follow whichever section is
+     in view; SheetFrame's script writes to both. -->
+<header class="sticky top-0 z-40 flex h-[var(--bar)] items-stretch border-b border-ink bg-paper font-mono text-sm print:hidden">
+  <a
+    href="/"
+    class="flex w-20 shrink-0 items-center justify-between gap-2 border-r border-ink px-2 md:w-32"
+    aria-label="Back to the top">
+    <span id="name-box" class="truncate">A1</span>
+    <svg class="h-3 w-3 shrink-0 text-muted" viewBox="0 0 12 12" aria-hidden="true">
+      <path d="M2 4l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5" />
+    </svg>
+  </a>
+
+  <span class="flex shrink-0 items-center border-r border-ink/20 px-3 font-serif italic text-muted" aria-hidden="true">
+    fx
+  </span>
+
+  <p id="formula" class="flex min-w-0 flex-1 items-center truncate px-3" aria-live="off">
+    =PARSE("gabriel_leon.csv")
+  </p>
+
+  <a
+    href={profile.links.linkedin}
+    target="_blank"
+    rel="noopener"
+    class="hidden shrink-0 items-center gap-1 border-l border-ink px-4 transition-colors hover:bg-ink hover:text-paper sm:flex">
+    LinkedIn <span aria-hidden="true">↗</span>
+  </a>
+</header>
